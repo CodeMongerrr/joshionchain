@@ -53,7 +53,7 @@ const experiences = [
 
 const achievements = [
   {
-    title: "ETHBangkok & DevCon 2024 Speaker",
+    title: "ETHBangkok & DevCon 2024 Participant",
     description: "Presented 'Self Learning Agentic KOLs' to 500+ Web3 professionals",
     icon: Presentation,
     highlight: "500+ attendees"

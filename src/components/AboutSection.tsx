@@ -18,11 +18,15 @@ const AboutSection = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Profile Image Placeholder */}
           <div className="order-2 lg:order-1">
-            <Card className="p-8 bg-gradient-surface border-border/50 shadow-card">
+            {/* <Card className="p-8 bg-gradient-surface border-border/50 shadow-card"> */}
               <div className="aspect-square rounded-2xl bg-gradient-primary/20 border border-primary/30 flex items-center justify-center mb-6">
-                <div className="w-32 h-32 rounded-full bg-primary/20 flex items-center justify-center">
-                  <span className="text-4xl font-bold text-primary">AJ</span>
-                </div>
+                {/* <div className="w-32 h-32 rounded-full bg-primary/20 flex items-center justify-center"> */}
+                  <img
+              src="src/assets/profile.jpeg"
+              alt="Aditya Joshi Logo"
+              className="h-81 w-81"
+            />
+                {/* </div> */}
               </div>
               
               <div className="space-y-4">
@@ -39,7 +43,7 @@ const AboutSection = () => {
                   <span>London, UK (Remote)</span>
                 </div>
               </div>
-            </Card>
+            {/* </Card> */}
           </div>
 
           {/* Bio Content */}
@@ -77,7 +81,7 @@ const AboutSection = () => {
               <h3 className="text-xl font-semibold mb-4">Key Achievements</h3>
               <div className="flex flex-wrap gap-2">
                 <Badge variant="secondary" className="bg-secondary/20 text-secondary border-secondary/30">
-                  ETHBangkok Speaker 2024
+                  ETHBangkok 2024 Winner
                 </Badge>
                 <Badge variant="secondary" className="bg-accent/20 text-accent border-accent/30">
                   5+ Hackathon Winner

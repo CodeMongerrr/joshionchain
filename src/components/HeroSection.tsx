@@ -47,7 +47,7 @@ const HeroSection = () => {
           <p className="text-lg md:text-xl text-foreground/80 mb-12 max-w-3xl mx-auto">
             Building the future with Smart Contracts, Encrypted Tokens, AI × Crypto, and DeFi infrastructure.
             Research Intern at <span className="text-primary font-semibold">Nethermind</span> | 
-            IIT (ISM) Dhanbad | ETHGlobal Speaker & Hackathon Winner
+            IIT (ISM) Dhanbad | ETHBangkok Hackathon Winner
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">

@@ -39,19 +39,22 @@ const Navigation = () => {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled 
-        ? 'bg-background/95 backdrop-blur-lg border-b border-border/50 shadow-card' 
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+        ? 'bg-background/95 backdrop-blur-lg border-b border-border/50 shadow-card'
         : 'bg-transparent'
-    }`}>
+      }`}>
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <div 
+          <div
             className="font-display text-2xl font-bold cursor-pointer"
             onClick={() => scrollToSection('hero')}
           >
-            <span className="bg-gradient-primary bg-clip-text text-transparent">AJ</span>
+            <img
+              src="src/assets/logo.png"
+              alt="Aditya Joshi Logo"
+              className="h-12 w-12 rounded-full"
+            />
           </div>
 
           {/* Desktop Navigation */}
@@ -122,7 +125,7 @@ const Navigation = () => {
                   {item.label}
                 </button>
               ))}
-              
+
               {/* Mobile Social Links */}
               <div className="flex items-center gap-4 pt-4 border-t border-border/50">
                 <a

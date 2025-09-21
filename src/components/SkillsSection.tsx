@@ -35,9 +35,9 @@ const skillCategories = [
     icon: Code,
     color: "accent",
     skills: [
-      { name: "GoLang", level: 90 },
-      { name: "Rust", level: 80 },
-      { name: "Python", level: 85 },
+      { name: "GoLang", level: 80 },
+      { name: "Rust", level: 60 },
+      { name: "Python", level: 95 },
       { name: "JavaScript", level: 90 },
       { name: "TypeScript", level: 90 },
       { name: "C/C++", level: 75 },
@@ -67,7 +67,6 @@ const skillCategories = [
       { name: "PostgreSQL", level: 70 },
       { name: "Microservices", level: 85 },
       { name: "OAuth2.0", level: 80 },
-      { name: "Apollo Server", level: 75 }
     ]
   },
   {
@@ -76,8 +75,7 @@ const skillCategories = [
     color: "accent",
     skills: [
       { name: "AI × Crypto", level: 80 },
-      { name: "Differential Privacy", level: 75 },
-      { name: "Machine Learning", level: 70 },
+      { name: "Machine Learning", level: 60 },
       { name: "Agentic Systems", level: 75 }
     ]
   }

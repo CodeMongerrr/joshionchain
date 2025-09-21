@@ -5,59 +5,58 @@ import { Github, ExternalLink, Shield, Database, Zap, Globe } from "lucide-react
 
 const projects = [
   {
-    title: "Homomorphic ERC20 Token",
-    description: "Revolutionary encrypted token implementation using FHE/TFHE with RSA ring signatures supporting 100+ participants while maintaining 99.99% verification accuracy.",
-    tech: ["Rust", "Solidity", "RSA", "AES-128", "FHE/TFHE"],
-    icon: Shield,
-    github: "https://github.com/CodeMongerrr",
-    demo: "#",
-    highlights: ["2048-bit RSA keys", "100+ participants", "99.99% accuracy"]
-  },
-  {
-    title: "Immutable Attestation Protocol",
-    description: "High-performance Ethereum event log indexer processing 2.1M+ blocks with 50+ go-routines, achieving 1,800+ events/sec processing rate.",
-    tech: ["Go", "BoltDB", "Ethereum", "IPFS", "Solidity"],
+    title: "Ethereum Event Log Indexer",
+    description: "Go-based, high-throughput Ethereum log indexer processing millions of blocks; uses goroutines and BoltDB storage to build reliable blockchain analytics backend.",
+    tech: ["Go", "Ethereum", "BoltDB", "go-ethereum"],
     icon: Database,
-    github: "https://github.com/CodeMongerrr",
+    github: "https://github.com/CodeMongerrr/eth-log-indexer",
     demo: "#",
-    highlights: ["2.1M+ blocks indexed", "1,800+ events/sec", "Real-time sync"]
+    highlights: ["Millions of blocks indexed", "Worker goroutines", "Efficient log DB storage"]
   },
   {
-    title: "zkSNARK Identity Framework",
-    description: "Decentralized identity protocol using Soulbound NFTs with merkle proof validation, preventing certificate fraud for 5+ universities.",
-    tech: ["Rust", "Bellman", "Solidity", "React.js", "IPFS"],
-    icon: Zap,
-    github: "https://github.com/CodeMongerrr",
-    demo: "#",
-    highlights: ["Soulbound NFTs", "Merkle proofs", "5+ universities"]
-  },
-  {
-    title: "Multichain Domain Infrastructure",
-    description: "Building multi-chain domain infrastructure where .btc, .eth, .sol become programmable on-chain assets with tokenized ownership and governance.",
-    tech: ["React", "TypeScript", "Alchemy API", "Solidity", "Multi-chain"],
-    icon: Globe,
-    github: "https://github.com/CodeMongerrr",
-    demo: "#",
-    highlights: ["Multi-chain support", "Tokenized domains", "In Progress"],
-    inProgress: true
-  },
-  {
-    title: "Cross-chain AMM Prototype",
-    description: "Automated market maker prototype enabling seamless cross-chain liquidity provision with advanced routing algorithms.",
-    tech: ["Solidity", "Web3.js", "Chainlink", "Uniswap V3", "Go"],
-    icon: ExternalLink,
-    github: "https://github.com/CodeMongerrr",
-    demo: "#",
-    highlights: ["Cross-chain AMM", "Liquidity routing", "DeFi protocol"]
-  },
-  {
-    title: "Multichain HD Wallet",
-    description: "Enterprise-grade HD wallet with BIP39/BIP44 compliance, supporting 8 networks and processing 5000+ transactions with advanced security.",
-    tech: ["JavaScript", "BIP39", "BIP44", "GraphQL", "Apollo"],
+    title: "RSA Ring Signature Library",
+    description: "Rust library implementing RSA ring signatures using 2048-bit keys, with AES-128 hybrid encryption helpers; key routines for sign-verify workflows built for privacy use-cases on chain or off chain.",
+    tech: ["Rust", "RSA", "AES-128"],
     icon: Shield,
-    github: "https://github.com/CodeMongerrr",
+    github: "https://github.com/CodeMongerrr/Ring_Signature_Implementation",
     demo: "#",
-    highlights: ["8 networks", "5000+ transactions", "BIP compliance"]
+    highlights: ["Ring signature primitives", "Secure sign & verify", "Hybrid encryption support"]
+  },
+  {
+    title: "Gas Checker",
+    description: "Real-time Ethereum gas price dashboard built with React + TypeScript; visualizes gas bands, sends alerts; frontend architecture supports integration with Web3 providers in future versions.",
+    tech: ["React", "TypeScript", "Tailwind CSS", "Vite"],
+    icon: ExternalLink,
+    github: "https://github.com/CodeMongerrr/Gas-Checker",
+    demo: "#",
+    highlights: ["Live gas visualization", "Alert system", "Prepared for Web3 integration"]
+  },
+  {
+    title: "Homomorphic ERC20 Prototype",
+    description: "ERC20 token built on Fully Homomorphic Encryption (fhEVM) with Hardhat + TypeScript and dockerized fhEVM nodes; focus on encrypted smart contracts and developer tooling.",
+    tech: ["Solidity", "TypeScript", "Hardhat", "fhEVM", "Docker"],
+    icon: Shield,
+    github: "https://github.com/CodeMongerrr/Inco_Safe_FHE",
+    demo: "#",
+    highlights: ["Encrypted ERC20 token", "Mock & real test modes", "fhEVM docker-compose setup"]
+  },
+  {
+    title: "CertiCryp – NFT Certificates",
+    description: "DApp for universities/institutions to issue and verify certificates as ERC-721 NFTs; smart contracts + frontend components combine to deliver tamper-proof credential issuance.",
+    tech: ["Solidity", "React", "ERC-721"],
+    icon: Globe,
+    github: "https://github.com/CodeMongerrr/Certicryp",
+    demo: "#",
+    highlights: ["NFT certificates", "Issued on Ethereum", "Verification UI + contracts"]
+  },
+  {
+    title: "SnapTrade Extension",
+    description: "Browser extension integrating SnapTrade API to surface brokerage balances, positions, and transaction data in a unified dashboard; supports secure frontend logic and user-centered UI.",
+    tech: ["JavaScript", "SnapTrade API", "Chrome Extension"],
+    icon: ExternalLink,
+    github: "https://github.com/CodeMongerrr/SnapTrade",
+    demo: "#",
+    highlights: ["Real-time portfolio view", "Secure client-side data display", "Brokerage API integration"]
   }
 ];
 
