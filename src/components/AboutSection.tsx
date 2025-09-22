@@ -15,7 +15,7 @@ const AboutSection = () => {
             Passionate blockchain researcher and full-stack engineer building the decentralized future
           </p>
         </div>
-
+ 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Profile Image Placeholder */}
           <div className="order-2 lg:order-1">
