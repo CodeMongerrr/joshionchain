@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Github, Linkedin, Twitter } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -51,7 +52,7 @@ const Navigation = () => {
             onClick={() => scrollToSection('hero')}
           >
             <img
-              src="src/assets/logo.png"
+              src={logo}
               alt="Aditya Joshi Logo"
               className="h-12 w-12 rounded-full"
             />

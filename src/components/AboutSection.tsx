@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, GraduationCap, Briefcase } from "lucide-react";
+import profile from "@/assets/profile.jpeg";
 
 const AboutSection = () => {
   return (
@@ -22,7 +23,7 @@ const AboutSection = () => {
               <div className="aspect-square rounded-2xl bg-gradient-primary/20 border border-primary/30 flex items-center justify-center mb-6">
                 {/* <div className="w-32 h-32 rounded-full bg-primary/20 flex items-center justify-center"> */}
                   <img
-              src="src/assets/profile.jpeg"
+              src={profile}
               alt="Aditya Joshi Logo"
               className="h-81 w-81"
             />
