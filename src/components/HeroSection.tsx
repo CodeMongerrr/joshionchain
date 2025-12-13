@@ -40,11 +40,11 @@ const HeroSection = () => {
             </span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-muted-foreground mb-4 font-mono">
-            Blockchain & AI Developer | Full-Stack Engineer | Protocol Builder
+          <p className="text-xl md:text-2l text-muted-foreground mb-4 font-mono">
+            Blockchain Developer | Full-Stack Engineer | Protocol Builder
           </p>
           
-          <p className="text-lg md:text-xl text-foreground/80 mb-12 max-w-3xl mx-auto">
+          <p className="text-lg md:text-l text-foreground/80 mb-12 max-w-3xl mx-auto">
             Building the future with Smart Contracts, Encrypted Tokens, AI × Crypto, and DeFi infrastructure.
             Research Intern at <span className="text-primary font-semibold">Nethermind</span> | 
             IIT (ISM) Dhanbad | ETHBangkok Hackathon Winner

@@ -42,10 +42,10 @@ const Index = () => {
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-muted-foreground text-center md:text-left">
-              © 2024 Aditya Joshi. Building the future of blockchain technology.
+              Building the future of blockchain technology.
             </p>
             <p className="text-sm text-muted-foreground/60">
-              Made with ❤️ using React, TypeScript & Tailwind CSS
+              Made with ❤️ by Aditya Roshan Joshi © {new Date().getFullYear()}
             </p>
           </div>
         </div>
