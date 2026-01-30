@@ -41,7 +41,7 @@ const AboutSection = () => {
                 </div>
                 <div className="flex items-center gap-3 text-muted-foreground">
                   <MapPin className="h-5 w-5 text-primary" />
-                  <span>London, UK (Remote)</span>
+                  <span>Mumbai, Maharashtra, India</span>
                 </div>
               </div>
             {/* </Card> */}
