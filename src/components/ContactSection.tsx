@@ -96,8 +96,8 @@ const ContactSection = () => {
     {
       name: "Email",
       icon: Mail,
-      url: "mailto:rajstylesmb@gmail.com",
-      username: "rajstylesmb@gmail.com",
+      url: "mailto:joshionchain@gmail.com",
+      username: "joshionchain@gmail.com",
       color: "primary"
     }
   ];
@@ -220,7 +220,7 @@ const ContactSection = () => {
                     </div>
                     <div>
                       <h4 className="font-semibold text-foreground mb-1">Email</h4>
-                      <p className="text-muted-foreground">rajstylesmb@gmail.com</p>
+                      <p className="text-muted-foreground">joshionchain@gmail.com</p>
                       <p className="text-sm text-muted-foreground/80">
                         Best for project inquiries and collaborations
                       </p>

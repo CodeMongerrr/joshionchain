@@ -94,7 +94,7 @@ const HeroSection = () => {
               <Twitter className="h-6 w-6 text-primary" />
             </a>
             <a 
-              href="mailto:rajstylesmb@gmail.com"
+              href="mailto:joshionchain@gmail.com"
               className="p-3 rounded-full bg-card/50 border border-border hover:border-primary hover:bg-primary/10 transition-all duration-300 hover:shadow-glow"
             >
               <Mail className="h-6 w-6 text-primary" />
