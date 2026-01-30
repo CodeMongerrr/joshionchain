@@ -7,9 +7,9 @@ const HeroSection = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 z-0">
-        <img 
-          src={heroBackground} 
-          alt="" 
+        <img
+          src={heroBackground}
+          alt=""
           className="w-full h-full object-cover opacity-40"
         />
         <div className="absolute inset-0 bg-gradient-to-br from-background/80 via-background/60 to-background/80" />
@@ -39,28 +39,30 @@ const HeroSection = () => {
               Aditya Joshi
             </span>
           </h1>
-          
+
           <p className="text-xl md:text-2l text-muted-foreground mb-4 font-mono">
             Blockchain Developer | Full-Stack Engineer | Protocol Builder
           </p>
-          
+
           <p className="text-lg md:text-l text-foreground/80 mb-12 max-w-3xl mx-auto">
             Building the future with Smart Contracts, Encrypted Tokens, AI × Crypto, and DeFi infrastructure.
-            Blockchain Engineer Intern at <span className="text-primary font-semibold">Nethermind</span> | 
+            Blockchain Engineer Intern at <span className="text-primary font-semibold">Nethermind</span> |
             IIT (ISM) Dhanbad | ETHBangkok Hackathon Winner
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <Button 
-              size="lg" 
-              className="bg-gradient-primary hover:shadow-glow transition-all duration-300 font-semibold"
-            >
-              <Mail className="mr-2 h-5 w-5" />
-              Get In Touch
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
+            <a href="mailto:joshionchain@gmail.com">
+              <Button
+                size="lg"
+                className="bg-gradient-primary hover:shadow-glow transition-all duration-300 font-semibold"
+              >
+                <Mail className="mr-2 h-5 w-5" />
+                Get In Touch
+              </Button>
+            </a>
+            <Button
+              variant="outline"
+              size="lg"
               className="border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
             >
               View Projects
@@ -69,31 +71,31 @@ const HeroSection = () => {
 
           {/* Social Links */}
           <div className="flex gap-6 justify-center mb-16">
-            <a 
-              href="https://github.com/CodeMongerrr" 
-              target="_blank" 
+            <a
+              href="https://github.com/CodeMongerrr"
+              target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-full bg-card/50 border border-border hover:border-primary hover:bg-primary/10 transition-all duration-300 hover:shadow-glow"
             >
               <Github className="h-6 w-6 text-primary" />
             </a>
-            <a 
-              href="https://www.linkedin.com/in/adityaroshanjoshiiitism/" 
-              target="_blank" 
+            <a
+              href="https://www.linkedin.com/in/adityaroshanjoshiiitism/"
+              target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-full bg-card/50 border border-border hover:border-primary hover:bg-primary/10 transition-all duration-300 hover:shadow-glow"
             >
               <Linkedin className="h-6 w-6 text-primary" />
             </a>
-            <a 
-              href="https://twitter.com/JoshiOnChain" 
-              target="_blank" 
+            <a
+              href="https://twitter.com/JoshiOnChain"
+              target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-full bg-card/50 border border-border hover:border-primary hover:bg-primary/10 transition-all duration-300 hover:shadow-glow"
             >
               <Twitter className="h-6 w-6 text-primary" />
             </a>
-            <a 
+            <a
               href="mailto:joshionchain@gmail.com"
               className="p-3 rounded-full bg-card/50 border border-border hover:border-primary hover:bg-primary/10 transition-all duration-300 hover:shadow-glow"
             >
