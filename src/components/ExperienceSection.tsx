@@ -5,7 +5,7 @@ import { Building, Calendar, MapPin, Trophy, Users, Presentation } from "lucide-
 const experiences = [
   {
     company: "Nethermind",
-    role: "Research Intern, Core Blockchain Engineering",
+    role: "Blockchain Engineer Intern, Core Blockchain Engineering",
     location: "London, UK (Remote)",
     duration: "May 2024 – August 2024",
     description: "Led cutting-edge blockchain infrastructure development for Starknet ecosystem",
@@ -59,7 +59,7 @@ const achievements = [
     highlight: "500+ attendees"
   },
   {
-    title: "Blockchain Research Lead @CyberLabs",
+    title: "Blockchain Head @CyberLabs",
     description: "Guided 30+ students through blockchain and backend development",
     icon: Users,
     highlight: "30+ students mentored"
