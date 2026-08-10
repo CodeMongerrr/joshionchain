@@ -1,73 +1,92 @@
-# Welcome to your Lovable project
+# joshionchain.com
 
-## Project info
+Personal site for Aditya Joshi — [joshionchain.com](https://www.joshionchain.com)
 
-**URL**: https://lovable.dev/projects/8eb4618d-830b-4623-bbab-98025bfb9215
+A static-first Next.js site with one dynamic seam: the open-source page keeps
+itself current against the GitHub API so merged pull requests appear without a
+deploy.
 
-## How can I edit this code?
+```
+Next.js 16 (App Router)  ·  React 19  ·  TypeScript  ·  Tailwind CSS 4
+```
 
-There are several ways of editing your application.
+## Why it's built this way
 
-**Use Lovable**
+**Content is data, not markup.** Every string on the site lives in `src/data/`.
+Components read from there and render; none of them contain copy. Editing the
+site is editing a typed object, and a typo in a slug is a build error rather
+than a broken page.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/8eb4618d-830b-4623-bbab-98025bfb9215) and start prompting.
+**Static by default, dynamic only where it earns it.** All 15 routes prerender.
+The single exception is the contributions data, revalidated hourly via ISR — and
+even that degrades to a hand-curated list if GitHub is unreachable, so a rate
+limit can never blank the page or fail a build.
 
-Changes made via Lovable will be committed automatically to this repo.
+**Overview and depth are separate pages.** The home page carries `summary`
+fields and links onward; the long-form `body` prose lives on detail routes. That
+split is what keeps the front page scannable while still giving search engines
+substantial, uniquely-titled pages to index.
 
-**Use your preferred IDE**
+## Structure
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+```
+src/
+├── app/
+│   ├── page.tsx                 Overview — summaries, links onward
+│   ├── work/                    Index + a detail page per system
+│   ├── projects/[slug]/         Open-source project detail
+│   ├── open-source/             Contributions, refreshed from GitHub
+│   ├── about/                   Bio, past roles, stack, contact
+│   ├── opengraph-image.tsx      Social card, generated from site.ts
+│   ├── icon.tsx                 Favicon, generated
+│   ├── sitemap.ts               Derived from the same data the pages render
+│   └── robots.ts
+├── components/                  Presentational; no copy lives here
+├── data/                        Every string on the site
+└── lib/
+    ├── github.ts                Live contribution sync, soft-failing
+    └── seo.ts                   Metadata builders and JSON-LD schemas
+```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Running locally
 
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Environment variables are all optional — the site builds and runs with none of
+them set. Copy `.env.example` to `.env.local` to enable the extras:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+| Variable | Effect when unset |
+| --- | --- |
+| `GITHUB_TOKEN` | Contributions fall back to the curated list |
+| `NEXT_PUBLIC_POSTHOG_KEY` | Analytics never loads; no request is made |
+| `NEXT_PUBLIC_POSTHOG_HOST` | Defaults to `https://us.i.posthog.com` |
 
-**Use GitHub Codespaces**
+## Checks
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```bash
+npm run typecheck
+npm run lint
+npm run build
+```
 
-## What technologies are used for this project?
+CI runs all three on every push and pull request. It deliberately does not
+deploy — hosting builds from its own Git integration, which keeps the pipeline
+portable between platforms.
 
-This project is built with:
+## SEO
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Handled as a property of the routing rather than a plugin:
 
-## How can I deploy this project?
+- One canonical URL per route, no trailing-slash duplicates
+- Unique `title` and `description` per page, driven by `seoTitle` / `seoDescription` in the data files
+- JSON-LD `Person`, `WebSite`, `CreativeWork`, `SoftwareSourceCode`, and `BreadcrumbList` graphs
+- `sitemap.xml` generated from the same arrays the pages map over, so a new entry cannot be omitted
+- Social cards generated at build time from the live copy
 
-Simply open [Lovable](https://lovable.dev/projects/8eb4618d-830b-4623-bbab-98025bfb9215) and click on Share -> Publish.
+## License
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+All rights reserved. The code is public to read; the writing, design, and
+personal content are not licensed for reuse.

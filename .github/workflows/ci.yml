@@ -1,0 +1,69 @@
+name: CI
+
+# Quality gates only — this workflow deliberately does NOT deploy.
+#
+# Hosting is still being decided (Vercel today, Cloudflare Workers under
+# consideration), and both platforms build from their own Git integration.
+# Keeping CI host-agnostic means switching hosts is a dashboard change, not a
+# pipeline rewrite. When a host is settled, add a separate deploy workflow
+# rather than bolting a deploy step onto this one.
+
+on:
+  push:
+    branches: [main, redesign]
+  pull_request:
+    branches: [main]
+  # Lets the pipeline be run by hand from the Actions tab before a release.
+  workflow_dispatch:
+
+# A newer push to the same branch makes an in-flight run obsolete.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Typecheck, lint, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      # `npm ci` is reproducible and fails loudly if package-lock.json has
+      # drifted from package.json — which is what we want in CI.
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      # Next caches compiled output between runs; restoring it cuts build time
+      # substantially once the cache is warm.
+      - name: Restore Next.js build cache
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: next-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('src/**/*.[jt]s', 'src/**/*.[jt]sx') }}
+          restore-keys: |
+            next-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-
+            next-${{ runner.os }}-
+
+      - name: Build
+        run: npm run build
+        env:
+          # The build must succeed without analytics secrets configured —
+          # analytics is strictly optional at runtime and is skipped when the
+          # key is absent. Setting it empty here proves that stays true.
+          NEXT_PUBLIC_POSTHOG_KEY: ""
