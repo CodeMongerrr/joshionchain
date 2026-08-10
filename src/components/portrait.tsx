@@ -1,8 +1,12 @@
 import Image from "next/image";
 
 /**
- * Hero portrait — hairline frame with registration marks and the duotone
- * accent wash from the design system.
+ * Hero portrait — hairline frame with registration marks, photograph shown as
+ * shot.
+ *
+ * The design system's `duotone` class is deliberately not applied here: it
+ * washes the image with the accent colour, and the photograph reads better
+ * unmodified.
  *
  * The source is the 3000×3000 square carried over from the previous site;
  * next/image crops it to the design's 4:5 and serves AVIF/WebP at the right
@@ -12,7 +16,7 @@ import Image from "next/image";
 export function Portrait() {
   return (
     <figure
-      className="hero-portrait blueprint duotone"
+      className="hero-portrait blueprint"
       style={{ margin: 0, aspectRatio: "4 / 5", width: "100%", position: "relative" }}
     >
       <Image
