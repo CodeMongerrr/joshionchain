@@ -11,6 +11,8 @@ import { contactEmail, site, socials } from "@/data/site";
 import { stack } from "@/data/stack";
 import { systems } from "@/data/systems";
 import { getContributions } from "@/lib/github";
+import { jsonLd, profilePageSchema } from "@/lib/seo";
+import { JsonLd } from "@/components/json-ld";
 
 /* Next parses segment config statically, so this has to be a literal, an
    imported binding (even a `const`) fails the build with "Invalid segment
@@ -36,6 +38,9 @@ export default async function HomePage() {
 
   return (
     <main id="main">
+      {/* Person and WebSite come from the layout; this marks the homepage as
+          being about that person rather than merely mentioning them. */}
+      <JsonLd data={jsonLd(profilePageSchema())} />
       <LegacyHashRedirect />
 
       <div className="wrap">

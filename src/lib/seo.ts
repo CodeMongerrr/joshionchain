@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { site, socials } from "@/data/site";
+import { contactEmail, site, socials } from "@/data/site";
 import { projects } from "@/data/projects";
 import { systems } from "@/data/systems";
 
@@ -67,7 +67,13 @@ export function personSchema() {
     "@type": "Person",
     "@id": `${site.url}/#person`,
     name: site.name,
+    /* The handle is how a lot of people will search for him; naming it here
+       ties the handle and the legal name to one entity rather than two. */
+    alternateName: "JoshiOnChain",
     url: site.url,
+    mainEntityOfPage: { "@id": `${site.url}/#profilepage` },
+    image: `${site.url}/opengraph-image`,
+    ...(contactEmail ? { email: `mailto:${contactEmail}` } : {}),
     description: site.tagline,
     jobTitle: "Software Engineer",
     knowsAbout: [
@@ -93,10 +99,34 @@ export function websiteSchema() {
     "@type": "WebSite",
     "@id": `${site.url}/#website`,
     url: site.url,
-    name: site.title,
+    /* Google's "site name" feature reads `name` and `alternateName` from
+       WebSite schema on the homepage to decide what to print in bold above
+       the URL in a result. Short and brand-like beats descriptive here: the
+       full title tag is already doing the descriptive work. */
+    name: site.name,
+    alternateName: ["JoshiOnChain", "joshionchain", "joshionchain.com"],
     description: site.description,
     inLanguage: "en",
     publisher: { "@id": `${site.url}/#person` },
+  };
+}
+
+/**
+ * ProfilePage marks the homepage as being *about* a person rather than
+ * merely mentioning one. It is the type Google documents for creator and
+ * profile pages, and it is what ties every other page's author reference
+ * back to a single entity.
+ */
+export function profilePageSchema() {
+  return {
+    "@type": "ProfilePage",
+    "@id": `${site.url}/#profilepage`,
+    url: site.url,
+    name: site.title,
+    description: site.description,
+    inLanguage: "en",
+    isPartOf: { "@id": `${site.url}/#website` },
+    mainEntity: { "@id": `${site.url}/#person` },
   };
 }
 
