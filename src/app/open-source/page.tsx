@@ -7,14 +7,14 @@ import { securityLede } from "@/data/contributions";
 import { getContributions } from "@/lib/github";
 import { breadcrumbSchema, jsonLd, pageMeta } from "@/lib/seo";
 
-/* Static literal, not an imported binding — see the note in src/app/page.tsx.
+/* Static literal, not an imported binding, see the note in src/app/page.tsx.
    Keep in sync with GITHUB_REVALIDATE_SECONDS in src/lib/github.ts. */
 export const revalidate = 3600;
 
 export const metadata = pageMeta({
   title: "Open source",
   description:
-    "Merged contributions to Zcash core infrastructure — including two security fixes in ZcashFoundation/zebra — plus librustzcash, ZecHub, and ethereum.org.",
+    "Merged contributions to Zcash core infrastructure, including two security fixes in ZcashFoundation/zebra, plus librustzcash, ZecHub, and ethereum.org.",
   path: "/open-source",
 });
 
@@ -44,7 +44,7 @@ export default async function OpenSourcePage() {
           <Kicker>Open source</Kicker>
           <h1 className="h2">Upstream contributions</h1>
 
-          <p className="body dim wrap-prose">{securityLede}</p>
+          <p className="body dim">{securityLede}</p>
 
           <p className="mono dimmer" style={{ fontSize: 12, marginTop: 16 }}>
             {counts.merged} merged · {counts.open} open

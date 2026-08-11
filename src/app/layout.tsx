@@ -42,8 +42,8 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
     default: site.title,
-    // Every sub-page reads "<page> — Aditya Joshi" without repeating itself.
-    template: `%s — ${site.name}`,
+    // Every sub-page reads "<page>, Aditya Joshi" without repeating itself.
+    template: `%s | ${site.name}`,
   },
   description: site.description,
   applicationName: site.name,

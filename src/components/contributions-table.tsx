@@ -1,7 +1,7 @@
 import type { LiveContribution } from "@/lib/github";
 
 /**
- * Renders `what` with any substrings listed in `code` set in mono — so
+ * Renders `what` with any substrings listed in `code` set in mono, so
  * `zebrad-log-filter` reads as a binary name rather than prose, without the
  * data file having to carry markup.
  */
@@ -66,7 +66,7 @@ export function ContributionsTable({
             marginBottom: 20,
           }}
         >
-          {/* Pure-CSS filtering via :has() — works with JavaScript disabled. */}
+          {/* Pure-CSS filtering via :has(), works with JavaScript disabled. */}
           <div className="seg" role="group" aria-label="Filter contributions by status">
             <label className="seg-opt mono" style={{ fontSize: 12, letterSpacing: ".06em" }}>
               <input type="radio" name="ossfilter" id="f-all" defaultChecked />
@@ -105,10 +105,11 @@ export function ContributionsTable({
               <td className="c-what">
                 <Described text={c.what} code={c.code} />{" "}
                 <span style={{ whiteSpace: "nowrap" }}>
-                  —{" "}
+                  (
                   <a href={c.url} target="_blank" rel="noopener noreferrer">
                     PR #{c.number}
                   </a>
+                  )
                 </span>
               </td>
               <StatusCell status={c.status} />

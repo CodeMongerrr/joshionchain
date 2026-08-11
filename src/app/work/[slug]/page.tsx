@@ -80,7 +80,7 @@ export default async function SystemPage({
       </section>
 
       <section className="sec">
-        <div className="wrap wrap-prose">
+        <div className="wrap-prose">
           {system.body.map((paragraph, i) => (
             <p className="body" key={i} style={{ marginBottom: 16 }}>
               {paragraph}
@@ -107,7 +107,7 @@ export default async function SystemPage({
             <div style={{ display: "grid", gap: 16, marginTop: 20 }}>
               {system.subItems.map((item) => (
                 <Frame as="article" key={item.name}>
-                  <div style={{ padding: 20 }}>
+                  <div>
                     <h3 className="mono" style={{ fontSize: 15 }}>
                       {item.name}
                     </h3>

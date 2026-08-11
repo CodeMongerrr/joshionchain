@@ -1,5 +1,5 @@
 /**
- * Stack — grouped by domain and linked to the work that proves it.
+ * Stack, grouped by domain and linked to the work that proves it.
  * No percentages, no bars, no self-rated proficiency.
  */
 

@@ -51,7 +51,7 @@ export default function AboutPage() {
       <section className="sec">
         <div className="wrap">
           <h2 className="h3">Previously</h2>
-          <p className="body dim wrap-prose" style={{ marginTop: 8 }}>
+          <p className="body dim" style={{ marginTop: 8 }}>
             Current work lives under{" "}
             <Link href="/work" className="rowlink">
               Work
@@ -62,7 +62,7 @@ export default function AboutPage() {
           <div style={{ display: "grid", gap: 16, marginTop: 24 }}>
             {experience.map((role) => (
               <Frame as="article" key={`${role.company}-${role.period}`}>
-                <div style={{ padding: 20 }}>
+                <div>
                   <p className="mono dimmer" style={{ fontSize: 12 }}>
                     {role.period} · {role.location}
                   </p>
@@ -114,7 +114,7 @@ export default function AboutPage() {
       <section className="sec" id="contact" style={{ paddingBottom: 88 }}>
         <div className="wrap">
           <h2 className="h3">Contact</h2>
-          <p className="body dim wrap-prose" style={{ marginTop: 8 }}>
+          <p className="body dim" style={{ marginTop: 8 }}>
             Open to conversations about freight infrastructure, telematics,
             privacy protocols, and hard backend problems.
           </p>

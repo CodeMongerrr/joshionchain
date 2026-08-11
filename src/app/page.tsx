@@ -12,7 +12,7 @@ import { stack } from "@/data/stack";
 import { systems } from "@/data/systems";
 import { getContributions } from "@/lib/github";
 
-/* Next parses segment config statically, so this has to be a literal — an
+/* Next parses segment config statically, so this has to be a literal, an
    imported binding (even a `const`) fails the build with "Invalid segment
    configuration export". Keep in sync with GITHUB_REVALIDATE_SECONDS in
    src/lib/github.ts, which controls the fetch-level cache. */
@@ -21,7 +21,7 @@ export const revalidate = 3600;
 /**
  * The overview.
  *
- * Every section here is a summary that links onward — the full prose,
+ * Every section here is a summary that links onward, the full prose,
  * diagrams and tables live on the detail routes. That split is deliberate:
  * it's what keeps this page scannable in one pass instead of asking a reader
  * to wade through three long-form case studies before reaching the contact
@@ -144,7 +144,7 @@ export default async function HomePage() {
                     paddingBottom: 2,
                   }}
                 >
-                  email — add address
+                  email: add address
                 </span>
               )}
             </div>
@@ -390,7 +390,7 @@ export default async function HomePage() {
                   color: "color-mix(in srgb, var(--color-text) 70%, transparent)",
                 }}
               >
-                email — add address
+                email: add address
               </span>
             )}
             {socials.map((s) => (

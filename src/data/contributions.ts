@@ -8,7 +8,7 @@
  * At request time `lib/github.ts` refreshes the *status* of each entry from
  * the live API, so a PR that gets merged upstream flips from Open to Merged
  * without anyone editing this file. If the API is unreachable or no token is
- * configured, these values render as-is — the page never breaks.
+ * configured, these values render as-is, the page never breaks.
  */
 
 export type Status = "merged" | "open" | "closed";
@@ -23,7 +23,7 @@ export type Contribution = {
   what: string;
   /** Substrings of `what` to render in mono, e.g. a binary or file name. */
   code?: string[];
-  /** Last known status — the live fetch overrides this when it succeeds. */
+  /** Last known status, the live fetch overrides this when it succeeds. */
   status: Status;
   /** Security fixes get called out in prose above the table. */
   security?: boolean;

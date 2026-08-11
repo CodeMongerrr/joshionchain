@@ -43,13 +43,13 @@ export function SiteHeader() {
 
   const toggleTheme = useCallback(() => {
     const next = readTheme() === "dark" ? "light" : "dark";
-    // Writing the attribute is what updates the UI — the MutationObserver
+    // Writing the attribute is what updates the UI, the MutationObserver
     // above picks it up and re-renders this button's label.
     document.documentElement.setAttribute("data-theme", next);
     try {
       localStorage.setItem("aj-theme", next);
     } catch {
-      // Private browsing / storage disabled — the theme still applies for
+      // Private browsing / storage disabled, the theme still applies for
       // this page view, it just won't persist.
     }
   }, []);

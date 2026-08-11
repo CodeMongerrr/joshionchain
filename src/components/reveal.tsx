@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 /**
  * Fade + 4px rise, once, on scroll-in. Mounted once in the layout and
- * re-observes on every route change — client navigations swap the DOM under
+ * re-observes on every route change, client navigations swap the DOM under
  * us, so a mount-only effect would leave later routes permanently hidden.
  *
  * Two fail-open paths matter here, both inherited from the design's own

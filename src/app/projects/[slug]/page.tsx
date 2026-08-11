@@ -66,7 +66,7 @@ export default async function ProjectPage({
       </section>
 
       <section className="sec">
-        <div className="wrap wrap-prose">
+        <div className="wrap-prose">
           {project.body.map((paragraph, i) => (
             <p className="body" key={i} style={{ marginBottom: 16 }}>
               {paragraph}

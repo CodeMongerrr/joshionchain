@@ -10,13 +10,13 @@ export const site = {
   /** Canonical origin. Drives sitemap, robots, canonical tags and OG urls. */
   url: "https://www.joshionchain.com",
   domain: "joshionchain.com",
-  title: "Aditya Joshi — production systems",
+  title: "Aditya Joshi | Backend and Distributed Systems Engineer",
   tagline:
-    "I build production systems — freight logistics, EV fleet telematics, and privacy-protocol infrastructure.",
+    "I build production systems for freight logistics, EV fleet telematics, and privacy-protocol infrastructure.",
   supporting:
     "Backend and distributed systems, mostly TypeScript, Go, and Rust. Four domains in three years.",
   description:
-    "I build production systems — freight logistics, EV fleet telematics, and privacy-protocol infrastructure. Backend and distributed systems in TypeScript, Go, and Rust.",
+    "I build production systems for freight logistics, EV fleet telematics, and privacy-protocol infrastructure. Backend engineering in TypeScript, Go, and Rust.",
   statusPill: "Building BharatTruck · Contributing to Zcash",
   credential: "B.Tech · IIT (ISM) Dhanbad",
   locale: "en_US",

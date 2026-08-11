@@ -2,7 +2,7 @@
  * Runs before first paint, so the correct theme is on <html> by the time
  * anything renders. Without this the page flashes light before hydration.
  *
- * Also sets `data-js`, which is what arms the scroll-reveal base state — with
+ * Also sets `data-js`, which is what arms the scroll-reveal base state, with
  * JS disabled the attribute never appears and content is simply visible.
  */
 const script = `(function(){try{

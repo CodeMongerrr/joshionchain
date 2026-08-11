@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ══════════════════════════════════════════════════════════════════════════
-   Industry — design-system tokens.
+   Industry, design-system tokens.
    Ported from the Claude Design project's _ds/industry-<id>/styles.css. This
    file is the source of truth for the system's look; retune it here.
 
@@ -19,7 +19,7 @@
   --color-accent-2: #728fab;
   --color-divider: color-mix(in srgb, #1d1f20 16%, transparent);
 
-  /* Tonal ramps — generated in OKLCH on one shared lightness scale, so the
+  /* Tonal ramps, generated in OKLCH on one shared lightness scale, so the
      same step of any role matches the others in visual value. */
   --color-neutral-100: #f5f5f8;
   --color-neutral-200: #e7e7ea;
@@ -166,7 +166,7 @@ figure {
   padding: 0 clamp(20px, 5vw, 56px);
 }
 
-/* Narrower measure for long-form detail pages — prose wants a tighter
+/* Narrower measure for long-form detail pages, prose wants a tighter
    column than the overview grid does. */
 .wrap-prose {
   max-width: 820px;
@@ -326,7 +326,7 @@ figure {
   border-color: color-mix(in srgb, var(--color-text) 42%, transparent);
 }
 
-/* Portrait treatment — hairline frame plus the duotone accent wash. */
+/* Portrait treatment, hairline frame plus the duotone accent wash. */
 .blueprint {
   position: relative;
   border: 1px solid var(--color-divider);
@@ -622,7 +622,7 @@ html[data-theme="dark"] .btn-primary:hover {
   outline-offset: -2px;
 }
 
-/* The open-source status filter is pure CSS — :has() on the checked radio
+/* The open-source status filter is pure CSS, :has() on the checked radio
    hides the other rows, so it keeps working with JavaScript disabled. */
 .oss:has(#f-merged:checked) tr[data-status="open"],
 .oss:has(#f-merged:checked) tr[data-status="closed"] {
@@ -721,16 +721,26 @@ html[data-js] [data-reveal][data-nofade] {
 /* ── responsive ───────────────────────────────────────────────────────── */
 
 @media (max-width: 1000px) {
+  /* Deliberately still two columns. Stacking the hero this early left the
+     portrait as a small box with an empty half-page beside it, which is what
+     made tablet widths look unfinished. At 700-1000px there is genuinely
+     room for both, so the ratio tightens instead of collapsing.
+
+     The fixed navbar is 56px tall and body already carries 57px of padding;
+     the extra top space here is what stops the h1 colliding with the bar. */
   .hero-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    /* The fixed navbar is 56px tall and body already carries 57px of
-       padding; the extra top space here is what stops the h1 colliding
-       with the bar in the 800–1000px band. */
-    padding: 88px 0 88px;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 32px;
+    padding: 92px 0 84px;
   }
   .hero-portrait {
-    max-width: 300px;
+    max-width: 320px;
+  }
+  /* The hero tagline is capped at 34ch on desktop for a deliberate ragged
+     edge. At tablet widths that cap fights the narrower column and produces
+     a stranded two-word line, so it lifts. */
+  .hero-grid .body {
+    max-width: none;
   }
 }
 
@@ -741,12 +751,15 @@ html[data-js] [data-reveal][data-nofade] {
     grid-template-columns: 1fr;
     gap: 36px;
   }
-  .sec {
-    padding: 80px 0;
-  }
 }
 
-@media (max-width: 720px) {
+/* Tablet portrait (768px) and below.
+   Six horizontal nav links plus the theme toggle stop fitting well before
+   phone widths, and the three-column contributions table runs out of room at
+   the same point, so both switch here rather than at a phone-only
+   breakpoint. This was previously 720px, which left 768px tablets with a
+   cramped navbar jammed against the viewport edge. */
+@media (max-width: 880px) {
   .navlinks {
     position: absolute;
     top: 56px;
@@ -772,10 +785,7 @@ html[data-js] [data-reveal][data-nofade] {
     margin-left: auto;
   }
   .sec {
-    padding: 64px 0;
-  }
-  .frame {
-    padding: 20px;
+    padding: 80px 0;
   }
   .osshead {
     display: none;
@@ -804,5 +814,23 @@ html[data-js] [data-reveal][data-nofade] {
   }
   .oss tbody tr:hover {
     background: none;
+  }
+}
+
+/* Phones. Only here does the hero genuinely have to stack. */
+@media (max-width: 700px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 72px 0 64px;
+  }
+  .hero-portrait {
+    max-width: 360px;
+  }
+  .sec {
+    padding: 64px 0;
+  }
+  .frame {
+    padding: 20px;
   }
 }

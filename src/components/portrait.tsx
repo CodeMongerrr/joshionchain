@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 /**
- * Hero portrait — hairline frame with registration marks, photograph shown as
+ * Hero portrait, hairline frame with registration marks, photograph shown as
  * shot.
  *
  * The design system's `duotone` class is deliberately not applied here: it
@@ -11,7 +11,7 @@ import Image from "next/image";
  * The source is the 3000×3000 square carried over from the previous site;
  * next/image crops it to the design's 4:5 and serves AVIF/WebP at the right
  * size. Swapping in a purpose-shot 4:5 portrait means replacing the file at
- * public/profile.jpeg — nothing here changes.
+ * public/profile.jpeg, nothing here changes.
  */
 export function Portrait() {
   return (

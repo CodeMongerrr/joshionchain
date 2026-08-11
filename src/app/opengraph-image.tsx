@@ -5,7 +5,7 @@ import { site } from "@/data/site";
 /**
  * The social card, generated at build time rather than shipped as a binary.
  *
- * Keeping it as code means it can never drift from the copy in site.ts — the
+ * Keeping it as code means it can never drift from the copy in site.ts, the
  * headline and tagline here are the same strings the page renders. Next reuses
  * this for `twitter:image` too, so one file covers every share surface.
  *
@@ -13,7 +13,7 @@ import { site } from "@/data/site";
  * asset pipeline or an art pass to look intentional.
  */
 export const runtime = "nodejs";
-export const alt = `${site.name} — ${site.tagline}`;
+export const alt = `${site.name}: ${site.tagline}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

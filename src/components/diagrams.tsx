@@ -10,7 +10,7 @@
 export function BharatTruckTopology() {
   return (
     <figure style={{ margin: 0 }}>
-      <figcaption className="figcap">Fig. 01 — service topology</figcaption>
+      <figcaption className="figcap">Fig. 01: service topology</figcaption>
       <svg
         viewBox="0 0 340 196"
         width="100%"
@@ -58,7 +58,7 @@ export function BharatTruckTopology() {
 export function BatteryFlowIntegration() {
   return (
     <figure style={{ margin: 0 }}>
-      <figcaption className="figcap">Fig. 02 — vehicle-integration layer</figcaption>
+      <figcaption className="figcap">Fig. 02: vehicle-integration layer</figcaption>
       <svg
         viewBox="0 0 330 186"
         width="100%"
@@ -86,7 +86,7 @@ export function BatteryFlowIntegration() {
         </g>
       </svg>
       <p className="mono dimmer" style={{ fontSize: 12, lineHeight: 1.4, margin: "10px 0 0" }}>
-        Bracketed steps are my main engineering surface — the same logical command maps to
+        Bracketed steps are my main engineering surface: the same logical command maps to
         different control behavior per vehicle platform.
       </p>
     </figure>

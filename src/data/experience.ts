@@ -21,7 +21,7 @@ export const experience: Role[] = [
     company: "Nethermind",
     title: "Blockchain Engineer Intern",
     team: "Core Blockchain Engineering",
-    period: "May–Aug 2024",
+    period: "May to Aug 2024",
     location: "London (Remote)",
     description:
       "P2P networking for Juno (Starknet) nodes, Go protocol components, and backend work on the Voyager block explorer.",
@@ -29,7 +29,7 @@ export const experience: Role[] = [
   {
     company: "Tabibi Healthcare Solutions",
     title: "Founding Developer",
-    period: "Nov 2023–Mar 2024",
+    period: "Nov 2023 to Mar 2024",
     location: "Dubai (Remote)",
     description:
       "A healthcare microservices platform: OAuth 2.0 authentication, encryption at rest, and patient anonymization.",
@@ -37,7 +37,7 @@ export const experience: Role[] = [
   {
     company: "SimplyFi InfoTech",
     title: "Blockchain Developer Intern",
-    period: "Oct–Dec 2023",
+    period: "Oct to Dec 2023",
     location: "Mumbai (Remote)",
     description:
       "A multichain HD wallet (BIP39/BIP44) and GraphQL federation with Apollo Server.",

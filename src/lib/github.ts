@@ -14,15 +14,15 @@ import { githubUser } from "@/data/site";
  *
  *   1. Every curated contribution has its status refreshed, so a PR that gets
  *      merged upstream flips from Open to Merged with no code change.
- *   2. Any *new* upstream PR — one authored by the account in a repo the
- *      account doesn't own — is discovered and appended automatically, so
+ *   2. Any *new* upstream PR, one authored by the account in a repo the
+ *      account doesn't own, is discovered and appended automatically, so
  *      contributions never silently go missing from the page.
  *
  * Curated copy always wins over the API: a hand-written description of what a
  * change actually did beats a terse PR title. The API only supplies status for
  * rows we already describe, and title-level detail for rows we don't.
  *
- * Failure is always soft. No token, rate limit, network error, schema drift —
+ * Failure is always soft. No token, rate limit, network error, schema drift , 
  * all of them fall back to the curated list exactly as authored. The page is
  * statically rendered and revalidated, so a transient API failure can never
  * take the site down or block a build.
@@ -80,7 +80,7 @@ async function search(): Promise<SearchItem[] | null> {
   const token = process.env.GITHUB_TOKEN;
   if (!token) return null;
 
-  // Authored by the account, in repos the account does not own — i.e. upstream
+  // Authored by the account, in repos the account does not own, i.e. upstream
   // work, which is the only kind this section claims.
   const q = `type:pr author:${githubUser} -user:${githubUser}`;
   const url = `${API}/search/issues?q=${encodeURIComponent(q)}&per_page=100&sort=updated&order=desc`;
@@ -136,7 +136,7 @@ export async function getContributions(): Promise<ContributionsResult> {
   const known = new Set(curated.map((c) => `${c.repo}#${c.number}`));
 
   // 2. Anything upstream we haven't described yet. Drafts and closed-unmerged
-  //    PRs are skipped — neither is a contribution worth listing.
+  //    PRs are skipped, neither is a contribution worth listing.
   const discovered: LiveContribution[] = [];
   for (const item of items) {
     const repo = repoFromUrl(item.repository_url);

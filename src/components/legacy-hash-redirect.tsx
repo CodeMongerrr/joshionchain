@@ -6,7 +6,7 @@ import { useEffect } from "react";
 /**
  * The previous site was a single page addressed entirely by hash, so any link
  * anyone ever shared looks like `/#projects`. Fragments are never sent to the
- * server, which means `next.config.ts` redirects cannot catch them — this is
+ * server, which means `next.config.ts` redirects cannot catch them, this is
  * the only place that can.
  *
  * Only runs on the home route, and only for hashes the old site actually used.

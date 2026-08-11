@@ -7,7 +7,7 @@ import { Suspense, useEffect } from "react";
  * PostHog, wired for the click/funnel feedback loop.
  *
  * Entirely env-gated: with no NEXT_PUBLIC_POSTHOG_KEY set, nothing loads and
- * no network request is made — so local dev and preview deploys stay clean and
+ * no network request is made, so local dev and preview deploys stay clean and
  * don't pollute production numbers.
  *
  * Pageviews are captured manually rather than automatically, because the App
@@ -46,7 +46,7 @@ function PostHogPageview() {
           ui_host: UI_HOST,
           capture_pageview: false,
           capture_pageleave: true,
-          // Heatmaps are the point of this integration — they're what tells
+          // Heatmaps are the point of this integration, they're what tells
           // you which project card people actually click.
           enable_heatmaps: true,
           persistence: "localStorage+cookie",
@@ -73,7 +73,7 @@ function PostHogPageview() {
 export function Analytics() {
   if (!KEY) return null;
   // useSearchParams needs a Suspense boundary or it opts the whole route out
-  // of static rendering — which would defeat the entire SEO setup.
+  // of static rendering, which would defeat the entire SEO setup.
   return (
     <Suspense fallback={null}>
       <PostHogPageview />

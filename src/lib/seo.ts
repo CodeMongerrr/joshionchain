@@ -58,7 +58,7 @@ export function pageMeta({
    Structured data is how a search engine learns that this site is one
    person, what they build, and which external profiles are the same
    identity. `sameAs` is the signal that consolidates the GitHub, LinkedIn
-   and X profiles onto this entity — which is what makes a name query
+   and X profiles onto this entity, which is what makes a name query
    resolve here rather than to a directory scrape.
    ────────────────────────────────────────────────────────────────────── */
 
