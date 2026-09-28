@@ -18,13 +18,21 @@ export type Role = {
 
 export const experience: Role[] = [
   {
+    company: "Gusto Development",
+    title: "Blockchain Developer Intern",
+    period: "Sep 2025 to Jan 2026",
+    location: "Tokyo (Remote)",
+    description:
+      "Janction DEX on JASMY Chain: AMM and DEX components, subgraph indexing on The Graph, and smart contract integrations.",
+  },
+  {
     company: "Nethermind",
     title: "Blockchain Engineer Intern",
     team: "Core Blockchain Engineering",
     period: "May to Aug 2024",
     location: "London (Remote)",
     description:
-      "P2P networking for Juno (Starknet) nodes, Go protocol components, and backend work on the Voyager block explorer.",
+      "Juno, Nethermind's Starknet full node in Go, across the P2P networking, sync and RPC code paths.",
   },
   {
     company: "Tabibi Healthcare Solutions",
@@ -46,7 +54,7 @@ export const experience: Role[] = [
 
 /** Compressed into one row of small items rather than four large cards. */
 export const highlights = [
-  "Talk · ETHBangkok / DevCon 2024",
+  "Security fixes · Zebra v6.2.2",
+  "Named contributor · Zebra v6.4.0",
   "Blockchain Head · CyberLabs",
-  "ETHBangkok hackathon winner",
 ];
