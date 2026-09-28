@@ -85,14 +85,6 @@ export const contributions: Contribution[] = [
     status: "merged",
   },
   {
-    repo: "tachyon-zcash/ragu",
-    number: 813,
-    url: "https://github.com/tachyon-zcash/ragu/pull/813",
-    what: "Element::batch_invert for the proof-carrying-data framework",
-    code: ["Element::batch_invert"],
-    status: "open",
-  },
-  {
     repo: "ZcashFoundation/zebra",
     number: 11216,
     url: "https://github.com/ZcashFoundation/zebra/pull/11216",
@@ -110,4 +102,4 @@ export const contributions: Contribution[] = [
 
 /** Framing line that must appear in prose, not buried in a table cell. */
 export const securityLede =
-  "The first two are security fixes: one closed a shell-injection path in a log-processing utility, the other stopped a database password leaking into config output.";
+  "The first two are security fixes in Zebra v6.2.2. One closed a shell-injection path so a crafted log line can no longer run commands on a node operator's machine, and the other stopped a database password leaking into config output.";

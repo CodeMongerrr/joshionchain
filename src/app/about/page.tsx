@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Frame, Kicker, TagRow } from "@/components/blueprint";
 import { JsonLd } from "@/components/json-ld";
 import { Portrait } from "@/components/portrait";
+import { bio } from "@/data/about";
 import { experience, highlights } from "@/data/experience";
 import { contactEmail, site, socials } from "@/data/site";
 import { stack } from "@/data/stack";
@@ -11,7 +12,7 @@ import { breadcrumbSchema, jsonLd, pageMeta, personSchema } from "@/lib/seo";
 export const metadata = pageMeta({
   title: "About",
   description:
-    "Backend and distributed systems engineer. Past roles at Nethermind, Tabibi Healthcare, and SimplyFi InfoTech. Stack grouped by domain and linked to the work that proves it.",
+    "About Aditya Joshi, a forward deployed founding engineer in Mumbai. Built BharatTruck alone, fixes hard problems at BatteryFlow, wrote both Zcash Zebra v6.2.2 security fixes, builds with Jino Labs, and is open to roles in the US, UK and UAE.",
   path: "/about",
 });
 
@@ -35,10 +36,11 @@ export default function AboutPage() {
 
           <div className="hero-grid" style={{ marginTop: 24 }}>
             <div>
-              <p className="body">{site.tagline}</p>
-              <p className="body dim" style={{ marginTop: 12 }}>
-                {site.supporting}
-              </p>
+              {bio.map((p, i) => (
+                <p className={i === 0 ? "body" : "body dim"} key={p} style={{ marginTop: i === 0 ? 0 : 12 }}>
+                  {p}
+                </p>
+              ))}
               <p className="mono dimmer" style={{ fontSize: 12, marginTop: 20 }}>
                 {site.credential}
               </p>
@@ -115,8 +117,9 @@ export default function AboutPage() {
         <div className="wrap">
           <h2 className="h3">Contact</h2>
           <p className="body dim" style={{ marginTop: 8 }}>
-            Open to conversations about freight infrastructure, telematics,
-            privacy protocols, and hard backend problems.
+            Open to forward deployed and founding roles in the US, UK and
+            UAE, or remote, and to hard problems where the first job is
+            figuring out what is actually broken.
           </p>
 
           <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 20 }}>

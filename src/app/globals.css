@@ -834,3 +834,27 @@ html[data-js] [data-reveal][data-nofade] {
     padding: 20px;
   }
 }
+
+/* ── print (the /resume page saves cleanly as a PDF) ─────────────────── */
+
+@media print {
+  html,
+  html[data-theme="dark"] {
+    --color-bg: #ffffff;
+    --color-text: #111111;
+    --color-divider: #cccccc;
+    --accent-ink: #111111;
+  }
+  body {
+    padding-top: 0;
+  }
+  .navbar,
+  body > footer,
+  .no-print {
+    display: none !important;
+  }
+  .sec {
+    padding: 14pt 0;
+    break-inside: avoid-page;
+  }
+}

@@ -9,7 +9,7 @@ import { breadcrumbSchema, jsonLd, pageMeta } from "@/lib/seo";
 export const metadata = pageMeta({
   title: "Work",
   description:
-    "Production systems in freight logistics, EV fleet telematics, and Zcash infrastructure, plus selected open-source projects in Go, Rust, and Solidity.",
+    "Aditya Joshi's work as a forward deployed founding engineer. BatteryFlow, an EV fleet platform, BharatTruck, a freight marketplace he built as its only engineer, the Jino Labs studio, and projects in agents, MEV and streaming systems.",
   path: "/work",
 });
 
@@ -38,15 +38,15 @@ export default function WorkPage() {
           <Kicker>Work</Kicker>
           <h1 className="h2">Systems and projects</h1>
           <p className="body dim">
-            Three systems currently in production across three different
-            markets, and the open-source projects behind the protocol work.
+            Two founding roles, the studio I build with, and the projects I
+            built on my own.
           </p>
         </div>
       </section>
 
       <section className="sec">
         <div className="wrap">
-          <h2 className="h3">Building now</h2>
+          <h2 className="h3">Roles and studio</h2>
 
           <div style={{ display: "grid", gap: 24, marginTop: 24 }}>
             {systems.map((s) => (
@@ -87,7 +87,7 @@ export default function WorkPage() {
 
       <section className="sec">
         <div className="wrap">
-          <h2 className="h3">Selected projects</h2>
+          <h2 className="h3">Built on my own</h2>
           <p className="body dim" style={{ marginTop: 8 }}>
             Deliberately capped at four. Each one is public and readable.
           </p>

@@ -9,7 +9,7 @@ import { Reveal } from "@/components/reveal";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { ThemeScript } from "@/components/theme-script";
-import { site } from "@/data/site";
+import { site, socials } from "@/data/site";
 import { jsonLd, personSchema, websiteSchema } from "@/lib/seo";
 
 import "./globals.css";
@@ -49,14 +49,31 @@ export const metadata: Metadata = {
   applicationName: site.name,
   authors: [{ name: site.name, url: site.url }],
   creator: site.name,
-  alternates: { canonical: "/" },
+  keywords: [
+    "Aditya Joshi",
+    "JoshiOnChain",
+    "Forward Deployed Engineer",
+    "Founding Engineer",
+    "Distributed systems",
+    "AI agents",
+    "Crypto infrastructure",
+    "Zcash",
+    "Nethermind",
+  ],
+  alternates: {
+    canonical: "/",
+    types: { "text/plain": "/llms.txt" },
+  },
   robots: {
     index: true,
     follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   },
   openGraph: {
-    type: "website",
+    type: "profile",
+    firstName: "Aditya",
+    lastName: "Joshi",
+    username: site.handle,
     siteName: site.name,
     locale: site.locale,
     url: site.url,
@@ -67,6 +84,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@JoshiOnChain",
     creator: "@JoshiOnChain",
+    title: site.title,
+    description: site.description,
   },
 };
 
@@ -86,6 +105,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <head>
         <ThemeScript />
+        {socials.map((s) => (
+          <link key={s.href} rel="me" href={s.href} />
+        ))}
+        <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt" />
       </head>
       <body>
         <a className="skip" href="#main">

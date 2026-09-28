@@ -7,6 +7,7 @@ import { Portrait } from "@/components/portrait";
 import { securityLede } from "@/data/contributions";
 import { experience, highlights } from "@/data/experience";
 import { projects } from "@/data/projects";
+import { results } from "@/data/results";
 import { contactEmail, site, socials } from "@/data/site";
 import { stack } from "@/data/stack";
 import { systems } from "@/data/systems";
@@ -26,7 +27,7 @@ export const revalidate = 3600;
  * Every section here is a summary that links onward, the full prose,
  * diagrams and tables live on the detail routes. That split is deliberate:
  * it's what keeps this page scannable in one pass instead of asking a reader
- * to wade through three long-form case studies before reaching the contact
+ * to wade through long-form case studies before reaching the contact
  * section.
  */
 export default async function HomePage() {
@@ -99,13 +100,13 @@ export default async function HomePage() {
               <a className="btn btn-primary" href="#contact" style={{ padding: "10px 18px", fontSize: 15 }}>
                 Get in touch
               </a>
-              <a
+              <Link
                 className="btn btn-secondary"
-                href="#building-now"
+                href="/resume"
                 style={{ padding: "10px 18px", fontSize: 15 }}
               >
-                See what I&rsquo;m building
-              </a>
+                Read the resume
+              </Link>
             </div>
 
             <div
@@ -158,13 +159,51 @@ export default async function HomePage() {
           <Portrait />
         </header>
 
-        {/* ── 01 building now ─────────────────────────────────────────── */}
+        {/* ── 01 results ──────────────────────────────────────────────── */}
+        <section className="sec" id="results" data-reveal>
+          <Kicker>01 · Results</Kicker>
+          <h2 className="h2">What changed because I was there</h2>
+          <div style={{ marginTop: 36, borderTop: "1px solid var(--color-divider)" }}>
+            {results.map((r) => {
+              const inner = (
+                <>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-barlow-condensed), sans-serif",
+                      fontWeight: 600,
+                      fontSize: 22,
+                      letterSpacing: ".01em",
+                      lineHeight: 1.25,
+                      maxWidth: "46ch",
+                    }}
+                  >
+                    {r.claim}
+                  </div>
+                  <span className="mono dimmer" style={{ fontSize: 12, whiteSpace: "nowrap" }}>
+                    {r.where} · {r.proof.label} →
+                  </span>
+                </>
+              );
+              return r.proof.external ? (
+                <a className="rowlink" href={r.proof.href} key={r.claim} target="_blank" rel="noopener noreferrer">
+                  {inner}
+                </a>
+              ) : (
+                <Link className="rowlink" href={r.proof.href} key={r.claim}>
+                  {inner}
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* ── 02 building now ─────────────────────────────────────────── */}
         <section className="sec" id="building-now" data-reveal>
-          <Kicker>01 · Building now</Kicker>
-          <h2 className="h2">Three systems in production</h2>
+          <Kicker>02 · Recent work</Kicker>
+          <h2 className="h2">Two founding roles and a studio</h2>
           <p className="body dim" style={{ margin: "16px 0 44px" }}>
-            Different markets, different constraints, same engineer. Everything below is live
-            work.
+            Different markets, same job. I get brought in where something is broken, find what
+            it actually is, and ship the system that fixes it.
           </p>
 
           <div style={{ display: "grid", gap: 28 }}>
@@ -222,7 +261,7 @@ export default async function HomePage() {
                     className="mono"
                     style={{ fontSize: 13, marginLeft: "auto", whiteSpace: "nowrap" }}
                   >
-                    Read the architecture →
+                    Read the full story →
                   </Link>
                 </div>
               </Frame>
@@ -230,9 +269,9 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* ── 02 selected work ────────────────────────────────────────── */}
+        {/* ── 03 selected work ────────────────────────────────────────── */}
         <section className="sec" id="work" data-reveal>
-          <Kicker>02 · Selected work</Kicker>
+          <Kicker>03 · Built on my own</Kicker>
           <h2 className="h2">Four projects</h2>
           <div style={{ marginTop: 36, borderTop: "1px solid var(--color-divider)" }}>
             {projects.map((p) => (
@@ -262,9 +301,9 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* ── 03 open source ──────────────────────────────────────────── */}
+        {/* ── 04 open source ──────────────────────────────────────────── */}
         <section className="sec" id="open-source" data-reveal>
-          <Kicker>03 · Open source</Kicker>
+          <Kicker>04 · Open source</Kicker>
           <h2 className="h2">Merged upstream</h2>
           <p className="body" style={{ margin: "16px 0 8px" }}>
             {securityLede}
@@ -283,9 +322,9 @@ export default async function HomePage() {
           </p>
         </section>
 
-        {/* ── 04 experience ───────────────────────────────────────────── */}
+        {/* ── 05 experience ───────────────────────────────────────────── */}
         <section className="sec" id="experience" data-reveal>
-          <Kicker>04 · Experience</Kicker>
+          <Kicker>05 · Experience</Kicker>
           <h2 className="h2">Before this</h2>
           <div style={{ marginTop: 36, borderTop: "1px solid var(--color-divider)" }}>
             {experience.map((role) => (
@@ -334,9 +373,9 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* ── 05 stack ────────────────────────────────────────────────── */}
+        {/* ── 06 stack ────────────────────────────────────────────────── */}
         <section className="sec" id="stack" data-reveal>
-          <Kicker>05 · Stack</Kicker>
+          <Kicker>06 · Skills</Kicker>
           <h2 className="h2">What I work in</h2>
           <div className="stack-grid" style={{ marginTop: 36 }}>
             {stack.map((group) => (
@@ -372,13 +411,14 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* ── 06 contact ──────────────────────────────────────────────── */}
+        {/* ── 07 contact ──────────────────────────────────────────────── */}
         <section className="sec" id="contact" data-reveal style={{ paddingBottom: 88 }}>
-          <Kicker>06 · Contact</Kicker>
+          <Kicker>07 · Contact</Kicker>
           <h2 className="h2">Get in touch</h2>
           <p className="body" style={{ fontSize: 19, lineHeight: 1.45, margin: "18px 0 32px" }}>
-            Open to conversations about freight infrastructure, telematics, privacy protocols, and
-            hard backend problems.
+            Open to forward deployed and founding roles in the US, UK and UAE, or remote. Got a
+            problem where the hard part is figuring out what is actually broken? I would love to
+            hear about it.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
             {contactEmail ? (

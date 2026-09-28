@@ -14,7 +14,7 @@ export const revalidate = 3600;
 export const metadata = pageMeta({
   title: "Open source",
   description:
-    "Merged contributions to Zcash core infrastructure, including two security fixes in ZcashFoundation/zebra, plus librustzcash, ZecHub, and ethereum.org.",
+    "Aditya Joshi's upstream open-source work. Both security fixes in Zcash Zebra v6.2.2, four merged PRs in Zebra, and merged work in librustzcash, ZecHub and ethereum.org, refreshed hourly from GitHub.",
   path: "/open-source",
 });
 

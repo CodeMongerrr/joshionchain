@@ -1,18 +1,15 @@
 /**
- * "Building now", the three current systems.
+ * Long-form pages under /work. The home page only shows each role's bullets;
+ * the depth, diagrams and studio work live here.
  *
- * `summary` is what the home page shows; `body` is the long form that only the
- * detail page renders. That split is what keeps the overview spacious.
- *
- * Confidentiality: BharatTruck and BatteryFlow copy describes architecture,
- * technology and benchmarks of open-source components only. No product
- * mechanics, business logic, pricing, customer names, internal business
- * metrics, or roadmap. No OEM or vehicle brand is ever named.
+ * Numbers match the resume. Partner and customer names are never printed,
+ * and no OEM or vehicle brand is ever named.
  */
 
 export type SubItem = {
   name: string;
   description: string;
+  href?: string;
 };
 
 export type System = {
@@ -20,17 +17,13 @@ export type System = {
   name: string;
   domain: string;
   period: string;
-  /** One-line framing that sits in place of a job title. */
+  /** Title or relationship, shown in place of a job title. */
   context: string;
-  /** Single paragraph, the home page card. */
+  /** Single paragraph, used on the work index. */
   summary: string;
   /** Full prose, the detail page only. */
   body: string[];
-  /**
-   * Countable-from-a-repository facts only. BatteryFlow deliberately carries
-   * none: that codebase is shared with two other engineers and a shared total
-   * is not mine to claim.
-   */
+  /** Short facts shown as a strip under the title. */
   evidence?: string[];
   tags: string[];
   diagram?: "bharattruck-topology" | "batteryflow-integration";
@@ -41,105 +34,87 @@ export type System = {
 
 export const systems: System[] = [
   {
-    slug: "bharattruck",
-    name: "BharatTruck",
-    domain: "Freight logistics",
-    period: "2026 to present",
-    context:
-      "A three-person team building for the Indian trucking market. I build the system.",
-    summary:
-      "A freight-logistics platform for Indian trucking, running as a TypeScript monorepo of nine independently deployable services behind an API gateway. I designed the architecture and wrote most of the codebase.",
-    body: [
-      "BharatTruck is a freight-logistics platform for Indian trucking. I designed the architecture and wrote most of the codebase.",
-      "It runs as a TypeScript monorepo of nine independently deployable services behind an API gateway: authentication, booking, pricing, payments, fleet, cargo ledger, and live tracking, plus a unified progressive web app and an internal operations console. Deployed on Kubernetes with containerized builds and CI that verifies deploys actually serve traffic.",
-      "Recent work has been a system-wide authorization redesign: moving off role-string checks onto capability-and-relation-based authorization, so permissions derive from a person's actual relationship to a shipment rather than a label on their token. Alongside that: geofence-gated proof of delivery, India-specific freight compliance documents, and a payments path with an explicit settlement model.",
-    ],
-    evidence: ["9 services", "~300 commits", "94 merged PRs", "TypeScript", "Kubernetes"],
-    tags: [
-      "TypeScript",
-      "Node.js",
-      "PostgreSQL",
-      "Supabase",
-      "Kubernetes",
-      "Docker",
-      "GCP",
-      "React",
-      "PWA",
-    ],
-    diagram: "bharattruck-topology",
-    seoTitle: "BharatTruck: freight logistics platform architecture",
-    seoDescription:
-      "A TypeScript monorepo of nine independently deployable services behind an API gateway, deployed on Kubernetes, with capability-and-relation-based authorization. Built for the Indian trucking market.",
-  },
-  {
     slug: "batteryflow",
     name: "BatteryFlow",
-    domain: "EV fleet telematics",
+    domain: "EV fleet platform",
     period: "Jun 2026 to present",
-    context:
-      "Founding engineer. Live telemetry, routing and trip monitoring for EV fleets.",
+    context: "Founding Engineer (Forward Deployed)",
     summary:
-      "An EV fleet-telematics platform that ingests live vehicle and battery data from manufacturer hardware and turns it into fleet operations tooling. I work across the ingestion pipeline, the vehicle-integration layer and routing, including self-hosted all-India routing that serves 2,270 requests a second on 2 vCPUs.",
+      "An EV fleet platform tracking 3,000+ electric vehicles and 3.7M events a day. I was brought in to find and fix its hardest problems, from route planning the team had never cracked to data operators could finally trust.",
     body: [
-      "BatteryFlow is an EV fleet-telematics platform: it ingests live vehicle and battery data from manufacturer hardware and turns it into fleet operations tooling.",
-      "My main engineering surface is the vehicle-integration layer, a telematics-provider integration that normalizes data and command handling across different EV manufacturers' hardware, where the same logical command maps to different control behavior depending on the vehicle platform.",
-      "The work I am proudest of so far: self-hosted all-India routing on OSRM, serving 2,270 requests a second on 2 vCPUs at a 4 ms median for about $30 a month; a trip-monitoring platform with corridor deviation, ETAs and alerts, guarded by a 106,751-case differential test; and a test rig that replays millions of packets through the deployed code, so a fix is proven at fleet scale before it ships.",
-      "The role is deliberately broad. I work across the backend rather than owning one service, handle deployments and the release path, and build features end to end. I also work outside engineering, on the business side and on customer onboarding, so I see how the product actually lands with fleet operators, not only how it's built.",
+      "BatteryFlow runs an EV fleet platform that tracks 3,000+ electric vehicles and 3.7M events a day and turns them into tooling for fleet operators. I was brought in as a forward deployed founding engineer to find and fix its hardest problems, and I own the fleet operator experience end to end, from onboarding and partner feeds to live monitoring and monthly reports.",
+      "Route planning was a feature the team had never cracked. I built it in 2 weeks on an in-house routing engine for all of India that handles 2,000+ routes a second on just 2 CPUs, with 1,000x room to grow at a fixed cost. The trip monitoring built on top of it is guarded by a 106,751 case differential test.",
+      "Operators had stopped trusting their data. I revived a partner feed that had dropped 613k packets, zeroed 705k impossible-speed readings, and ended 6.8M junk errors a week that were being sent back to the partner, so alerts now run on clean data.",
+      "The work reaches past engineering. I led fleet onboarding for a national battery-swap network and a new OEM partner, then architected self-serve onboarding so business teams can launch new fleet customers without engineering in the loop. I also single-handedly built BatteryFlow Rental, a second product for riders and warehouses, in 18 days.",
     ],
-    tags: [
-      "TypeScript",
-      "Deno",
-      "Kafka",
-      "Redis",
-      "PostgreSQL",
-      "OSRM",
-      "GKE",
-      "BigQuery",
-    ],
+    evidence: ["3,000+ EVs", "3.7M events a day", "2,000+ routes a second", "Rental built in 18 days"],
+    tags: ["TypeScript", "Kafka", "Redis", "PostgreSQL", "BigQuery", "Apollo GraphQL", "Kubernetes", "GCP"],
     diagram: "batteryflow-integration",
-    seoTitle: "BatteryFlow: EV fleet telematics, routing and vehicle integration",
+    seoTitle: "BatteryFlow · EV fleet platform, route planning and data you can trust",
     seoDescription:
-      "An EV fleet-telematics platform ingesting live vehicle and battery data from manufacturer hardware. Vehicle integrations, trip monitoring, and self-hosted all-India routing at 2,270 requests a second on 2 vCPUs.",
+      "Aditya Joshi, forward deployed founding engineer at BatteryFlow. Route planning built in 2 weeks on an all-India routing engine handling 2,000+ routes a second, clean data across 3,000+ EVs and 3.7M events a day, and a second product built in 18 days.",
+  },
+  {
+    slug: "bharattruck",
+    name: "BharatTruck",
+    domain: "Freight marketplace",
+    period: "Jan to Aug 2026",
+    context: "Sole Founding Engineer",
+    summary:
+      "A freight marketplace for Indian shippers, carriers and drivers. As its only engineer I designed, built, hosted and ran every layer, from zero to its first paid trip in 4 months.",
+    body: [
+      "BharatTruck is a freight marketplace for Indian shippers, carriers and drivers. The founders brought the vision for scale, cost, legal and tax compliance. As the sole founding engineer I designed, built, hosted and ran every layer of it, from zero to its first paid trip in production in 4 months.",
+      "It runs as seven independently deployable microservices behind an API gateway, covering authentication, booking, pricing, payments, fleet, the cargo ledger and live tracking, with a unified web app and an internal operations console on top.",
+      "After a monorepo move, deploys had been failing silently for 3 weeks while CI stayed green. I rebuilt the pipeline with post-deploy health probes, then shipped 115 production deploys in 31 days and authored 125 of the first 126 PRs.",
+      "Quotes had to cover the real cost of a trip. Flat pricing underpriced fuel by 38%, so I built a 4-layer pricing engine in a day that matches the fleet's own cost model to 0.5% median error. Live truck tracking stays inside Google Maps' free tier with one cached ETA call per trip every 45 seconds, however many people watch.",
+      "Before launch I closed 34 review findings in 2 weeks, 11 of them in a single day, including open writes to the pricing tables behind every quote and reset tokens that worked as full logins.",
+    ],
+    evidence: ["7 microservices", "First paid trip in 4 months", "115 deploys in 31 days", "125 of the first 126 PRs"],
+    tags: ["TypeScript", "Fastify", "Next.js", "PostgreSQL", "Redis", "GCP", "CI/CD"],
+    diagram: "bharattruck-topology",
+    seoTitle: "BharatTruck · a freight marketplace built by one engineer",
+    seoDescription:
+      "Aditya Joshi was the sole founding engineer of BharatTruck, an Indian freight marketplace. Seven microservices, a pricing engine within 0.5% of the fleet's cost model, 115 production deploys in 31 days, and a first paid trip in 4 months.",
   },
   {
     slug: "jino-labs",
     name: "Jino Labs",
-    domain: "Zcash infrastructure",
+    domain: "Zcash and agent infrastructure",
     period: "2026 to present",
-    context: "Where my open-source and protocol work lives.",
+    context: "The studio I build with",
     summary:
-      "My engineering studio for deep-infrastructure work: on-chain systems, MEV, DeFi, and high-throughput backends. Most current output is Zcash infrastructure, built in the open.",
+      "An engineering studio building deep infrastructure in the open, mostly for Zcash, plus the agent tooling we use every day. The work below is the studio's, built together.",
     body: [
-      "Jino Labs is my engineering studio for deep-infrastructure work: on-chain systems, MEV, DeFi, and high-throughput backends. Most current output is Zcash infrastructure, built in the open.",
+      "Jino Labs is an engineering studio for deep infrastructure work, on chain systems, MEV, DeFi and high-throughput backends. Most of its current output is Zcash infrastructure, built in the open, alongside tooling for working with AI agents.",
+      "Everything listed here is studio work built together. Earshot is the piece I built on my own.",
     ],
     subItems: [
       {
+        name: "Earshot",
+        href: "https://www.npmjs.com/package/@jino-labs/earshot",
+        description:
+          "Watch and steer Claude Code agent sessions across machines from one page. End-to-end encrypted so the relay never sees code or prompts, with guest links that can watch but never issue commands. Published on npm with zero runtime dependencies.",
+      },
+      {
         name: "zsnap",
         description:
-          "Snapshot sync for Zebra. Bootstraps a fresh Zcash node from a hash-verified state snapshot in seconds instead of replaying the chain from genesis; Zebra then validates every subsequent block as normal. Testnet-validated prototype.",
+          "Snapshot sync for Zebra. It bootstraps a fresh Zcash node from a hash-verified state snapshot in seconds instead of replaying the chain from genesis, and Zebra then validates every later block as normal. A testnet-validated prototype.",
       },
       {
         name: "Zcash testnet faucet",
         description:
-          "A self-sovereign faucet running its own node, wallet, and miner, paying shielded z-to-z drips and gating claims with browser proof-of-work instead of a third-party captcha vendor.",
+          "A self-sovereign faucet running its own node, wallet and miner, paying shielded drips and gating claims with browser proof of work instead of a third-party captcha.",
       },
       {
         name: "Speedrun Zcash",
         description:
-          "Ten hands-on challenges taking a developer from “what is a shielded transaction” to a first merged pull request, on a real in-browser testnet wallet.",
+          "Ten hands-on challenges that take a developer from their first shielded transaction to a first merged pull request, on a real in-browser testnet wallet.",
       },
     ],
-    tags: [
-      "Rust",
-      "TypeScript",
-      "Zcash",
-      "Zebra",
-      "WebAssembly",
-      "Cloudflare Workers",
-    ],
-    seoTitle: "Jino Labs: Zcash infrastructure and protocol engineering",
+    tags: ["Rust", "TypeScript", "Zcash", "Zebra", "WebAssembly", "Cloudflare Workers", "Claude Code"],
+    seoTitle: "Jino Labs · Zcash infrastructure and agent tooling",
     seoDescription:
-      "Engineering studio for deep-infrastructure work: zsnap snapshot sync for Zebra, a self-sovereign Zcash testnet faucet, and Speedrun Zcash. Rust, TypeScript, WebAssembly.",
+      "The engineering studio Aditya Joshi builds with. Earshot for steering Claude Code agents across machines, zsnap snapshot sync for Zebra, a self-sovereign Zcash testnet faucet, and Speedrun Zcash.",
   },
 ];
 

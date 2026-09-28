@@ -13,7 +13,7 @@ import { site } from "@/data/site";
  * asset pipeline or an art pass to look intentional.
  */
 export const runtime = "nodejs";
-export const alt = `${site.name}: ${site.tagline}`;
+export const alt = `${site.name}, ${site.role}. ${site.tagline}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -83,11 +83,9 @@ export default async function OpenGraphImage() {
             paddingTop: 28,
           }}
         >
-          <span>Freight logistics</span>
+          <span>{site.role}</span>
           <span>·</span>
-          <span>EV fleet telematics</span>
-          <span>·</span>
-          <span>Privacy protocols</span>
+          <span>{site.domains.join(" · ")}</span>
         </div>
       </div>
     ),
