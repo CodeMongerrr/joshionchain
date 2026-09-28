@@ -4,10 +4,10 @@
  * `summary` is what the home page shows; `body` is the long form that only the
  * detail page renders. That split is what keeps the overview spacious.
  *
- * Confidentiality: BharatTruck and BatteryFlow copy describes architecture and
- * technology only. No product mechanics, business logic, pricing, customer
- * names, internal metrics, or roadmap. No OEM or vehicle brand is ever named.
- * No role titles appear on any system.
+ * Confidentiality: BharatTruck and BatteryFlow copy describes architecture,
+ * technology and benchmarks of open-source components only. No product
+ * mechanics, business logic, pricing, customer names, internal business
+ * metrics, or roadmap. No OEM or vehicle brand is ever named.
  */
 
 export type SubItem = {
@@ -75,26 +75,31 @@ export const systems: System[] = [
     slug: "batteryflow",
     name: "BatteryFlow",
     domain: "EV fleet telematics",
-    period: "Remote · since July 2024",
-    context: "Remote engineer on a production EV telematics platform.",
+    period: "Jun 2026 to present",
+    context:
+      "Founding engineer. Live telemetry, routing and trip monitoring for EV fleets.",
     summary:
-      "An EV fleet-telematics platform that ingests live vehicle and battery data from manufacturer hardware and turns it into fleet operations tooling. My main surface is the vehicle-integration layer.",
+      "An EV fleet-telematics platform that ingests live vehicle and battery data from manufacturer hardware and turns it into fleet operations tooling. I work across the ingestion pipeline, the vehicle-integration layer and routing, including self-hosted all-India routing that serves 2,270 requests a second on 2 vCPUs.",
     body: [
       "BatteryFlow is an EV fleet-telematics platform: it ingests live vehicle and battery data from manufacturer hardware and turns it into fleet operations tooling.",
       "My main engineering surface is the vehicle-integration layer, a telematics-provider integration that normalizes data and command handling across different EV manufacturers' hardware, where the same logical command maps to different control behavior depending on the vehicle platform.",
+      "The work I am proudest of so far: self-hosted all-India routing on OSRM, serving 2,270 requests a second on 2 vCPUs at a 4 ms median for about $30 a month; a trip-monitoring platform with corridor deviation, ETAs and alerts, guarded by a 106,751-case differential test; and a test rig that replays millions of packets through the deployed code, so a fix is proven at fleet scale before it ships.",
       "The role is deliberately broad. I work across the backend rather than owning one service, handle deployments and the release path, and build features end to end. I also work outside engineering, on the business side and on customer onboarding, so I see how the product actually lands with fleet operators, not only how it's built.",
     ],
     tags: [
-      "Backend services",
-      "REST APIs",
-      "Telematics integration",
-      "CI/CD",
-      "Deployments",
+      "TypeScript",
+      "Deno",
+      "Kafka",
+      "Redis",
+      "PostgreSQL",
+      "OSRM",
+      "GKE",
+      "BigQuery",
     ],
     diagram: "batteryflow-integration",
-    seoTitle: "BatteryFlow: EV fleet telematics and vehicle integration",
+    seoTitle: "BatteryFlow: EV fleet telematics, routing and vehicle integration",
     seoDescription:
-      "An EV fleet-telematics platform ingesting live vehicle and battery data from manufacturer hardware. Vehicle-integration layer normalizing data and command handling across EV platforms.",
+      "An EV fleet-telematics platform ingesting live vehicle and battery data from manufacturer hardware. Vehicle integrations, trip monitoring, and self-hosted all-India routing at 2,270 requests a second on 2 vCPUs.",
   },
   {
     slug: "jino-labs",
