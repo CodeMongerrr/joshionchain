@@ -10,12 +10,12 @@
 export function BharatTruckTopology() {
   return (
     <figure style={{ margin: 0 }}>
-      <figcaption className="figcap">Fig. 01: service topology</figcaption>
+      <figcaption className="figcap">Fig. 01 · service topology</figcaption>
       <svg
         viewBox="0 0 340 196"
         width="100%"
         role="img"
-        aria-label="Diagram: a progressive web app and an internal operations console sit above an API gateway, which fronts nine independently deployable services."
+        aria-label="Diagram: a progressive web app and an internal operations console sit above an API gateway, which fronts seven independently deployable services."
       >
         <g className="dg">
           <rect x="6" y="4" width="160" height="26" />
@@ -28,8 +28,7 @@ export function BharatTruckTopology() {
           <rect x="6" y="128" width="104" height="28" />
           <rect x="118" y="128" width="104" height="28" />
           <rect x="230" y="128" width="104" height="28" />
-          <rect x="62" y="164" width="104" height="28" />
-          <rect x="174" y="164" width="104" height="28" strokeDasharray="4 4" />
+          <rect x="118" y="164" width="104" height="28" />
         </g>
         <g className="dga">
           <rect x="6" y="44" width="328" height="26" />
@@ -44,8 +43,7 @@ export function BharatTruckTopology() {
           <text x="58" y="146">payments</text>
           <text x="170" y="146">fleet</text>
           <text x="282" y="146">cargo ledger</text>
-          <text x="114" y="182">live tracking</text>
-          <text x="226" y="182">+ 2 services</text>
+          <text x="170" y="182">live tracking</text>
         </g>
       </svg>
       <p className="mono dimmer" style={{ fontSize: 12, lineHeight: 1.4, margin: "10px 0 0" }}>
@@ -58,7 +56,7 @@ export function BharatTruckTopology() {
 export function BatteryFlowIntegration() {
   return (
     <figure style={{ margin: 0 }}>
-      <figcaption className="figcap">Fig. 02: vehicle-integration layer</figcaption>
+      <figcaption className="figcap">Fig. 02 · vehicle-integration layer</figcaption>
       <svg
         viewBox="0 0 330 186"
         width="100%"
@@ -86,8 +84,8 @@ export function BatteryFlowIntegration() {
         </g>
       </svg>
       <p className="mono dimmer" style={{ fontSize: 12, lineHeight: 1.4, margin: "10px 0 0" }}>
-        Bracketed steps are my main engineering surface: the same logical command maps to
-        different control behavior per vehicle platform.
+        The bracketed steps are where most of my work sits. The same logical command maps to
+        different control behavior on each vehicle platform.
       </p>
     </figure>
   );

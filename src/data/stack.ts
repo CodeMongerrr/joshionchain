@@ -1,6 +1,6 @@
 /**
- * Stack, grouped by domain and linked to the work that proves it.
- * No percentages, no bars, no self-rated proficiency.
+ * Skills, the same four lines as the resume. Broad, recognisable names only,
+ * no self-rated proficiency.
  */
 
 export type StackGroup = {
@@ -12,29 +12,22 @@ export type StackGroup = {
 
 export const stack: StackGroup[] = [
   {
-    label: "Systems & backend",
-    items: ["TypeScript", "Node.js", "Go", "Rust", "Python", "PostgreSQL", "Redis"],
+    label: "Languages and frameworks",
+    items: ["TypeScript", "Python", "Go", "Rust", "SQL", "Solidity", "Node.js", "Fastify", "React", "Next.js", "Apollo GraphQL"],
   },
   {
-    label: "Infrastructure",
-    evidence: { label: "→ BharatTruck, BatteryFlow", href: "/work" },
-    items: ["Kubernetes", "Docker", "GCP", "CI/CD", "Supabase", "Deployments"],
+    label: "AI engineering",
+    evidence: { label: "→ Earshot", href: "/projects/earshot" },
+    items: ["LLM agents", "Tool calling", "RAG", "Vector search", "MCP servers", "Claude Agent SDK", "Structured outputs", "Guardrails"],
   },
   {
-    label: "Protocol & cryptography",
+    label: "Distributed systems",
+    evidence: { label: "→ BatteryFlow, BharatTruck", href: "/work" },
+    items: ["Event-driven microservices", "Kafka", "Redis", "PostgreSQL", "BigQuery", "Kubernetes", "GCP", "Terraform", "CI/CD"],
+  },
+  {
+    label: "Web3 and security",
     evidence: { label: "→ Open source", href: "/open-source" },
-    items: [
-      "Zcash",
-      "Zebra",
-      "Ethereum",
-      "Solidity",
-      "zkSNARKs",
-      "FHE / fhEVM",
-      "Ring signatures",
-    ],
-  },
-  {
-    label: "Frontend",
-    items: ["React", "Next.js", "Tailwind", "PWA"],
+    items: ["Ethereum", "Smart contracts", "DeFi", "MEV", "Zcash", "Starknet", "P2P networking", "Application security", "Tenant isolation"],
   },
 ];

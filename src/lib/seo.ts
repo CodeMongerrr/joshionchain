@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
-import { contactEmail, site, socials } from "@/data/site";
+import { roles } from "@/data/experience";
+import { contactEmail, extraSameAs, site, socials } from "@/data/site";
 import { projects } from "@/data/projects";
 import { systems } from "@/data/systems";
 
@@ -63,34 +64,50 @@ export function pageMeta({
    ────────────────────────────────────────────────────────────────────── */
 
 export function personSchema() {
+  const current = roles[0];
   return {
     "@type": "Person",
     "@id": `${site.url}/#person`,
     name: site.name,
-    /* The handle is how a lot of people will search for him; naming it here
-       ties the handle and the legal name to one entity rather than two. */
-    alternateName: "JoshiOnChain",
+    givenName: "Aditya",
+    familyName: "Joshi",
+    /* Handles people actually search for, tied to one entity. */
+    alternateName: ["JoshiOnChain", "CodeMongerrr", "Aditya Roshan Joshi"],
     url: site.url,
     mainEntityOfPage: { "@id": `${site.url}/#profilepage` },
     image: `${site.url}/opengraph-image`,
     ...(contactEmail ? { email: `mailto:${contactEmail}` } : {}),
-    description: site.tagline,
-    jobTitle: "Software Engineer",
+    description: site.description,
+    jobTitle: site.role,
+    hasOccupation: {
+      "@type": "Occupation",
+      name: "Forward Deployed Engineer",
+      occupationalCategory: "15-1252.00 Software Developers",
+      skills: "Distributed systems, AI agents, crypto infrastructure, backend engineering, partner integrations",
+    },
+    worksFor: current?.companyUrl
+      ? { "@type": "Organization", name: current.company, url: current.companyUrl }
+      : undefined,
+    homeLocation: { "@type": "Place", name: site.location },
     knowsAbout: [
+      "Forward deployed engineering",
       "Distributed systems",
-      "Backend engineering",
-      "Freight logistics software",
-      "EV fleet telematics",
+      "AI agents",
+      "LLM tool calling",
+      "Model Context Protocol",
+      "Event-driven microservices",
+      "Kafka",
+      "Kubernetes",
       "Zcash",
       "Ethereum",
-      "Applied cryptography",
-      "Kubernetes",
+      "MEV",
+      "Application security",
     ],
     alumniOf: {
       "@type": "CollegeOrUniversity",
       name: "Indian Institute of Technology (ISM) Dhanbad",
     },
-    sameAs: socials.map((s) => s.href),
+    sameAs: [...socials.map((s) => s.href), ...extraSameAs],
   };
 }
 

@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { Evidence, Frame, Kicker, TagRow } from "@/components/blueprint";
 import { Diagram } from "@/components/diagrams";
 import { JsonLd } from "@/components/json-ld";
+import { Rich } from "@/components/rich";
+import { roles } from "@/data/experience";
 import { systemBySlug, systems } from "@/data/systems";
 import { breadcrumbSchema, jsonLd, pageMeta, systemSchema } from "@/lib/seo";
 
@@ -43,6 +45,8 @@ export default async function SystemPage({
   const { slug } = await params;
   const system = systemBySlug(slug);
   if (!system) notFound();
+
+  const role = roles.find((r) => r.slug === system.slug);
 
   return (
     <>
@@ -89,6 +93,24 @@ export default async function SystemPage({
         </div>
       </section>
 
+      {role ? (
+        <section className="sec">
+          <div className="wrap-prose">
+            <h2 className="h3">On the resume</h2>
+            <p className="mono dim" style={{ fontSize: 13, marginTop: 4 }}>
+              {role.title}
+            </p>
+            <ul className="body" style={{ marginTop: 16, paddingLeft: 18, display: "grid", gap: 10 }}>
+              {role.bullets.map((b) => (
+                <li key={b}>
+                  <Rich text={b} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      ) : null}
+
       {system.diagram ? (
         <section className="sec">
           <div className="wrap">
@@ -109,7 +131,13 @@ export default async function SystemPage({
                 <Frame as="article" key={item.name}>
                   <div>
                     <h3 className="mono" style={{ fontSize: 15 }}>
-                      {item.name}
+                      {item.href ? (
+                        <a href={item.href} target="_blank" rel="noreferrer noopener">
+                          {item.name}
+                        </a>
+                      ) : (
+                        item.name
+                      )}
                     </h3>
                     <p className="body" style={{ marginTop: 8 }}>
                       {item.description}

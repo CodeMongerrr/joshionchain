@@ -24,12 +24,13 @@ export function SiteFooter() {
         aria-label="Footer"
       >
         {socials.map((s) => (
-          <a key={s.href} href={s.href} target="_blank" rel="noopener noreferrer">
+          <a key={s.href} href={s.href} target="_blank" rel="me noopener noreferrer">
             {s.label}
           </a>
         ))}
         {contactEmail ? <a href={`mailto:${contactEmail}`}>Email</a> : null}
         <Link href="/open-source">Open source</Link>
+        <Link href="/resume">Resume</Link>
         <Link href="/about">About</Link>
       </nav>
       <span className="mono dimmer" style={{ fontSize: 12, marginLeft: "auto" }}>

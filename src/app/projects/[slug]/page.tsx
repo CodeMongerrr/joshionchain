@@ -86,7 +86,7 @@ export default async function ProjectPage({
               target="_blank"
               rel="noreferrer noopener"
             >
-              View source on GitHub →
+              {project.repoLabel} →
             </a>
           </p>
 
