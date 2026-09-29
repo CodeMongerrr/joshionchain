@@ -138,7 +138,7 @@ Curious who's already feeling the gap between the two. 🙂‍↔️`,
     url: "https://x.com/JoshiOnChain/status/2096617165642490346",
     date: "2026-09-06T15:11:00.000Z",
     title: "Seatbelts before the car",
-    note: "On Zcash shipping quantum recoverable notes years early. I write fixes for Zebra, the Zcash Foundation's full node, so this is home ground.",
+    note: "On Zcash shipping quantum recoverable notes well ahead of the threat. I wrote both security fixes in Zebra v6.2.2, so this is home ground.",
     related: { label: "My Zcash work", href: "/open-source" },
     text: `we're shipping quantum-recoverable notes before quantum computers can reliably read an email.
 
@@ -164,7 +164,7 @@ a doc that points at it cannot.`,
     url: "https://x.com/JoshiOnChain/status/2029029799747023169",
     date: "2026-03-04T03:02:56.000Z",
     title: "Running a fleet of cloud agents",
-    note: "Quoting Nader Dabit's guide, written with the team behind Devin, to running coding agents in the cloud at fleet scale. The most viewed thing I have posted on X.",
+    note: "Quoting Nader Dabit's guide, from the team behind Devin, to running coding agents in the cloud at fleet scale.",
     quote: {
       name: "nader dabit",
       handle: "dabit3",
@@ -290,7 +290,7 @@ a working demo hides how much of the spec is still scaffolding.`,
     url: "https://x.com/JoshiOnChain/status/2096628239158378921",
     date: "2026-09-06T15:55:00.000Z",
     title: "The mess is the feature",
-    note: "On Zcash governance, where several organisations argue in public and still ship network upgrades on schedule.",
+    note: "On Zcash governance, where several organizations argue in public and still ship network upgrades on schedule.",
     related: { label: "My Zcash work", href: "/open-source" },
     text: `a healthy protocol isn't five orgs nodding along.
 
