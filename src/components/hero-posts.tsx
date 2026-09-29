@@ -14,7 +14,8 @@ import type { Post } from "@/data/posts";
  * round, without moving the page. Click a card and the original post opens in
  * a new tab.
  *
- * Narrower screens have no side margins, so the left trail becomes one row
+ * Narrower screens (under 1680px) have no room in the margins, so the left
+ * trail becomes one row
  * under the hero instead, which drifts sideways and can be swiped or scrolled.
  *
  * The drift is a transform, so it is smooth at any speed, and the scrolling is
@@ -23,9 +24,9 @@ import type { Post } from "@/data/posts";
  * copy, so neither ever reaches an end. With reduced motion nothing drifts.
  */
 
-const WIDE = "(min-width: 1600px)";
-/** Pixels a second at rest. */
-const DRIFT = 18;
+const WIDE = "(min-width: 1680px)";
+/** Pixels a second at rest. The two sides run at different speeds so they never move in lockstep. */
+const DRIFT = { left: 26, right: 22 } as const;
 
 export function HeroPosts({ left, right }: { left: readonly Post[]; right: readonly Post[] }) {
   const wide = useSyncExternalStore(subscribeWide, () => matchMedia(WIDE).matches, () => true);
@@ -98,7 +99,7 @@ function Trail({
       last = now;
       if (!held && visible) {
         const c = copy();
-        offset = (((offset + direction * DRIFT * dt) % c) + c) % c;
+        offset = (((offset + direction * DRIFT[side] * dt) % c) + c) % c;
         paint();
       }
       raf = requestAnimationFrame(frame);
@@ -154,7 +155,7 @@ function Trail({
       scroller.removeEventListener("focusout", onFocusOut);
       track.style.transform = "";
     };
-  }, [axis, direction]);
+  }, [axis, direction, side]);
 
   return (
     <aside

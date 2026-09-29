@@ -1030,26 +1030,43 @@ a.pc:hover .pc-open {
   width: 300px;
 }
 
-/* Wide screens, a trail down each side margin, centred in the space between
-   the window edge and the page content. Resting the mouse on one lets the
-   wheel scroll it without moving the page. */
-@media (min-width: 1600px) {
+/* Wide screens, a trail down each side margin. Resting the mouse on one lets
+   the wheel scroll it without moving the page.
+
+   The two sides are deliberately unequal, different widths, heights and
+   speeds, set back from the content and dimmed until hovered, so they read as
+   texture around the hero rather than two more columns competing with it. */
+@media (min-width: 1680px) {
   .hero-trail {
     --gut: calc((100% - 1100px) / 2 + 56px);
-    --trail-w: min(320px, calc(var(--gut) - 72px));
     display: block;
     position: absolute;
-    top: 24px;
-    bottom: 24px;
     width: var(--trail-w);
     margin: 0;
     padding: 0;
   }
   .hero-trail-left {
-    left: calc((var(--gut) - var(--trail-w)) / 2);
+    --trail-w: min(300px, calc(var(--gut) - 80px));
+    left: max(20px, calc((var(--gut) - var(--trail-w)) / 2 - 30px));
+    top: 12px;
+    bottom: 110px;
   }
   .hero-trail-right {
-    right: calc((var(--gut) - var(--trail-w)) / 2);
+    --trail-w: min(260px, calc(var(--gut) - 100px));
+    right: max(20px, calc((var(--gut) - var(--trail-w)) / 2 - 30px));
+    top: 140px;
+    bottom: -24px;
+  }
+  .hero-trail .pc {
+    opacity: 0.6;
+    transition:
+      opacity 0.25s ease-out,
+      background-color 0.15s ease-out,
+      border-color 0.15s ease-out;
+  }
+  .hero-trail:hover .pc,
+  .hero-trail:focus-within .pc {
+    opacity: 1;
   }
   .hero-trail-scroll {
     height: 100%;
@@ -1462,32 +1479,95 @@ html[data-theme="dark"] .frame.door:hover .door-action {
   }
 }
 
-/* ── title block (hero facts) ─────────────────────────────────────────── */
+/* ── hero (quiet status, text link, inline email, facts) ─────────────── */
 
-/* The box in the corner of a drawing, spanning the hero under the portrait. */
-.frame.tblock {
-  grid-column: 1 / -1;
+/* The hero keeps one framed thing, the portrait. Everything else is type
+   and hairlines, so the page reads calm even with posts beside it. */
+.hero-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+
+.hero-status > i {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent) 22%, transparent);
+}
+
+.hero-textlink {
+  font-family: var(--font-barlow-condensed), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--color-text);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-text) 35%, transparent);
+  padding-bottom: 2px;
+}
+
+.hero-textlink:hover {
+  color: var(--accent-ink);
+  border-bottom-color: var(--color-accent);
+}
+
+.hero-email {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.hero-email > a {
+  font-size: 13px;
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-divider);
+  padding-bottom: 2px;
+}
+
+.inline-copy {
   padding: 0;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-text) 60%, transparent);
+  background: none;
+  border: 0;
+  cursor: pointer;
 }
 
-.tblock-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin: 0;
+.inline-copy:hover {
+  color: var(--accent-ink);
 }
 
-.tcell {
+/* The portrait sits a little lower than the text, so the two columns don't
+   line up edge to edge. */
+.hero-grid .hero-portrait {
+  margin-top: 48px;
+}
+
+.facts {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 56px;
+  margin: 8px 0 0;
+  padding-top: 22px;
+  border-top: 1px solid var(--color-divider);
+}
+
+.fact {
   min-width: 0;
-  padding: 16px 18px 18px;
-  border-left: 1px solid var(--color-divider);
 }
 
-.tcell:first-child {
-  border-left: 0;
-}
-
-.tlabel {
-  margin: 0 0 8px;
+.fact-label {
+  margin: 0 0 6px;
   font-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
   font-size: 11px;
   letter-spacing: 0.14em;
@@ -1495,80 +1575,40 @@ html[data-theme="dark"] .frame.door:hover .door-action {
   color: var(--accent-ink);
 }
 
-.tcell dd {
+.fact dd {
   margin: 0;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
+  gap: 2px;
 }
 
-.tvalue {
+.fact-value {
   font-family: var(--font-barlow-condensed), system-ui, sans-serif;
   font-weight: 600;
-  font-size: 20px;
-  line-height: 1.2;
+  font-size: 18px;
+  line-height: 1.25;
   letter-spacing: 0.01em;
   color: var(--color-text);
   text-decoration: none;
-  overflow-wrap: anywhere;
 }
 
-a.tvalue:hover {
+a.fact-value:hover {
   color: var(--accent-ink);
 }
 
-.tsub {
+.fact-sub {
   font-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
   font-size: 12px;
-  line-height: 1.45;
-  color: color-mix(in srgb, var(--color-text) 70%, transparent);
+  color: color-mix(in srgb, var(--color-text) 64%, transparent);
 }
 
-.tcopy {
-  margin-top: 4px;
-  padding: 3px 8px;
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: color-mix(in srgb, var(--color-text) 78%, transparent);
-  background: transparent;
-  border: 1px solid var(--color-divider);
-  cursor: pointer;
-}
-
-.tcopy:hover {
-  background: color-mix(in srgb, var(--color-text) 7%, transparent);
-}
-
-@media (max-width: 880px) {
-  .tblock-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+@media (max-width: 700px) {
+  .hero-grid .hero-portrait {
+    margin-top: 0;
   }
-  .tcell:nth-child(3) {
-    border-left: 0;
-  }
-  .tcell:nth-child(n + 3) {
-    border-top: 1px solid var(--color-divider);
-  }
-}
-
-@media (max-width: 480px) {
-  .tblock-grid {
-    grid-template-columns: 1fr;
-  }
-  .tcell {
-    padding: 12px 16px 13px;
-    border-left: 0;
-  }
-  .tlabel {
-    margin-bottom: 4px;
-  }
-  .tvalue {
-    font-size: 18px;
-  }
-  .tcell + .tcell {
-    border-top: 1px solid var(--color-divider);
+  .facts {
+    flex-direction: column;
+    gap: 16px;
   }
 }
 

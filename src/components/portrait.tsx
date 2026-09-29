@@ -17,7 +17,7 @@ export function Portrait() {
   return (
     <figure
       className="hero-portrait blueprint"
-      style={{ margin: 0, aspectRatio: "4 / 5", width: "100%", position: "relative" }}
+      style={{ aspectRatio: "4 / 5", width: "100%", position: "relative" }}
     >
       <Image
         src="/profile.jpeg"
