@@ -22,7 +22,7 @@ export const stack: StackGroup[] = [
   },
   {
     label: "Distributed systems",
-    evidence: { label: "→ BatteryFlow, BharatTruck", href: "/work" },
+    evidence: { label: "→ BatteryFlow, BharatTruck", href: "/#building-now" },
     items: ["Event-driven microservices", "Kafka", "Redis", "PostgreSQL", "BigQuery", "Kubernetes", "GCP", "Terraform", "CI/CD"],
   },
   {

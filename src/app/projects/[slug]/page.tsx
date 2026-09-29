@@ -1,7 +1,7 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { Kicker, TagRow } from "@/components/blueprint";
+import { BackHomeDoor } from "@/components/back-home";
 import { JsonLd } from "@/components/json-ld";
 import { ReachOut } from "@/components/reach-out";
 import { projectBySlug, projects } from "@/data/projects";
@@ -43,7 +43,6 @@ export default async function ProjectPage({
           projectSchema(project.slug),
           breadcrumbSchema([
             { name: "Home", path: "/" },
-            { name: "Work", path: "/work" },
             { name: project.title, path: `/projects/${project.slug}` },
           ]),
         )}
@@ -51,12 +50,6 @@ export default async function ProjectPage({
 
       <section className="sec sec-first">
         <div className="wrap">
-          <p className="mono dimmer" style={{ fontSize: 12 }}>
-            <Link href="/work" className="rowlink">
-              ← Work
-            </Link>
-          </p>
-
           <Kicker>{project.language}</Kicker>
           <h1 className="h2">{project.title}</h1>
 
@@ -96,11 +89,7 @@ export default async function ProjectPage({
             subject={`About ${project.title}`}
           />
 
-          <p style={{ marginTop: 32 }}>
-            <Link href="/work" className="mono rowlink">
-              ← All work
-            </Link>
-          </p>
+          <BackHomeDoor />
         </div>
       </section>
     </>

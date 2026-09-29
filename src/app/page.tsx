@@ -3,12 +3,12 @@ import Link from "next/link";
 import { Evidence, Frame, Kicker, TagRow } from "@/components/blueprint";
 import { ContactPanel } from "@/components/contact-panel";
 import { Door } from "@/components/door";
+import { HeroPosts } from "@/components/hero-posts";
 import { LegacyHashRedirect } from "@/components/legacy-hash-redirect";
 import { Portrait } from "@/components/portrait";
 import { TitleBlock } from "@/components/title-block";
-import TestimonialsVerticalMarquee from "@/components/ui/testimonials-with-verticalmarquee";
 import { earlier, roles } from "@/data/experience";
-import { posts } from "@/data/posts";
+import { postTrails } from "@/data/posts";
 import { projects } from "@/data/projects";
 import { results } from "@/data/results";
 import { resumePdf, site, socials } from "@/data/site";
@@ -30,6 +30,7 @@ import { JsonLd } from "@/components/json-ld";
 export default function HomePage() {
   // Past roles for the experience door, the ones without a /work page of their own.
   const pastCompanies = [...roles.filter((r) => !r.slug), ...earlier].map((r) => r.company);
+  const [left, right] = postTrails();
 
   return (
     <main id="main">
@@ -38,8 +39,11 @@ export default function HomePage() {
       <JsonLd data={jsonLd(profilePageSchema())} />
       <LegacyHashRedirect />
 
-      <div className="wrap">
-        {/* ── hero ────────────────────────────────────────────────────── */}
+      {/* ── hero ──────────────────────────────────────────────────────── */}
+      {/* A full width stage so posts from X and LinkedIn can fill the empty
+          side margins beside the hero on wide screens. */}
+      <div className="hero-stage">
+        <div className="wrap">
         <header className="hero-grid">
           <div>
             <span
@@ -82,15 +86,10 @@ export default function HomePage() {
 
             <p
               className="body"
-              style={{ fontSize: 19, lineHeight: 1.45, margin: "0 0 14px", maxWidth: "34ch" }}
+              style={{ fontSize: 19, lineHeight: 1.45, margin: "0 0 30px", maxWidth: "34ch" }}
             >
               {site.tagline}
             </p>
-            {/* The proof in one scannable line. The title block below carries
-                the rest, so nothing here needs a paragraph. */}
-            <div style={{ margin: "0 0 30px" }}>
-              <Evidence items={site.proof} />
-            </div>
 
             <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
               <a className="btn btn-primary" href="#contact" style={{ padding: "10px 18px", fontSize: 15 }}>
@@ -132,6 +131,11 @@ export default function HomePage() {
           <Portrait />
           <TitleBlock />
         </header>
+        </div>
+        <HeroPosts left={left} right={right} />
+      </div>
+
+      <div className="wrap">
 
         {/* ── 01 results ──────────────────────────────────────────────── */}
         <section className="sec" id="results" data-reveal>
@@ -316,31 +320,14 @@ export default function HomePage() {
           </dl>
         </section>
 
-      </div>
 
-      {/* ── 05 in public ────────────────────────────────────────────────── */}
-      {/* Social proof sits last, after every section of actual work and right
-          before the ask, so it backs the case instead of making it. It is the
-          one section that runs the full width of the window, so it lives
-          outside .wrap and puts the grid back around its own heading. */}
-      <section className="sec-bleed" id="in-public" data-reveal>
-        <TestimonialsVerticalMarquee
-          kicker="05 · In public"
-          title="Where I think out loud"
-          subtitle="A few picks from what I post on X and LinkedIn, on AI agents, crypto infrastructure and the bugs that taught me something. Open any card to read it in full."
-          posts={posts}
-        />
-      </section>
-
-      <div className="wrap">
-        {/* ── 06 contact ──────────────────────────────────────────────── */}
+        {/* ── 05 contact ──────────────────────────────────────────────── */}
         <section className="sec" id="contact" data-reveal style={{ paddingBottom: 88 }}>
-          <Kicker>06 · Contact</Kicker>
+          <Kicker>05 · Contact</Kicker>
           <h2 className="h2">Get in touch</h2>
           <p className="body" style={{ fontSize: 19, lineHeight: 1.45, margin: "18px 0 32px" }}>
-            Open to forward deployed and founding roles in the US, UK and UAE, or remote. Got a
-            problem where the hard part is figuring out what is actually broken? I would love to
-            hear about it.
+            Open to new roles, and to problems where the hard part is figuring out what is
+            actually broken. I would love to hear about yours.
           </p>
           <ContactPanel />
         </section>

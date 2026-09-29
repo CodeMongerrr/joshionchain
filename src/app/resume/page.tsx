@@ -1,4 +1,5 @@
 import { Kicker, TagRow } from "@/components/blueprint";
+import { BackHomeDoor } from "@/components/back-home";
 import { JsonLd } from "@/components/json-ld";
 import { Rich } from "@/components/rich";
 import { roles } from "@/data/experience";
@@ -187,6 +188,10 @@ export default function ResumePage() {
               sub={`${resumeEducation.degree} · ${resumeEducation.location}`}
               period={resumeEducation.period}
             />
+          </div>
+
+          <div className="no-print">
+            <BackHomeDoor />
           </div>
         </div>
       </section>

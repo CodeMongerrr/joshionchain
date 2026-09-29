@@ -12,8 +12,8 @@ import { useEffect } from "react";
  * Only runs on the home route, and only for hashes the old site actually used.
  */
 const LEGACY: Record<string, string> = {
-  "#projects": "/work",
-  "#skills": "/about",
+  "#projects": "/#work",
+  "#skills": "/#stack",
   "#experience": "/experience",
   "#about": "/about",
 };

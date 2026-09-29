@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { Evidence, Frame, Kicker, TagRow } from "@/components/blueprint";
 import { Diagram } from "@/components/diagrams";
+import { BackHomeDoor } from "@/components/back-home";
 import { JsonLd } from "@/components/json-ld";
 import { ReachOut } from "@/components/reach-out";
 import { Rich } from "@/components/rich";
@@ -56,7 +56,6 @@ export default async function SystemPage({
           systemSchema(system.slug),
           breadcrumbSchema([
             { name: "Home", path: "/" },
-            { name: "Work", path: "/work" },
             { name: system.name, path: `/work/${system.slug}` },
           ]),
         )}
@@ -64,12 +63,6 @@ export default async function SystemPage({
 
       <section className="sec sec-first">
         <div className="wrap">
-          <p className="mono dimmer" style={{ fontSize: 12 }}>
-            <Link href="/work" className="rowlink">
-              ← Work
-            </Link>
-          </p>
-
           <Kicker>
             {system.domain} · {system.period}
           </Kicker>
@@ -161,11 +154,7 @@ export default async function SystemPage({
             subject={`About your work at ${system.name}`}
           />
 
-          <p style={{ marginTop: 32 }}>
-            <Link href="/work" className="mono rowlink">
-              ← All work
-            </Link>
-          </p>
+          <BackHomeDoor />
         </div>
       </section>
     </>

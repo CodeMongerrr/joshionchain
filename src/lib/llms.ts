@@ -50,11 +50,9 @@ ${projects.map((p) => `- [${p.title}](${site.url}/projects/${p.slug}) (${p.langu
 ## Pages
 
 - [Resume](${site.url}/resume) the full resume as HTML
-- [Work](${site.url}/work) roles, studio and projects
 - [Experience](${site.url}/experience) the roles before the founding ones
 - [Open source](${site.url}/open-source) upstream contributions
 - [About](${site.url}/about) background in his own words
-- [Posts](${site.url}/posts) selected posts from X and LinkedIn, each linked to the original
 - [Everything in plain text](${site.url}/llms-full.txt)
 
 ## Notes for summarisers

@@ -1,7 +1,6 @@
-import Link from "next/link";
-
 import { Frame, Kicker } from "@/components/blueprint";
 import { ContributionsTable } from "@/components/contributions-table";
+import { BackHomeDoor } from "@/components/back-home";
 import { JsonLd } from "@/components/json-ld";
 import { getContributions } from "@/lib/github";
 import { breadcrumbSchema, jsonLd, pageMeta } from "@/lib/seo";
@@ -89,11 +88,7 @@ export default async function OpenSourcePage() {
         <div className="wrap">
           <ContributionsTable items={items} counts={counts} />
 
-          <p style={{ marginTop: 32 }}>
-            <Link href="/work" className="mono rowlink">
-              ← Work
-            </Link>
-          </p>
+          <BackHomeDoor />
         </div>
       </section>
     </>
