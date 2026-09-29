@@ -4,8 +4,10 @@ import { Evidence, Frame, Kicker, TagRow } from "@/components/blueprint";
 import { ContributionsTable } from "@/components/contributions-table";
 import { LegacyHashRedirect } from "@/components/legacy-hash-redirect";
 import { Portrait } from "@/components/portrait";
+import TestimonialsVerticalMarquee from "@/components/ui/testimonials-with-verticalmarquee";
 import { securityLede } from "@/data/contributions";
 import { experience, highlights } from "@/data/experience";
+import { posts } from "@/data/posts";
 import { projects } from "@/data/projects";
 import { results } from "@/data/results";
 import { contactEmail, site, socials } from "@/data/site";
@@ -411,9 +413,21 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* ── 07 contact ──────────────────────────────────────────────── */}
+        {/* ── 07 in public ────────────────────────────────────────────── */}
+        {/* Social proof sits last, after every section of actual work and
+            right before the ask, so it backs the case instead of making it. */}
+        <section className="sec" id="in-public" data-reveal>
+          <TestimonialsVerticalMarquee
+            kicker="07 · In public"
+            title="Where I think out loud"
+            subtitle="Posts from X and LinkedIn on AI agents, crypto infrastructure and the bugs that taught me something. Every card opens the full post, with a link to the original."
+            posts={posts}
+          />
+        </section>
+
+        {/* ── 08 contact ──────────────────────────────────────────────── */}
         <section className="sec" id="contact" data-reveal style={{ paddingBottom: 88 }}>
-          <Kicker>07 · Contact</Kicker>
+          <Kicker>08 · Contact</Kicker>
           <h2 className="h2">Get in touch</h2>
           <p className="body" style={{ fontSize: 19, lineHeight: 1.45, margin: "18px 0 32px" }}>
             Open to forward deployed and founding roles in the US, UK and UAE, or remote. Got a
