@@ -3,8 +3,10 @@ import { notFound } from "next/navigation";
 
 import { Kicker } from "@/components/blueprint";
 import { JsonLd } from "@/components/json-ld";
+import { ReachOut } from "@/components/reach-out";
 import { PostCard } from "@/components/ui/testimonials-with-verticalmarquee-utils/post-card";
 import { formatPostDate, platformLabel, postBySlug, posts } from "@/data/posts";
+import { socials } from "@/data/site";
 import { breadcrumbSchema, jsonLd, pageMeta, postSchema } from "@/lib/seo";
 
 export function generateStaticParams() {
@@ -41,9 +43,12 @@ export default async function PostPage({
   const post = postBySlug(slug);
   if (!post) notFound();
 
+  // Two more picks to keep reading, then the way out to the live feeds. No
+  // previous and next that loop back round, which would show where the
+  // picks run out.
   const i = posts.indexOf(post);
-  const prev = posts[(i - 1 + posts.length) % posts.length];
-  const next = posts[(i + 1) % posts.length];
+  const more = [posts[(i + 1) % posts.length], posts[(i + 2) % posts.length]];
+  const feed = socials.find((s) => s.label === platformLabel[post.platform]);
   const platform = platformLabel[post.platform];
 
   return (
@@ -59,28 +64,25 @@ export default async function PostPage({
         )}
       />
 
+      {/* Laid out like the homepage hero, the words on the left and the post
+          on the right as the page's registered figure, the way the portrait
+          sits there. On a long post the left column stays in view. */}
       <section className="sec sec-first">
-        <div className="wrap">
-          <p className="mono dimmer" style={{ fontSize: 12 }}>
-            <Link href="/posts" className="rowlink">
-              ← All posts
-            </Link>
-          </p>
+        <div className="wrap post-hero">
+          <div className="post-lead">
+            <p className="mono dimmer" style={{ fontSize: 12 }}>
+              <Link href="/posts" className="rowlink">
+                ← All posts
+              </Link>
+            </p>
 
-          <Kicker>
-            Posted on {platform} · {formatPostDate(post.date)}
-          </Kicker>
-          <h1 className="h2">{post.title}</h1>
-          <p className="body dim" style={{ marginTop: 16 }}>
-            {post.note}
-          </p>
-        </div>
-      </section>
-
-      <section className="sec">
-        <div className="wrap-prose">
-          <div style={{ maxWidth: 600 }}>
-            <PostCard post={post} variant="full" />
+            <Kicker>
+              Posted on {platform} · {formatPostDate(post.date)}
+            </Kicker>
+            <h1 className="post-title">{post.title}</h1>
+            <p className="body dim" style={{ margin: 0 }}>
+              {post.note}
+            </p>
 
             {post.response ? (
               <div className="post-reply">
@@ -102,7 +104,7 @@ export default async function PostPage({
               </div>
             ) : null}
 
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 28 }}>
+            <div className="post-actions">
               <a
                 className="btn btn-primary"
                 href={post.url}
@@ -123,17 +125,33 @@ export default async function PostPage({
               ) : null}
             </div>
           </div>
+
+          <figure className="post-figure">
+            <figcaption className="figcap">As posted on {platform}</figcaption>
+            <div className="post-figure-card">
+              <PostCard post={post} variant="full" />
+              <i className="corner tl" />
+              <i className="corner tr" />
+              <i className="corner bl" />
+              <i className="corner br" />
+            </div>
+          </figure>
         </div>
       </section>
 
       <section className="sec" style={{ paddingBottom: 88 }}>
         <div className="wrap">
-          <div style={{ borderTop: "1px solid var(--color-divider)" }}>
-            {[
-              { label: "Previous", post: prev },
-              { label: "Next", post: next },
-            ].map(({ label, post: p }) => (
-              <Link className="rowlink" href={`/posts/${p.slug}`} key={label}>
+          <ReachOut
+            prompt="Thinking about the same problems? I would love to hear from you."
+            subject={`About your post, ${post.title}`}
+          />
+
+          <h2 className="h3" style={{ marginTop: 56 }}>
+            Keep reading
+          </h2>
+          <div style={{ borderTop: "1px solid var(--color-divider)", marginTop: 16 }}>
+            {more.map((p) => (
+              <Link className="rowlink" href={`/posts/${p.slug}`} key={p.slug}>
                 <div>
                   <div
                     style={{
@@ -145,14 +163,32 @@ export default async function PostPage({
                   >
                     {p.title}
                   </div>
+                  <p className="body dim" style={{ fontSize: 15, margin: "4px 0 0" }}>
+                    {p.note}
+                  </p>
                 </div>
                 <span className="mono dimmer" style={{ fontSize: 12, whiteSpace: "nowrap" }}>
-                  {label === "Previous" ? "← " : null}
-                  {label} · {platformLabel[p.platform]}
-                  {label === "Next" ? " →" : null}
+                  On {platformLabel[p.platform]} →
                 </span>
               </Link>
             ))}
+            {feed ? (
+              <a className="rowlink" href={feed.href} target="_blank" rel="noopener noreferrer">
+                <div
+                  style={{
+                    fontFamily: "var(--font-barlow-condensed), sans-serif",
+                    fontWeight: 600,
+                    fontSize: 20,
+                    letterSpacing: ".01em",
+                  }}
+                >
+                  Everything else I post on {feed.label}
+                </div>
+                <span className="mono dimmer" style={{ fontSize: 12, whiteSpace: "nowrap" }}>
+                  Follow ↗
+                </span>
+              </a>
+            ) : null}
           </div>
 
           <p style={{ marginTop: 32 }}>

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { Kicker, TagRow } from "@/components/blueprint";
 import { JsonLd } from "@/components/json-ld";
+import { ReachOut } from "@/components/reach-out";
 import { projectBySlug, projects } from "@/data/projects";
 import { breadcrumbSchema, jsonLd, pageMeta, projectSchema } from "@/lib/seo";
 
@@ -89,6 +90,11 @@ export default async function ProjectPage({
               {project.repoLabel} →
             </a>
           </p>
+
+          <ReachOut
+            prompt="Building something like this? I would love to hear about it."
+            subject={`About ${project.title}`}
+          />
 
           <p style={{ marginTop: 32 }}>
             <Link href="/work" className="mono rowlink">

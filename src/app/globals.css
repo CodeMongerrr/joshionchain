@@ -358,7 +358,8 @@ figure {
   overflow: hidden;
 }
 
-.blueprint > .corner {
+.blueprint > .corner,
+.post-figure-card > .corner {
   position: absolute;
   width: 11px;
   height: 11px;
@@ -366,39 +367,47 @@ figure {
 }
 
 .blueprint > .corner::before,
-.blueprint > .corner::after {
+.blueprint > .corner::after,
+.post-figure-card > .corner::before,
+.post-figure-card > .corner::after {
   content: "";
   position: absolute;
   background: currentColor;
 }
 
-.blueprint > .corner::before {
+.blueprint > .corner::before,
+.post-figure-card > .corner::before {
   left: 5px;
   top: 0;
   width: 1px;
   height: 100%;
 }
 
-.blueprint > .corner::after {
+.blueprint > .corner::after,
+.post-figure-card > .corner::after {
   top: 5px;
   left: 0;
   width: 100%;
   height: 1px;
 }
 
-.blueprint > .corner.tl {
+.blueprint > .corner.tl,
+.post-figure-card > .corner.tl {
   top: -6px;
   left: -6px;
 }
-.blueprint > .corner.tr {
+.blueprint > .corner.tr,
+.post-figure-card > .corner.tr {
   top: -6px;
   right: -6px;
 }
-.blueprint > .corner.bl {
+.blueprint > .corner.bl,
+.post-figure-card > .corner.bl {
   bottom: -6px;
   left: -6px;
 }
-.blueprint > .corner.br {
+.blueprint > .corner.br,
+.post-figure-card > .corner.br {
   bottom: -6px;
   right: -6px;
 }
@@ -528,6 +537,21 @@ html[data-theme="dark"] .btn-primary:hover {
 .navlinks a:hover,
 .navlinks a[aria-current="page"] {
   color: var(--accent-ink);
+}
+
+/* The one filled button in the bar. Contact is a click away from anywhere,
+   not a scroll to the bottom of the homepage. */
+.navlinks a.navcta {
+  font-family: var(--font-barlow-condensed), system-ui, sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--color-bg);
+  padding: 6px 12px;
+}
+
+.navlinks a.navcta:hover {
+  color: var(--color-bg);
 }
 
 .menubtn {
@@ -982,6 +1006,72 @@ a.pc:hover .pc-open {
   margin-bottom: 12px;
 }
 
+/* The post page, laid out like the hero. Words left, the post right as the
+   registered figure, the left column holding still beside a long post. */
+.post-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 56px;
+  align-items: start;
+}
+
+.post-lead {
+  position: sticky;
+  top: 97px;
+}
+
+.post-title {
+  font-family: var(--font-barlow-condensed), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(32px, 4.4vw, 46px);
+  line-height: 1.06;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  margin: 0 0 18px;
+}
+
+.post-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.post-figure {
+  margin: 0;
+}
+
+.post-figure .figcap {
+  margin-bottom: 14px;
+}
+
+.post-figure-card {
+  position: relative;
+}
+
+/* Stacked, the post has to come before the reply to it and the way out, so
+   the lead column dissolves and the figure takes its place in the reading
+   order, right after the title and note. */
+@media (max-width: 880px) {
+  .post-hero {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .post-lead {
+    display: contents;
+  }
+  .post-figure {
+    order: 1;
+    margin-top: 32px;
+  }
+  .post-reply {
+    order: 2;
+  }
+  .post-actions {
+    order: 3;
+  }
+}
+
 /* A notable reply, quoted under the post on its detail page. */
 .post-reply {
   margin-top: 24px;
@@ -1029,32 +1119,70 @@ a.pc:hover .pc-open {
   }
 }
 
-.frame.kt-frame {
-  padding: 0 20px;
+/* The section runs the full window width, so it rebuilds the .sec rhythm
+   around its own heading instead of inheriting it from .wrap. */
+.sec-bleed {
+  padding: 0 0 120px;
+  scroll-margin-top: 57px;
+}
+
+.kt-head {
+  padding-top: 120px;
+  border-top: 1px solid var(--color-divider);
+}
+
+/* The wall, edge to edge between two hairlines. */
+.kt-band {
+  position: relative;
+  margin-top: 44px;
+  border-top: 1px solid var(--color-divider);
+  border-bottom: 1px solid var(--color-divider);
 }
 
 .kt-stage {
   display: grid;
-  grid-template-columns: repeat(var(--kt-cols, 3), minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(var(--kt-cols, 5), minmax(0, 1fr));
   align-items: start;
-  height: 640px;
+  height: clamp(560px, 78vh, 820px);
+  padding: 0 clamp(8px, 1.2vw, 20px);
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
-  mask-image: linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
+  overflow: clip;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent);
+}
+
+/* Ruled trails, like the columns of a drawing sheet. The rule belongs to the
+   still column, only the track inside it moves. */
+.kt-col {
+  min-width: 0;
+  padding: 0 8px;
+  border-left: 1px solid var(--color-divider);
+}
+
+.kt-col:first-child {
+  border-left: 0;
 }
 
 .kt-track {
-  animation: scroll-up-smooth var(--kt-duration, 45s) linear infinite;
   will-change: transform;
 }
 
-.kt-track[data-dir="down"] {
+/* Before hydration, or with JavaScript off, the keyframes turn the wall at
+   its resting speed. Once the scroll engine is live it owns the transform. */
+.kt-stage:not([data-live]) .kt-track {
+  animation: scroll-up-smooth var(--kt-duration, 45s) linear infinite;
+}
+
+.kt-stage:not([data-live]) .kt-track[data-dir="down"] {
   animation-name: scroll-down-smooth;
 }
 
+.kt-stage:not([data-live]):hover .kt-track {
+  animation-play-state: paused;
+}
+
 /* Padding rather than a gap between the two copies, so the track is exactly
-   two copies tall and -50% is exactly one of them. */
+   two copies tall and one copy is exactly the wrap distance. */
 .kt-set {
   display: flex;
   flex-direction: column;
@@ -1062,11 +1190,65 @@ a.pc:hover .pc-open {
   padding-bottom: 16px;
 }
 
-/* Hold still for the reader. */
-.kt-stage:hover .kt-track,
-.kt-stage:focus-within .kt-track,
-.kt-stage[data-offscreen] .kt-track {
-  animation-play-state: paused;
+/* The page grid's registration marks, sitting on the band's hairlines at the
+   content edges, so the full width band still lines up with everything else. */
+.kt-marks {
+  position: absolute;
+  inset: -1px 0;
+  pointer-events: none;
+}
+
+.kt-marks > .wrap,
+.kt-marks-box {
+  height: 100%;
+}
+
+.kt-marks-box {
+  position: relative;
+}
+
+.kt-marks-box > .corner {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  color: color-mix(in srgb, var(--color-text) 55%, transparent);
+}
+
+.kt-marks-box > .corner::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: currentColor;
+}
+
+.kt-marks-box > .corner::after {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+}
+
+.kt-marks-box > .corner.tl {
+  top: -7px;
+  left: -7px;
+}
+.kt-marks-box > .corner.tr {
+  top: -7px;
+  right: -7px;
+}
+.kt-marks-box > .corner.bl {
+  bottom: -7px;
+  left: -7px;
+}
+.kt-marks-box > .corner.br {
+  bottom: -7px;
+  right: -7px;
 }
 
 /* The heading blurs in word by word, then the subtitle, then the marquee,
@@ -1126,7 +1308,7 @@ html[data-js] .kt[data-inview] .kt-rise {
   animation: kt-rise 0.6s ease-out 0.65s both;
 }
 
-/* Reduced motion gets a still wall, every card once, nothing hidden. */
+/* Reduced motion gets a still wall, every post once, nothing moving. */
 @media (prefers-reduced-motion: reduce) {
   html[data-js] .kt .kt-w,
   html[data-js] .kt .kt-sub,
@@ -1136,24 +1318,551 @@ html[data-js] .kt[data-inview] .kt-rise {
   }
   .kt-stage {
     height: auto;
-    padding: 20px 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    overflow: visible;
     -webkit-mask-image: none;
     mask-image: none;
   }
   .kt-track {
-    animation: none;
+    animation: none !important;
+    transform: none !important;
   }
-  .kt-set[aria-hidden="true"] {
+  .kt-set[aria-hidden="true"],
+  .kt-stage a.pc[aria-hidden="true"] {
     display: none;
   }
 }
 
+@media (max-width: 880px) {
+  .sec-bleed {
+    padding-bottom: 80px;
+  }
+  .kt-head {
+    padding-top: 80px;
+  }
+}
+
 @media (max-width: 700px) {
+  .sec-bleed {
+    padding-bottom: 64px;
+  }
+  .kt-head {
+    padding-top: 64px;
+  }
+  .kt-band {
+    margin-top: 32px;
+  }
   .kt-stage {
     height: 560px;
   }
-  .frame.kt-frame {
-    padding: 0 12px;
+}
+
+/* ── clickable cards (recent work) ────────────────────────────────────── */
+
+/* The card's one link is its button, stretched over the whole card, so any
+   click on the card goes through and the button still says where. */
+.frame.card {
+  transition:
+    border-color 0.15s ease-out,
+    background-color 0.15s ease-out;
+}
+
+.frame.card:hover {
+  border-color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 5%, transparent);
+}
+
+.frame.card:has(.card-cta:focus-visible) {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 5px;
+}
+
+.card-cta {
+  margin-left: auto;
+  padding: 10px 18px;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.card-cta:focus-visible {
+  outline: none;
+}
+
+.card-cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.frame.card:hover .card-cta {
+  background: var(--color-accent-600);
+  border-color: var(--color-accent-600);
+}
+
+html[data-theme="dark"] .frame.card:hover .card-cta {
+  background: var(--color-accent-300);
+  border-color: var(--color-accent-300);
+}
+
+/* ── security fix cards (/open-source) ────────────────────────────────── */
+
+.fix-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: 36px;
+}
+
+.frame.fix {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+}
+
+.fix .kick {
+  margin: 0;
+}
+
+.fix-title {
+  margin: 0;
+  font-family: var(--font-barlow-condensed), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(22px, 2.4vw, 26px);
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+}
+
+.fix-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.fix-status {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+
+.fix-meta .btn {
+  padding: 8px 14px;
+  font-size: 14px;
+}
+
+@media (max-width: 880px) {
+  .fix-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── spec table (skills) ──────────────────────────────────────────────── */
+
+.spec {
+  margin: 36px 0 0;
+  border-top: 1px solid var(--color-divider);
+}
+
+.spec-row {
+  display: grid;
+  grid-template-columns: minmax(0, 220px) minmax(0, 1fr) auto;
+  gap: 8px 28px;
+  align-items: baseline;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.spec-label {
+  font-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+
+.spec-items {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.spec-proof {
+  margin: 0;
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+  .spec-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .spec-proof {
+    white-space: normal;
+  }
+}
+
+/* ── doors (the way into a page the homepage only summarises) ─────────── */
+
+/* Framed like everything else, but tinted with the accent and carrying a
+   real button, so it reads as the next step rather than a footnote. */
+.frame.door {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px 40px;
+  margin-top: 36px;
+  padding: 30px 32px;
+  color: inherit;
+  text-decoration: none;
+  background: color-mix(in srgb, var(--color-accent) 7%, transparent);
+  border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+  transition:
+    background-color 0.15s ease-out,
+    border-color 0.15s ease-out;
+}
+
+.frame.door:hover {
+  background: color-mix(in srgb, var(--color-accent) 13%, transparent);
+  border-color: var(--color-accent);
+}
+
+.frame.door:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 5px;
+}
+
+.door-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.door .kick {
+  margin: 0;
+}
+
+.door-title {
+  font-family: var(--font-barlow-condensed), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(28px, 3.4vw, 38px);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.door-summary {
+  font-size: 16px;
+  line-height: 1.5;
+  max-width: 62ch;
+  color: color-mix(in srgb, var(--color-text) 78%, transparent);
+}
+
+.door-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  margin-top: 4px;
+  font-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  font-size: 12.5px;
+  color: var(--accent-ink);
+}
+
+.door-action {
+  padding: 14px 24px;
+  font-size: 17px;
+  white-space: nowrap;
+  transition:
+    transform 0.15s ease-out,
+    background-color 0.15s ease-out;
+}
+
+.frame.door:hover .door-action {
+  transform: translateX(4px);
+  background: var(--color-accent-600);
+  border-color: var(--color-accent-600);
+}
+
+html[data-theme="dark"] .frame.door:hover .door-action {
+  background: var(--color-accent-300);
+  border-color: var(--color-accent-300);
+}
+
+/* A door that opens its own section needs no gap above it. */
+.wrap > .frame.door:first-child {
+  margin-top: 0;
+}
+
+@media (max-width: 700px) {
+  .frame.door {
+    grid-template-columns: 1fr;
+    padding: 22px 20px;
+  }
+  .door-action {
+    justify-self: stretch;
+  }
+}
+
+/* ── experience page ──────────────────────────────────────────────────── */
+
+.xp-row {
+  display: grid;
+  grid-template-columns: minmax(0, 200px) minmax(0, 1fr);
+  gap: 28px;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.xp-when {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.7;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.xp-company {
+  margin: 0;
+  font-family: var(--font-barlow-condensed), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  letter-spacing: 0.01em;
+}
+
+.xp-company a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.xp-company a:hover {
+  color: var(--accent-ink);
+}
+
+.xp-title {
+  margin: 4px 0 12px;
+  font-size: 13px;
+}
+
+.xp-bullets {
+  margin: 0;
+  padding-left: 18px;
+  max-width: 72ch;
+  list-style: disc;
+}
+
+.xp-bullets li::marker {
+  color: var(--accent-ink);
+}
+
+.xp-text {
+  margin: 0;
+  max-width: 72ch;
+  font-size: 15.5px;
+  line-height: 1.55;
+}
+
+.xp-bullets li {
+  margin: 0 0 8px;
+  font-size: 15.5px;
+  line-height: 1.55;
+}
+
+@media (max-width: 700px) {
+  .xp-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+/* ── title block (hero facts) ─────────────────────────────────────────── */
+
+/* The box in the corner of a drawing, spanning the hero under the portrait. */
+.frame.tblock {
+  grid-column: 1 / -1;
+  padding: 0;
+}
+
+.tblock-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+}
+
+.tcell {
+  min-width: 0;
+  padding: 16px 18px 18px;
+  border-left: 1px solid var(--color-divider);
+}
+
+.tcell:first-child {
+  border-left: 0;
+}
+
+.tlabel {
+  margin: 0 0 8px;
+  font-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+
+.tcell dd {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.tvalue {
+  font-family: var(--font-barlow-condensed), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: var(--color-text);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+a.tvalue:hover {
+  color: var(--accent-ink);
+}
+
+.tsub {
+  font-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  font-size: 12px;
+  line-height: 1.45;
+  color: color-mix(in srgb, var(--color-text) 70%, transparent);
+}
+
+.tcopy {
+  margin-top: 4px;
+  padding: 3px 8px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-text) 78%, transparent);
+  background: transparent;
+  border: 1px solid var(--color-divider);
+  cursor: pointer;
+}
+
+.tcopy:hover {
+  background: color-mix(in srgb, var(--color-text) 7%, transparent);
+}
+
+@media (max-width: 880px) {
+  .tblock-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .tcell:nth-child(3) {
+    border-left: 0;
+  }
+  .tcell:nth-child(n + 3) {
+    border-top: 1px solid var(--color-divider);
+  }
+}
+
+@media (max-width: 480px) {
+  .tblock-grid {
+    grid-template-columns: 1fr;
+  }
+  .tcell {
+    padding: 12px 16px 13px;
+    border-left: 0;
+  }
+  .tlabel {
+    margin-bottom: 4px;
+  }
+  .tvalue {
+    font-size: 18px;
+  }
+  .tcell + .tcell {
+    border-top: 1px solid var(--color-divider);
+  }
+}
+
+/* ── reach me (contact panel and the closing strip on detail pages) ───── */
+
+.frame.reach {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 32px 48px;
+}
+
+.reach-main,
+.reach-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.reach-email {
+  font-family: var(--font-barlow-condensed), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(24px, 3.4vw, 34px);
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  color: var(--color-text);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  margin: 2px 0 18px;
+}
+
+.reach-email:hover {
+  color: var(--accent-ink);
+}
+
+.reach-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.reach-actions .btn {
+  padding: 10px 18px;
+  font-size: 15px;
+}
+
+.reach-time {
+  margin: 18px 0 0;
+  font-size: 12px;
+}
+
+.reach-card {
+  margin-top: 18px;
+  font-size: 13px;
+}
+
+.reach-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 32px;
+  margin-top: 48px;
+  padding: 24px 0;
+  border-top: 1px solid var(--color-divider);
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.reach-strip:first-child {
+  margin-top: 0;
+}
+
+@media (max-width: 880px) {
+  .frame.reach {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1236,6 +1945,12 @@ html[data-js] .kt[data-inview] .kt-rise {
     width: 100%;
     font-size: 13px;
   }
+  .navlinks a.navcta {
+    width: auto;
+    margin: 8px 0 6px;
+    padding: 10px 18px;
+    font-size: 15px;
+  }
   [data-menu="closed"] .navlinks {
     display: none;
   }
@@ -1315,5 +2030,65 @@ html[data-js] .kt[data-inview] .kt-rise {
   .sec {
     padding: 14pt 0;
     break-inside: avoid-page;
+  }
+
+  /* The resume prints as the downloadable PDF, so it is set like one. Dense
+     type, sections that may break across pages, and a heading or a single
+     role that never does. */
+  @page {
+    size: letter;
+    margin: 12mm 13mm 13mm;
+  }
+  .resume .sec {
+    padding: 5pt 0;
+    border-top: 0;
+    break-inside: auto;
+  }
+  .resume .sec-first {
+    padding-top: 0;
+  }
+  .resume .wrap-prose {
+    max-width: none;
+    padding: 0;
+  }
+  .resume .kick {
+    display: none;
+  }
+  .resume .h2 {
+    font-size: 21pt;
+    margin: 0;
+  }
+  .resume .h3 {
+    font-size: 11.5pt;
+    break-after: avoid;
+  }
+  .resume .body {
+    font-size: 9.5pt;
+    line-height: 1.36;
+    max-width: none;
+    margin-top: 3pt !important;
+  }
+  .resume ul.body {
+    gap: 2.5pt !important;
+    margin-top: 4pt !important;
+    list-style: disc;
+  }
+  .resume li {
+    break-inside: avoid;
+  }
+  .resume .mono {
+    font-size: 8.3pt !important;
+    margin-top: 1pt !important;
+  }
+  .resume .resume-item {
+    margin-top: 8pt !important;
+    break-inside: avoid;
+  }
+  .resume .t {
+    font-size: 7.8pt;
+    padding: 0 4pt;
+  }
+  .resume .tagrow {
+    gap: 3pt;
   }
 }

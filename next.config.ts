@@ -47,7 +47,8 @@ const nextConfig: NextConfig = {
     return [
       { source: "/projects", destination: "/work", permanent: true },
       { source: "/skills", destination: "/about", permanent: true },
-      { source: "/experience", destination: "/about", permanent: true },
+      // /experience used to redirect to /about. It is a real page now.
+
       // Projects dropped in the resume sync. Old links and search results can
       // still point at them, so send them to the projects list on /work
       // instead of a 404.

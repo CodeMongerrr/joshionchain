@@ -1,27 +1,21 @@
 import Link from "next/link";
 
 import { Evidence, Frame, Kicker, TagRow } from "@/components/blueprint";
-import { ContributionsTable } from "@/components/contributions-table";
+import { ContactPanel } from "@/components/contact-panel";
+import { Door } from "@/components/door";
 import { LegacyHashRedirect } from "@/components/legacy-hash-redirect";
 import { Portrait } from "@/components/portrait";
+import { TitleBlock } from "@/components/title-block";
 import TestimonialsVerticalMarquee from "@/components/ui/testimonials-with-verticalmarquee";
-import { securityLede } from "@/data/contributions";
-import { experience, highlights } from "@/data/experience";
+import { earlier, roles } from "@/data/experience";
 import { posts } from "@/data/posts";
 import { projects } from "@/data/projects";
 import { results } from "@/data/results";
-import { contactEmail, site, socials } from "@/data/site";
+import { resumePdf, site, socials } from "@/data/site";
 import { stack } from "@/data/stack";
 import { systems } from "@/data/systems";
-import { getContributions } from "@/lib/github";
 import { jsonLd, profilePageSchema } from "@/lib/seo";
 import { JsonLd } from "@/components/json-ld";
-
-/* Next parses segment config statically, so this has to be a literal, an
-   imported binding (even a `const`) fails the build with "Invalid segment
-   configuration export". Keep in sync with GITHUB_REVALIDATE_SECONDS in
-   src/lib/github.ts, which controls the fetch-level cache. */
-export const revalidate = 3600;
 
 /**
  * The overview.
@@ -30,14 +24,12 @@ export const revalidate = 3600;
  * diagrams and tables live on the detail routes. That split is deliberate:
  * it's what keeps this page scannable in one pass instead of asking a reader
  * to wade through long-form case studies before reaching the contact
- * section.
+ * section. The long lists (every past role, every upstream PR) sit behind
+ * doors, one click away and impossible to miss.
  */
-export default async function HomePage() {
-  const { items, counts } = await getContributions();
-
-  // The overview shows the merged work only; the full table (with the open
-  // PRs and the status filter) is one click away.
-  const featured = items.filter((c) => c.status === "merged").slice(0, 5);
+export default function HomePage() {
+  // Past roles for the experience door, the ones without a /work page of their own.
+  const pastCompanies = [...roles.filter((r) => !r.slug), ...earlier].map((r) => r.company);
 
   return (
     <main id="main">
@@ -94,21 +86,24 @@ export default async function HomePage() {
             >
               {site.tagline}
             </p>
-            <p className="body dim" style={{ margin: "0 0 30px" }}>
-              {site.supporting}
-            </p>
+            {/* The proof in one scannable line. The title block below carries
+                the rest, so nothing here needs a paragraph. */}
+            <div style={{ margin: "0 0 30px" }}>
+              <Evidence items={site.proof} />
+            </div>
 
             <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
               <a className="btn btn-primary" href="#contact" style={{ padding: "10px 18px", fontSize: 15 }}>
                 Get in touch
               </a>
-              <Link
+              <a
                 className="btn btn-secondary"
-                href="/resume"
+                href={resumePdf.href}
+                download={resumePdf.filename}
                 style={{ padding: "10px 18px", fontSize: 15 }}
               >
-                Read the resume
-              </Link>
+                Download the resume ↓
+              </a>
             </div>
 
             <div
@@ -131,34 +126,11 @@ export default async function HomePage() {
                   {s.label} ↗
                 </a>
               ))}
-              {contactEmail ? (
-                <a
-                  href={`mailto:${contactEmail}`}
-                  style={{
-                    fontSize: 13,
-                    textDecoration: "none",
-                    borderBottom: "1px solid var(--color-divider)",
-                    paddingBottom: 2,
-                  }}
-                >
-                  Email ↗
-                </a>
-              ) : (
-                <span
-                  className="dimmer"
-                  style={{
-                    fontSize: 13,
-                    borderBottom: "1px dashed var(--color-divider)",
-                    paddingBottom: 2,
-                  }}
-                >
-                  email: add address
-                </span>
-              )}
             </div>
           </div>
 
           <Portrait />
+          <TitleBlock />
         </header>
 
         {/* ── 01 results ──────────────────────────────────────────────── */}
@@ -210,7 +182,7 @@ export default async function HomePage() {
 
           <div style={{ display: "grid", gap: 28 }}>
             {systems.map((s) => (
-              <Frame as="article" className="frame-link" key={s.slug}>
+              <Frame as="article" className="frame-link card" key={s.slug}>
                 <div
                   style={{
                     display: "flex",
@@ -221,9 +193,7 @@ export default async function HomePage() {
                   }}
                 >
                   <h3 className="h3" style={{ fontSize: 26 }}>
-                    <Link href={`/work/${s.slug}`} style={{ color: "inherit", textDecoration: "none" }}>
-                      {s.name}
-                    </Link>
+                    {s.name}
                   </h3>
                   <span
                     className="mono dimmer"
@@ -258,10 +228,12 @@ export default async function HomePage() {
                   }}
                 >
                   <TagRow items={s.tags} />
+                  {/* One link per card, stretched over all of it by .card-cta, so
+                      the whole card clicks through and the button says where. */}
                   <Link
                     href={`/work/${s.slug}`}
-                    className="mono"
-                    style={{ fontSize: 13, marginLeft: "auto", whiteSpace: "nowrap" }}
+                    className="btn btn-primary card-cta"
+                    aria-label={`Read the full ${s.name} story`}
                   >
                     Read the full story →
                   </Link>
@@ -269,12 +241,21 @@ export default async function HomePage() {
               </Frame>
             ))}
           </div>
+
+          <Door
+            href="/experience"
+            kicker="Experience"
+            title="Before this"
+            summary="Ethereum core infrastructure at Nethermind, a DEX for a client in Japan, and the early roles that came first."
+            items={pastCompanies}
+            action="See the experience"
+          />
         </section>
 
         {/* ── 03 selected work ────────────────────────────────────────── */}
         <section className="sec" id="work" data-reveal>
           <Kicker>03 · Built on my own</Kicker>
-          <h2 className="h2">Four projects</h2>
+          <h2 className="h2">Selected projects</h2>
           <div style={{ marginTop: 36, borderTop: "1px solid var(--color-divider)" }}>
             {projects.map((p) => (
               <Link className="rowlink" href={`/projects/${p.slug}`} key={p.slug}>
@@ -301,170 +282,67 @@ export default async function HomePage() {
               </Link>
             ))}
           </div>
-        </section>
 
-        {/* ── 04 open source ──────────────────────────────────────────── */}
-        <section className="sec" id="open-source" data-reveal>
-          <Kicker>04 · Open source</Kicker>
-          <h2 className="h2">Merged upstream</h2>
-          <p className="body" style={{ margin: "16px 0 8px" }}>
-            {securityLede}
-          </p>
-          <p className="body dim" style={{ margin: "0 0 28px" }}>
-            {counts.merged} merged, {counts.open} open across{" "}
-            {new Set(items.map((c) => c.repo)).size} upstream repositories.
-          </p>
-
-          <ContributionsTable items={featured} counts={counts} showFilter={false} />
-
-          <p style={{ marginTop: 20 }}>
-            <Link href="/open-source" className="mono" style={{ fontSize: 13 }}>
-              All {counts.total} contributions →
-            </Link>
-          </p>
-        </section>
-
-        {/* ── 05 experience ───────────────────────────────────────────── */}
-        <section className="sec" id="experience" data-reveal>
-          <Kicker>05 · Experience</Kicker>
-          <h2 className="h2">Before this</h2>
-          <div style={{ marginTop: 36, borderTop: "1px solid var(--color-divider)" }}>
-            {experience.map((role) => (
-              <div
-                key={role.company}
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "minmax(0, 180px) minmax(0, 1fr)",
-                  gap: 24,
-                  padding: "24px 0",
-                  borderBottom: "1px solid var(--color-divider)",
-                }}
-              >
-                <div
-                  className="mono dimmer"
-                  style={{ fontSize: 12, letterSpacing: ".06em", textTransform: "uppercase" }}
-                >
-                  {role.period}
-                  <br />
-                  {role.location}
-                </div>
-                <div>
-                  <div
-                    style={{
-                      fontFamily: "var(--font-barlow-condensed), sans-serif",
-                      fontWeight: 600,
-                      fontSize: 20,
-                      letterSpacing: ".01em",
-                    }}
-                  >
-                    {role.company}
-                  </div>
-                  <div className="mono dim" style={{ fontSize: 13, margin: "2px 0 8px" }}>
-                    {role.title}
-                    {role.team ? ` · ${role.team}` : ""}
-                  </div>
-                  <p className="body dim" style={{ fontSize: 15, margin: 0 }}>
-                    {role.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div style={{ marginTop: 24 }}>
-            <TagRow items={highlights} />
-          </div>
-        </section>
-
-        {/* ── 06 stack ────────────────────────────────────────────────── */}
-        <section className="sec" id="stack" data-reveal>
-          <Kicker>06 · Skills</Kicker>
-          <h2 className="h2">What I work in</h2>
-          <div className="stack-grid" style={{ marginTop: 36 }}>
-            {stack.map((group) => (
-              <div key={group.label}>
-                <div
-                  className="mono"
-                  style={{
-                    fontSize: 12,
-                    letterSpacing: ".1em",
-                    textTransform: "uppercase",
-                    paddingBottom: 10,
-                    borderBottom: "1px solid var(--color-divider)",
-                    marginBottom: 14,
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: 10,
-                  }}
-                >
-                  {group.label}
-                  {group.evidence ? (
-                    <Link
-                      href={group.evidence.href}
-                      className="dimmer"
-                      style={{ textDecoration: "none", marginLeft: "auto" }}
-                    >
-                      {group.evidence.label}
-                    </Link>
-                  ) : null}
-                </div>
-                <TagRow items={group.items} />
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ── 07 in public ────────────────────────────────────────────── */}
-        {/* Social proof sits last, after every section of actual work and
-            right before the ask, so it backs the case instead of making it. */}
-        <section className="sec" id="in-public" data-reveal>
-          <TestimonialsVerticalMarquee
-            kicker="07 · In public"
-            title="Where I think out loud"
-            subtitle="Posts from X and LinkedIn on AI agents, crypto infrastructure and the bugs that taught me something. Every card opens the full post, with a link to the original."
-            posts={posts}
+          <Door
+            href="/open-source"
+            kicker="Open source"
+            title="Merged upstream"
+            summary="Both security fixes in Zcash Zebra v6.2.2, plus merged work in librustzcash, ZecHub and ethereum.org."
+            items={["Zcash Zebra", "librustzcash", "ZecHub", "ethereum.org"]}
+            action="See the contributions"
           />
         </section>
 
-        {/* ── 08 contact ──────────────────────────────────────────────── */}
+        {/* ── 04 stack ────────────────────────────────────────────────── */}
+        <section className="sec" id="stack" data-reveal>
+          <Kicker>04 · Skills</Kicker>
+          <h2 className="h2">What I work in</h2>
+          {/* One line per group, like the spec table on a drawing, so the whole
+              stack reads in a glance instead of a wall of chips. */}
+          <dl className="spec">
+            {stack.map((group) => (
+              <div className="spec-row" key={group.label}>
+                <dt className="spec-label">{group.label}</dt>
+                <dd className="spec-items">{group.items.join(" · ")}</dd>
+                <dd className="spec-proof">
+                  {group.evidence ? (
+                    <Link href={group.evidence.href} className="mono">
+                      {group.evidence.label.replace(/^→\s*/, "")} →
+                    </Link>
+                  ) : null}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
+      </div>
+
+      {/* ── 05 in public ────────────────────────────────────────────────── */}
+      {/* Social proof sits last, after every section of actual work and right
+          before the ask, so it backs the case instead of making it. It is the
+          one section that runs the full width of the window, so it lives
+          outside .wrap and puts the grid back around its own heading. */}
+      <section className="sec-bleed" id="in-public" data-reveal>
+        <TestimonialsVerticalMarquee
+          kicker="05 · In public"
+          title="Where I think out loud"
+          subtitle="A few picks from what I post on X and LinkedIn, on AI agents, crypto infrastructure and the bugs that taught me something. Open any card to read it in full."
+          posts={posts}
+        />
+      </section>
+
+      <div className="wrap">
+        {/* ── 06 contact ──────────────────────────────────────────────── */}
         <section className="sec" id="contact" data-reveal style={{ paddingBottom: 88 }}>
-          <Kicker>08 · Contact</Kicker>
+          <Kicker>06 · Contact</Kicker>
           <h2 className="h2">Get in touch</h2>
           <p className="body" style={{ fontSize: 19, lineHeight: 1.45, margin: "18px 0 32px" }}>
             Open to forward deployed and founding roles in the US, UK and UAE, or remote. Got a
             problem where the hard part is figuring out what is actually broken? I would love to
             hear about it.
           </p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
-            {contactEmail ? (
-              <a className="btn btn-primary" href={`mailto:${contactEmail}`} style={{ padding: "10px 18px", fontSize: 15 }}>
-                Email ↗
-              </a>
-            ) : (
-              <span
-                className="btn btn-secondary mono"
-                style={{
-                  padding: "10px 18px",
-                  fontSize: 13,
-                  borderStyle: "dashed",
-                  color: "color-mix(in srgb, var(--color-text) 70%, transparent)",
-                }}
-              >
-                email: add address
-              </span>
-            )}
-            {socials.map((s) => (
-              <a
-                key={s.href}
-                className="btn btn-secondary"
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ padding: "10px 18px", fontSize: 15 }}
-              >
-                {s.label} ↗
-              </a>
-            ))}
-          </div>
+          <ContactPanel />
         </section>
       </div>
     </main>

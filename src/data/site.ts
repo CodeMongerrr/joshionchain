@@ -66,16 +66,57 @@ export const socials = [
   },
 ] as const;
 
+/** Where the local time on the contact section is read from. */
+export const home = { city: "Mumbai", timeZone: "Asia/Kolkata", zoneLabel: "IST" } as const;
+
+/**
+ * One-click starts for an email. Each opens the visitor's mail app with the
+ * subject filled in, and for the two that need details, a short skeleton of
+ * what helps me reply quickly.
+ */
+export const contactTopics = [
+  {
+    label: "A role",
+    subject: "A role for Aditya",
+    body: "Hi Aditya,\n\nThe company\n\nThe role\n\nWhere it is based, or remote\n\n",
+  },
+  {
+    label: "A project",
+    subject: "A project for Aditya",
+    body: "Hi Aditya,\n\nWhat is broken, or what needs building\n\nThe timeline\n\n",
+  },
+  {
+    label: "Just to say hi",
+    subject: "Hello from joshionchain.com",
+    body: "Hi Aditya,\n\n",
+  },
+] as const;
+
+/** A mailto link, with the subject and body encoded the way mail apps expect. */
+export function mailto({ subject, body }: { subject?: string; body?: string } = {}) {
+  if (!contactEmail) return null;
+  const params = [
+    subject ? `subject=${encodeURIComponent(subject)}` : null,
+    body ? `body=${encodeURIComponent(body)}` : null,
+  ].filter(Boolean);
+  return `mailto:${contactEmail}${params.length ? `?${params.join("&")}` : ""}`;
+}
+
 /** Profiles that prove identity to crawlers but don't need a visible button. */
 export const extraSameAs = ["https://www.npmjs.com/package/@jino-labs/earshot"] as const;
 
 export const githubUser = "CodeMongerrr";
 
 export const nav = [
-  { label: "Now", href: "/#building-now" },
   { label: "Work", href: "/work" },
+  { label: "Experience", href: "/experience" },
   { label: "Open source", href: "/open-source" },
   { label: "Resume", href: "/resume" },
   { label: "About", href: "/about" },
-  { label: "Contact", href: "/#contact" },
 ] as const;
+
+/** The one filled button in the navbar, so contact is a click away from anywhere. */
+export const navCta = { label: "Get in touch", href: "/#contact" } as const;
+
+/** The resume as a file, generated from /resume by `npm run resume:pdf`. */
+export const resumePdf = { href: "/aditya-joshi-resume.pdf", filename: "Aditya-Joshi-Resume.pdf" } as const;

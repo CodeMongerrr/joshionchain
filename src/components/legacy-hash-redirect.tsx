@@ -14,7 +14,7 @@ import { useEffect } from "react";
 const LEGACY: Record<string, string> = {
   "#projects": "/work",
   "#skills": "/about",
-  "#experience": "/about",
+  "#experience": "/experience",
   "#about": "/about",
 };
 

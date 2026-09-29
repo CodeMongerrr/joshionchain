@@ -1,9 +1,8 @@
 import Link from "next/link";
 
-import { Kicker } from "@/components/blueprint";
+import { Frame, Kicker } from "@/components/blueprint";
 import { ContributionsTable } from "@/components/contributions-table";
 import { JsonLd } from "@/components/json-ld";
-import { securityLede } from "@/data/contributions";
 import { getContributions } from "@/lib/github";
 import { breadcrumbSchema, jsonLd, pageMeta } from "@/lib/seo";
 
@@ -27,6 +26,8 @@ export const metadata = pageMeta({
  */
 export default async function OpenSourcePage() {
   const { items, counts, live } = await getContributions();
+  // The headline proof opens the page as cards; the table below is the ledger.
+  const fixes = items.filter((c) => c.security);
 
   return (
     <>
@@ -43,10 +44,41 @@ export default async function OpenSourcePage() {
         <div className="wrap">
           <Kicker>Open source</Kicker>
           <h1 className="h2">Upstream contributions</h1>
+          <p className="body dim" style={{ marginTop: 16 }}>
+            Both security fixes in Zcash Zebra v6.2.2 first, then everything else I have sent
+            upstream.
+          </p>
 
-          <p className="body dim">{securityLede}</p>
+          <div className="fix-grid">
+            {fixes.map((c) => (
+              <Frame as="article" className="fix" key={c.number}>
+                <span className="kick">Security fix · Zebra v6.2.2</span>
+                <h2 className="fix-title">{c.what}</h2>
+                {c.detail ? (
+                  <p className="body dim" style={{ margin: 0 }}>
+                    {c.detail}
+                  </p>
+                ) : null}
+                <div className="fix-meta">
+                  <span className={`mono fix-status fix-${c.status}`}>
+                    {c.status === "merged" ? "Merged" : c.status === "open" ? "Open" : "Closed"}
+                  </span>
+                  <a className="btn btn-secondary" href={c.url} target="_blank" rel="noopener noreferrer">
+                    Pull request #{c.number} ↗
+                  </a>
+                </div>
+              </Frame>
+            ))}
+          </div>
 
-          <p className="mono dimmer" style={{ fontSize: 12, marginTop: 16 }}>
+          <p className="mono dimmer" style={{ fontSize: 12, marginTop: 20 }}>
+            Both merged within 31 hours ·{" "}
+            <a href="https://github.com/ZcashFoundation/zebra/releases/tag/v6.2.2" target="_blank" rel="noopener noreferrer">
+              Zebra v6.2.2 release notes ↗
+            </a>
+          </p>
+
+          <p className="mono dimmer" style={{ fontSize: 12, marginTop: 8 }}>
             {counts.merged} merged · {counts.open} open
             {live ? " · synced hourly from GitHub" : null}
           </p>

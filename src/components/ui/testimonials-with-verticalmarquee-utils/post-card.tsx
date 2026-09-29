@@ -27,7 +27,7 @@ export function PostCard({
 }: {
   post: Post;
   variant?: "compact" | "full";
-  /** A marquee loop copy. Kept clickable, but out of the tab order. */
+  /** A repeat in the marquee. Kept clickable, but hidden from assistive tech and the tab order. */
   duplicate?: boolean;
 }) {
   const full = variant === "full";
@@ -111,6 +111,7 @@ export function PostCard({
       className={className}
       data-platform={post.platform}
       aria-label={`${post.title}, ${platformLabel[post.platform]} post from ${date}`}
+      aria-hidden={duplicate ? true : undefined}
       tabIndex={duplicate ? -1 : undefined}
       prefetch={false}
     >

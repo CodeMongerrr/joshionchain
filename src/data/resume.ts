@@ -1,6 +1,10 @@
 /**
  * The resume as data. Experience comes from experience.ts; this file carries
  * the parts only the resume shows. Keep it word for word with the PDF.
+ *
+ * The downloadable PDF is printed from /resume. After changing this file,
+ * experience.ts or stack.ts, run `npm run resume:pdf` against a running build
+ * so public/aditya-joshi-resume.pdf says the same thing.
  */
 
 export const resumeSummary =
