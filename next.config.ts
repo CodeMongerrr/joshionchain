@@ -48,6 +48,12 @@ const nextConfig: NextConfig = {
       { source: "/projects", destination: "/work", permanent: true },
       { source: "/skills", destination: "/about", permanent: true },
       { source: "/experience", destination: "/about", permanent: true },
+      // Projects dropped in the resume sync. Old links and search results can
+      // still point at them, so send them to the projects list on /work
+      // instead of a 404.
+      { source: "/projects/ethereum-event-log-indexer", destination: "/work", permanent: true },
+      { source: "/projects/rsa-ring-signature-library", destination: "/work", permanent: true },
+      { source: "/projects/ethereum-light-client", destination: "/work", permanent: true },
     ];
   },
 };
