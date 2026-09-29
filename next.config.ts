@@ -47,7 +47,7 @@ const nextConfig: NextConfig = {
     return [
       { source: "/projects", destination: "/work", permanent: true },
       { source: "/skills", destination: "/about", permanent: true },
-      { source: "/experience", destination: "/about", permanent: true },
+      // /experience used to redirect to /about. It is a real page now.
     ];
   },
 };

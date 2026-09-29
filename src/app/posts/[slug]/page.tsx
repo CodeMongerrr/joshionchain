@@ -6,6 +6,7 @@ import { JsonLd } from "@/components/json-ld";
 import { ReachOut } from "@/components/reach-out";
 import { PostCard } from "@/components/ui/testimonials-with-verticalmarquee-utils/post-card";
 import { formatPostDate, platformLabel, postBySlug, posts } from "@/data/posts";
+import { socials } from "@/data/site";
 import { breadcrumbSchema, jsonLd, pageMeta, postSchema } from "@/lib/seo";
 
 export function generateStaticParams() {
@@ -42,9 +43,12 @@ export default async function PostPage({
   const post = postBySlug(slug);
   if (!post) notFound();
 
+  // Two more picks to keep reading, then the way out to the live feeds. No
+  // previous and next that loop back round, which would show where the
+  // picks run out.
   const i = posts.indexOf(post);
-  const prev = posts[(i - 1 + posts.length) % posts.length];
-  const next = posts[(i + 1) % posts.length];
+  const more = [posts[(i + 1) % posts.length], posts[(i + 2) % posts.length]];
+  const feed = socials.find((s) => s.label === platformLabel[post.platform]);
   const platform = platformLabel[post.platform];
 
   return (
@@ -142,12 +146,12 @@ export default async function PostPage({
             subject={`About your post, ${post.title}`}
           />
 
-          <div style={{ borderTop: "1px solid var(--color-divider)", marginTop: 48 }}>
-            {[
-              { label: "Previous", post: prev },
-              { label: "Next", post: next },
-            ].map(({ label, post: p }) => (
-              <Link className="rowlink" href={`/posts/${p.slug}`} key={label}>
+          <h2 className="h3" style={{ marginTop: 56 }}>
+            Keep reading
+          </h2>
+          <div style={{ borderTop: "1px solid var(--color-divider)", marginTop: 16 }}>
+            {more.map((p) => (
+              <Link className="rowlink" href={`/posts/${p.slug}`} key={p.slug}>
                 <div>
                   <div
                     style={{
@@ -159,14 +163,32 @@ export default async function PostPage({
                   >
                     {p.title}
                   </div>
+                  <p className="body dim" style={{ fontSize: 15, margin: "4px 0 0" }}>
+                    {p.note}
+                  </p>
                 </div>
                 <span className="mono dimmer" style={{ fontSize: 12, whiteSpace: "nowrap" }}>
-                  {label === "Previous" ? "← " : null}
-                  {label} · {platformLabel[p.platform]}
-                  {label === "Next" ? " →" : null}
+                  On {platformLabel[p.platform]} →
                 </span>
               </Link>
             ))}
+            {feed ? (
+              <a className="rowlink" href={feed.href} target="_blank" rel="noopener noreferrer">
+                <div
+                  style={{
+                    fontFamily: "var(--font-barlow-condensed), sans-serif",
+                    fontWeight: 600,
+                    fontSize: 20,
+                    letterSpacing: ".01em",
+                  }}
+                >
+                  Everything else I post on {feed.label}
+                </div>
+                <span className="mono dimmer" style={{ fontSize: 12, whiteSpace: "nowrap" }}>
+                  Follow ↗
+                </span>
+              </a>
+            ) : null}
           </div>
 
           <p style={{ marginTop: 32 }}>

@@ -16,16 +16,15 @@ export const metadata = pageMeta({
 });
 
 /**
- * Every post at once, still. The homepage marquee is the lively version; this
- * is the one that works for reading, for keyboards and for crawlers. The
- * platform filter is pure CSS, same as the open-source status filter.
+ * The picks, still. The homepage wall is the lively version; this is the one
+ * that works for reading, for keyboards and for crawlers. The platform filter
+ * is pure CSS, same as the open-source status filter.
+ *
+ * No counts anywhere on purpose. This is a handful chosen from an ongoing
+ * feed, so the page points at the feeds rather than presenting itself as the
+ * whole archive.
  */
 export default function PostsPage() {
-  const counts = {
-    x: posts.filter((p) => p.platform === "x").length,
-    linkedin: posts.filter((p) => p.platform === "linkedin").length,
-  };
-
   return (
     <>
       <JsonLd
@@ -40,10 +39,10 @@ export default function PostsPage() {
       <section className="sec sec-first">
         <div className="wrap">
           <Kicker>In public</Kicker>
-          <h1 className="h2">Posts</h1>
+          <h1 className="h2">A few picks</h1>
           <p className="body dim" style={{ marginTop: 16 }}>
-            Selected posts from X and LinkedIn. Each one opens here with its context, and links
-            to the original.
+            A handful of posts from X and LinkedIn that show how I think. Each one opens here with
+            its context and a link to the original. The rest of what I post lives on both.
           </p>
           <div className="mono" style={{ display: "flex", flexWrap: "wrap", gap: 18, marginTop: 20 }}>
             {socials
@@ -69,14 +68,14 @@ export default function PostsPage() {
           <div className="seg" role="group" aria-label="Filter posts by platform">
             <label className="seg-opt mono" style={{ fontSize: 12, letterSpacing: ".06em" }}>
               <input type="radio" name="postfilter" id="pf-all" defaultChecked />
-              All {posts.length}
+              All
             </label>
             <label className="seg-opt mono" style={{ fontSize: 12, letterSpacing: ".06em" }}>
-              <input type="radio" name="postfilter" id="pf-x" />X {counts.x}
+              <input type="radio" name="postfilter" id="pf-x" />X
             </label>
             <label className="seg-opt mono" style={{ fontSize: 12, letterSpacing: ".06em" }}>
               <input type="radio" name="postfilter" id="pf-li" />
-              LinkedIn {counts.linkedin}
+              LinkedIn
             </label>
           </div>
 

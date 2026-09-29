@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Fragment } from "react";
 import type { CSSProperties } from "react";
 
@@ -13,13 +12,16 @@ import KineticTestimonial from "./testimonials-with-verticalmarquee-utils/kineti
  * testimonial block rebuilt on the site's blueprint system with no motion
  * library.
  *
- * The heading and the links stay on the page grid. The wall itself runs the
+ * The heading stays on the page grid. The wall itself runs the
  * full width of the window between two hairlines, with ruled trails and the
  * grid's registration marks sitting on those hairlines, so it reads as one
  * wide sheet of the same drawing rather than a widget dropped in.
  *
  * The heading still blurs in word by word and the wall still rises in after
  * it, with CSS keyed off <InView>. Every card links to that post's own page.
+ *
+ * There is deliberately no "all posts" link or count under the wall. It is a
+ * sample of an ongoing feed, and a number would read as the whole of it.
  */
 export default function TestimonialsVerticalMarquee({
   kicker,
@@ -68,18 +70,6 @@ export default function TestimonialsVerticalMarquee({
               <i className="corner br" />
             </div>
           </div>
-        </div>
-      </div>
-
-      <div className="wrap">
-        <div className="kt-foot kt-sub">
-          <Link href="/posts" className="mono" style={{ fontSize: 13 }}>
-            All {posts.length} posts →
-          </Link>
-          <span className="mono dimmer kt-hint">
-            <span className="kt-hint-pointer">Scroll to turn it · rest the mouse on it to stop</span>
-            <span className="kt-hint-touch">Scroll to turn it</span>
-          </span>
         </div>
       </div>
     </InView>
