@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Evidence, Frame, Kicker, TagRow } from "@/components/blueprint";
 import { Diagram } from "@/components/diagrams";
 import { JsonLd } from "@/components/json-ld";
+import { ReachOut } from "@/components/reach-out";
 import { Rich } from "@/components/rich";
 import { roles } from "@/data/experience";
 import { systemBySlug, systems } from "@/data/systems";
@@ -154,6 +155,11 @@ export default async function SystemPage({
         <div className="wrap">
           <h2 className="h3">Stack</h2>
           <TagRow items={system.tags} className="mt-4" />
+
+          <ReachOut
+            prompt="Got a problem like this one? I would love to hear about it."
+            subject={`About your work at ${system.name}`}
+          />
 
           <p style={{ marginTop: 32 }}>
             <Link href="/work" className="mono rowlink">

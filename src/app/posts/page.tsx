@@ -2,8 +2,10 @@ import Link from "next/link";
 
 import { Kicker } from "@/components/blueprint";
 import { JsonLd } from "@/components/json-ld";
+import { ReachOut } from "@/components/reach-out";
 import { PostCard } from "@/components/ui/testimonials-with-verticalmarquee-utils/post-card";
 import { posts } from "@/data/posts";
+import { socials } from "@/data/site";
 import { breadcrumbSchema, jsonLd, pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
@@ -43,6 +45,21 @@ export default function PostsPage() {
             Selected posts from X and LinkedIn. Each one opens here with its context, and links
             to the original.
           </p>
+          <div className="mono" style={{ display: "flex", flexWrap: "wrap", gap: 18, marginTop: 20 }}>
+            {socials
+              .filter((s) => s.label !== "GitHub")
+              .map((s) => (
+                <a
+                  key={s.href}
+                  href={s.href}
+                  target="_blank"
+                  rel="me noopener noreferrer"
+                  style={{ fontSize: 13 }}
+                >
+                  Follow on {s.label} ↗
+                </a>
+              ))}
+          </div>
         </div>
       </section>
 
@@ -68,6 +85,8 @@ export default function PostsPage() {
               <PostCard key={post.slug} post={post} />
             ))}
           </div>
+
+          <ReachOut prompt="Thinking about the same problems? I would love to hear from you." />
 
           <p style={{ marginTop: 32 }}>
             <Link href="/#in-public" className="mono rowlink">

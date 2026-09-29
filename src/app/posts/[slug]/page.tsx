@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { Kicker } from "@/components/blueprint";
 import { JsonLd } from "@/components/json-ld";
+import { ReachOut } from "@/components/reach-out";
 import { PostCard } from "@/components/ui/testimonials-with-verticalmarquee-utils/post-card";
 import { formatPostDate, platformLabel, postBySlug, posts } from "@/data/posts";
 import { breadcrumbSchema, jsonLd, pageMeta, postSchema } from "@/lib/seo";
@@ -128,7 +129,12 @@ export default async function PostPage({
 
       <section className="sec" style={{ paddingBottom: 88 }}>
         <div className="wrap">
-          <div style={{ borderTop: "1px solid var(--color-divider)" }}>
+          <ReachOut
+            prompt="Thinking about the same problems? I would love to hear from you."
+            subject={`About your post, ${post.title}`}
+          />
+
+          <div style={{ borderTop: "1px solid var(--color-divider)", marginTop: 48 }}>
             {[
               { label: "Previous", post: prev },
               { label: "Next", post: next },

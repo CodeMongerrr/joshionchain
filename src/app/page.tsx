@@ -1,9 +1,11 @@
 import Link from "next/link";
 
 import { Evidence, Frame, Kicker, TagRow } from "@/components/blueprint";
+import { ContactPanel } from "@/components/contact-panel";
 import { ContributionsTable } from "@/components/contributions-table";
 import { LegacyHashRedirect } from "@/components/legacy-hash-redirect";
 import { Portrait } from "@/components/portrait";
+import { TitleBlock } from "@/components/title-block";
 import TestimonialsVerticalMarquee from "@/components/ui/testimonials-with-verticalmarquee";
 import { securityLede } from "@/data/contributions";
 import { experience, highlights } from "@/data/experience";
@@ -159,6 +161,7 @@ export default async function HomePage() {
           </div>
 
           <Portrait />
+          <TitleBlock />
         </header>
 
         {/* ── 01 results ──────────────────────────────────────────────── */}
@@ -434,37 +437,7 @@ export default async function HomePage() {
             problem where the hard part is figuring out what is actually broken? I would love to
             hear about it.
           </p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
-            {contactEmail ? (
-              <a className="btn btn-primary" href={`mailto:${contactEmail}`} style={{ padding: "10px 18px", fontSize: 15 }}>
-                Email ↗
-              </a>
-            ) : (
-              <span
-                className="btn btn-secondary mono"
-                style={{
-                  padding: "10px 18px",
-                  fontSize: 13,
-                  borderStyle: "dashed",
-                  color: "color-mix(in srgb, var(--color-text) 70%, transparent)",
-                }}
-              >
-                email: add address
-              </span>
-            )}
-            {socials.map((s) => (
-              <a
-                key={s.href}
-                className="btn btn-secondary"
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ padding: "10px 18px", fontSize: 15 }}
-              >
-                {s.label} ↗
-              </a>
-            ))}
-          </div>
+          <ContactPanel />
         </section>
       </div>
     </main>
