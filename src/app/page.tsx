@@ -2,16 +2,17 @@ import Link from "next/link";
 
 import { Evidence, Frame, Kicker, TagRow } from "@/components/blueprint";
 import { ContactPanel } from "@/components/contact-panel";
+import { CopyEmail } from "@/components/copy-email";
 import { Door } from "@/components/door";
 import { HeroPosts } from "@/components/hero-posts";
 import { LegacyHashRedirect } from "@/components/legacy-hash-redirect";
 import { Portrait } from "@/components/portrait";
-import { TitleBlock } from "@/components/title-block";
+import { HeroFacts } from "@/components/hero-facts";
 import { earlier, roles } from "@/data/experience";
 import { postTrails } from "@/data/posts";
 import { projects } from "@/data/projects";
 import { results } from "@/data/results";
-import { resumePdf, site, socials } from "@/data/site";
+import { contactEmail, resumePdf, site, socials } from "@/data/site";
 import { stack } from "@/data/stack";
 import { systems } from "@/data/systems";
 import { jsonLd, profilePageSchema } from "@/lib/seo";
@@ -46,29 +47,8 @@ export default function HomePage() {
         <div className="wrap">
         <header className="hero-grid">
           <div>
-            <span
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 8,
-                border: "1px solid var(--color-divider)",
-                padding: "6px 12px",
-                fontFamily: "var(--font-ibm-plex-mono), monospace",
-                fontSize: 12,
-                letterSpacing: ".02em",
-                color: "color-mix(in srgb, var(--color-text) 78%, transparent)",
-              }}
-            >
-              <i
-                aria-hidden="true"
-                style={{
-                  width: 6,
-                  height: 6,
-                  background: "var(--color-accent)",
-                  borderRadius: "50%",
-                  display: "block",
-                }}
-              />
+            <span className="hero-status">
+              <i aria-hidden="true" />
               {site.statusPill}
             </span>
 
@@ -91,16 +71,11 @@ export default function HomePage() {
               {site.tagline}
             </p>
 
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "12px 28px" }}>
               <a className="btn btn-primary" href="#contact" style={{ padding: "10px 18px", fontSize: 15 }}>
                 Get in touch
               </a>
-              <a
-                className="btn btn-secondary"
-                href={resumePdf.href}
-                download={resumePdf.filename}
-                style={{ padding: "10px 18px", fontSize: 15 }}
-              >
+              <a className="hero-textlink" href={resumePdf.href} download={resumePdf.filename}>
                 Download the resume ↓
               </a>
             </div>
@@ -125,11 +100,17 @@ export default function HomePage() {
                   {s.label} ↗
                 </a>
               ))}
+              {contactEmail ? (
+                <span className="hero-email">
+                  <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+                  <CopyEmail email={contactEmail} className="inline-copy mono" />
+                </span>
+              ) : null}
             </div>
           </div>
 
           <Portrait />
-          <TitleBlock />
+          <HeroFacts />
         </header>
         </div>
         <HeroPosts left={left} right={right} />
