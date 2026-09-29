@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 
+import { posts } from "@/data/posts";
 import { projects } from "@/data/projects";
 import { site } from "@/data/site";
 import { systems } from "@/data/systems";
@@ -30,6 +31,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.6,
+    })),
+    { url: url("/posts"), lastModified: now, changeFrequency: "monthly", priority: 0.5 },
+    ...posts.map((p) => ({
+      url: url(`/posts/${p.slug}`),
+      lastModified: new Date(p.date),
+      changeFrequency: "yearly" as const,
+      priority: 0.4,
     })),
   ];
 }

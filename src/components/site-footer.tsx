@@ -30,6 +30,7 @@ export function SiteFooter() {
         ))}
         {contactEmail ? <a href={`mailto:${contactEmail}`}>Email</a> : null}
         <Link href="/open-source">Open source</Link>
+        <Link href="/posts">Posts</Link>
         <Link href="/resume">Resume</Link>
         <Link href="/about">About</Link>
       </nav>

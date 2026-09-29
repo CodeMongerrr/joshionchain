@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { roles } from "@/data/experience";
 import { contactEmail, extraSameAs, site, socials } from "@/data/site";
+import { posts } from "@/data/posts";
 import { projects } from "@/data/projects";
 import { systems } from "@/data/systems";
 
@@ -173,6 +174,27 @@ export function systemSchema(slug: string) {
     about: s.domain,
     url: absoluteUrl(`/work/${s.slug}`),
     author: { "@id": `${site.url}/#person` },
+  };
+}
+
+/**
+ * A post from X or LinkedIn, as it appears on its page here. `sameAs` points
+ * at the original, so the two are understood as one post, not a copy.
+ */
+export function postSchema(slug: string) {
+  const p = posts.find((x) => x.slug === slug);
+  if (!p) return null;
+  return {
+    "@type": "SocialMediaPosting",
+    "@id": `${site.url}/posts/${p.slug}/#post`,
+    headline: p.title,
+    description: p.note,
+    articleBody: p.text,
+    datePublished: p.date,
+    url: absoluteUrl(`/posts/${p.slug}`),
+    sameAs: p.url,
+    author: { "@id": `${site.url}/#person` },
+    isPartOf: { "@id": `${site.url}/#website` },
   };
 }
 

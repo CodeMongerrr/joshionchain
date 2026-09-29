@@ -1,0 +1,167 @@
+import Link from "next/link";
+import { notFound } from "next/navigation";
+
+import { Kicker } from "@/components/blueprint";
+import { JsonLd } from "@/components/json-ld";
+import { PostCard } from "@/components/ui/testimonials-with-verticalmarquee-utils/post-card";
+import { formatPostDate, platformLabel, postBySlug, posts } from "@/data/posts";
+import { breadcrumbSchema, jsonLd, pageMeta, postSchema } from "@/lib/seo";
+
+export function generateStaticParams() {
+  return posts.map((p) => ({ slug: p.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const post = postBySlug(slug);
+  if (!post) return {};
+
+  return pageMeta({
+    title: post.title,
+    description: post.note,
+    path: `/posts/${post.slug}`,
+  });
+}
+
+/**
+ * Where a card from the "In public" marquee lands. The post in full, dressed
+ * as its platform, with the context around it and the way out to the
+ * original.
+ */
+export default async function PostPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const post = postBySlug(slug);
+  if (!post) notFound();
+
+  const i = posts.indexOf(post);
+  const prev = posts[(i - 1 + posts.length) % posts.length];
+  const next = posts[(i + 1) % posts.length];
+  const platform = platformLabel[post.platform];
+
+  return (
+    <>
+      <JsonLd
+        data={jsonLd(
+          postSchema(post.slug),
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Posts", path: "/posts" },
+            { name: post.title, path: `/posts/${post.slug}` },
+          ]),
+        )}
+      />
+
+      <section className="sec sec-first">
+        <div className="wrap">
+          <p className="mono dimmer" style={{ fontSize: 12 }}>
+            <Link href="/posts" className="rowlink">
+              ← All posts
+            </Link>
+          </p>
+
+          <Kicker>
+            Posted on {platform} · {formatPostDate(post.date)}
+          </Kicker>
+          <h1 className="h2">{post.title}</h1>
+          <p className="body dim" style={{ marginTop: 16 }}>
+            {post.note}
+          </p>
+        </div>
+      </section>
+
+      <section className="sec">
+        <div className="wrap-prose">
+          <div style={{ maxWidth: 600 }}>
+            <PostCard post={post} variant="full" />
+
+            {post.response ? (
+              <div className="post-reply">
+                <p className="mono dimmer" style={{ fontSize: 12, margin: "0 0 6px" }}>
+                  {post.response.name} replied
+                </p>
+                <p className="body" style={{ margin: "0 0 8px" }}>
+                  {post.response.summary}
+                </p>
+                <a
+                  className="mono"
+                  style={{ fontSize: 13 }}
+                  href={post.response.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Read the reply on X ↗
+                </a>
+              </div>
+            ) : null}
+
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 28 }}>
+              <a
+                className="btn btn-primary"
+                href={post.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ padding: "10px 18px", fontSize: 15 }}
+              >
+                Open on {platform} ↗
+              </a>
+              {post.related ? (
+                <Link
+                  className="btn btn-secondary"
+                  href={post.related.href}
+                  style={{ padding: "10px 18px", fontSize: 15 }}
+                >
+                  {post.related.label} →
+                </Link>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="sec" style={{ paddingBottom: 88 }}>
+        <div className="wrap">
+          <div style={{ borderTop: "1px solid var(--color-divider)" }}>
+            {[
+              { label: "Previous", post: prev },
+              { label: "Next", post: next },
+            ].map(({ label, post: p }) => (
+              <Link className="rowlink" href={`/posts/${p.slug}`} key={label}>
+                <div>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-barlow-condensed), sans-serif",
+                      fontWeight: 600,
+                      fontSize: 20,
+                      letterSpacing: ".01em",
+                    }}
+                  >
+                    {p.title}
+                  </div>
+                </div>
+                <span className="mono dimmer" style={{ fontSize: 12, whiteSpace: "nowrap" }}>
+                  {label === "Previous" ? "← " : null}
+                  {label} · {platformLabel[p.platform]}
+                  {label === "Next" ? " →" : null}
+                </span>
+              </Link>
+            ))}
+          </div>
+
+          <p style={{ marginTop: 32 }}>
+            <Link href="/#in-public" className="mono rowlink">
+              ← Back to the overview
+            </Link>
+          </p>
+        </div>
+      </section>
+    </>
+  );
+}

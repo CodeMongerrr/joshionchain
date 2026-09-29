@@ -698,6 +698,465 @@ html[data-js] [data-reveal][data-nofade] {
   }
 }
 
+/* ── in public: post cards ────────────────────────────────────────────── */
+
+/* Each card borrows its platform's look, X or LinkedIn, in the site's light
+   or dark theme. Everything below reads from the --pc-* variables, so a
+   platform is just a palette, a radius and a type stack. */
+
+.pc {
+  display: block;
+  position: relative;
+  background: var(--pc-bg);
+  color: var(--pc-text);
+  border: 1px solid var(--pc-border);
+  padding: 12px 16px 14px;
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease-out,
+    border-color 0.15s ease-out;
+}
+
+.pc-x {
+  --pc-bg: #ffffff;
+  --pc-hover: #f7f9f9;
+  --pc-border: #cfd9de;
+  --pc-text: #0f1419;
+  --pc-dim: #536471;
+  --pc-link: #1d9bf0;
+  border-radius: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.34;
+}
+
+html[data-theme="dark"] .pc-x {
+  --pc-bg: #000000;
+  --pc-hover: #080808;
+  --pc-border: #2f3336;
+  --pc-text: #e7e9ea;
+  --pc-dim: #71767b;
+}
+
+.pc-linkedin {
+  --pc-bg: #ffffff;
+  --pc-hover: #f8f8f8;
+  --pc-border: rgb(140 140 140 / 0.3);
+  --pc-text: rgb(0 0 0 / 0.9);
+  --pc-dim: rgb(0 0 0 / 0.6);
+  --pc-link: #0a66c2;
+  border-radius: 8px;
+  font-family:
+    -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen,
+    Cantarell, sans-serif;
+  font-size: 14px;
+  line-height: 1.43;
+}
+
+html[data-theme="dark"] .pc-linkedin {
+  --pc-bg: #1b1f23;
+  --pc-hover: #22272c;
+  --pc-border: rgb(255 255 255 / 0.14);
+  --pc-text: rgb(255 255 255 / 0.9);
+  --pc-dim: rgb(255 255 255 / 0.6);
+  --pc-link: #71b7fb;
+}
+
+a.pc:hover {
+  background: var(--pc-hover);
+  border-color: var(--pc-link);
+}
+
+a.pc:focus-visible {
+  outline: 2px solid var(--pc-link);
+  outline-offset: 2px;
+}
+
+.pc-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.pc-avatar {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.pc-linkedin .pc-avatar {
+  width: 48px;
+  height: 48px;
+}
+
+.pc-id {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.pc-id > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pc-id > .pc-byline {
+  display: flex;
+  gap: 4px;
+}
+
+a.pc .pc-byline {
+  font-size: 14px;
+}
+
+.pc-byline > * {
+  flex: none;
+}
+
+.pc-byline > .pc-handle {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pc-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-weight: 700;
+  color: var(--pc-text);
+}
+
+/* The name gives way before the verified badge does. */
+.pc-id > .pc-name {
+  display: flex;
+}
+
+.pc-name-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pc-linkedin .pc-name {
+  font-weight: 600;
+}
+
+.pc-dim {
+  color: var(--pc-dim);
+}
+
+.pc-linkedin .pc-id > .pc-dim {
+  font-size: 12px;
+  line-height: 1.33;
+}
+
+.pc-verified {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  fill: #1d9bf0;
+}
+
+.pc-logo {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  fill: var(--pc-text);
+}
+
+.pc-linkedin .pc-logo {
+  width: 20px;
+  height: 20px;
+  fill: var(--pc-link);
+}
+
+.pc-globe {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  vertical-align: -2px;
+  fill: currentColor;
+}
+
+.pc-replying {
+  margin: 0 0 4px;
+}
+
+.pc-link {
+  color: var(--pc-link);
+  text-decoration: none;
+}
+
+a.pc-link:hover {
+  text-decoration: underline;
+}
+
+.pc-text {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: var(--pc-text);
+}
+
+.pc-clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 8;
+  line-clamp: 8;
+  overflow: hidden;
+}
+
+.pc-linkedin .pc-clamp {
+  -webkit-line-clamp: 6;
+  line-clamp: 6;
+}
+
+.pc-quote {
+  display: block;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--pc-border);
+  border-radius: 12px;
+  color: var(--pc-text);
+  text-decoration: none;
+}
+
+a.pc-quote:hover {
+  background: var(--pc-hover);
+}
+
+.pc-quote-by {
+  display: block;
+  font-size: 14px;
+}
+
+.pc-quote-by .pc-name {
+  display: inline;
+}
+
+.pc-quote-title {
+  display: block;
+  margin-top: 4px;
+  font-weight: 700;
+}
+
+.pc-response {
+  margin: 10px 0 0;
+  font-size: 13px;
+}
+
+.pc-open {
+  display: block;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--pc-dim);
+}
+
+a.pc:hover .pc-open {
+  color: var(--pc-link);
+}
+
+/* The post itself on its detail page, X's larger reading size. */
+.pc-full {
+  padding: 16px 20px 20px;
+}
+
+.pc-full.pc-x {
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+.pc-full.pc-linkedin {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.pc-full .pc-head {
+  margin-bottom: 12px;
+}
+
+/* A notable reply, quoted under the post on its detail page. */
+.post-reply {
+  margin-top: 24px;
+  padding: 4px 0 4px 16px;
+  border-left: 2px solid var(--color-accent);
+}
+
+/* /posts, a masonry of every card with a CSS only platform filter, same
+   pattern as the open-source status filter. */
+.pgrid-cols {
+  columns: 3 280px;
+  column-gap: 16px;
+  margin-top: 28px;
+}
+
+.pgrid-cols > .pc {
+  break-inside: avoid;
+  margin-bottom: 16px;
+}
+
+.pgrid:has(#pf-x:checked) .pc[data-platform="linkedin"],
+.pgrid:has(#pf-li:checked) .pc[data-platform="x"] {
+  display: none;
+}
+
+/* ── in public: vertical marquee ──────────────────────────────────────── */
+
+/* Keyframes from the 21st.dev vertical marquee. Each track holds its cards
+   twice, so sliding by -50% lands exactly on the start of the copy. */
+@keyframes scroll-up-smooth {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes scroll-down-smooth {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.frame.kt-frame {
+  padding: 0 20px;
+}
+
+.kt-stage {
+  display: grid;
+  grid-template-columns: repeat(var(--kt-cols, 3), minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+  height: 640px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
+}
+
+.kt-track {
+  animation: scroll-up-smooth var(--kt-duration, 45s) linear infinite;
+  will-change: transform;
+}
+
+.kt-track[data-dir="down"] {
+  animation-name: scroll-down-smooth;
+}
+
+/* Padding rather than a gap between the two copies, so the track is exactly
+   two copies tall and -50% is exactly one of them. */
+.kt-set {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 16px;
+}
+
+/* Hold still for the reader. */
+.kt-stage:hover .kt-track,
+.kt-stage:focus-within .kt-track,
+.kt-stage[data-offscreen] .kt-track {
+  animation-play-state: paused;
+}
+
+/* The heading blurs in word by word, then the subtitle, then the marquee,
+   the same sequence and timings as the original's motion props. */
+.kt-w {
+  display: inline-block;
+}
+
+@keyframes kt-word {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+}
+
+@keyframes kt-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes kt-rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+html[data-js] .kt:not([data-inview]) .kt-w,
+html[data-js] .kt:not([data-inview]) .kt-sub,
+html[data-js] .kt:not([data-inview]) .kt-rise {
+  opacity: 0;
+}
+
+html[data-js] .kt[data-inview] .kt-w {
+  animation: kt-word 0.4s ease-in-out calc(var(--i) * 80ms) both;
+}
+
+html[data-js] .kt[data-inview] .kt-sub {
+  animation: kt-fade 0.5s ease-out 0.5s both;
+}
+
+html[data-js] .kt[data-inview] .kt-rise {
+  animation: kt-rise 0.6s ease-out 0.65s both;
+}
+
+/* Reduced motion gets a still wall, every card once, nothing hidden. */
+@media (prefers-reduced-motion: reduce) {
+  html[data-js] .kt .kt-w,
+  html[data-js] .kt .kt-sub,
+  html[data-js] .kt .kt-rise {
+    opacity: 1;
+    animation: none;
+  }
+  .kt-stage {
+    height: auto;
+    padding: 20px 0;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .kt-track {
+    animation: none;
+  }
+  .kt-set[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .kt-stage {
+    height: 560px;
+  }
+  .frame.kt-frame {
+    padding: 0 12px;
+  }
+}
+
 /* ── skip link ────────────────────────────────────────────────────────── */
 
 .skip {

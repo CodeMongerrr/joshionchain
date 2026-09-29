@@ -1,5 +1,6 @@
 import { contributions } from "@/data/contributions";
 import { earlier, plain, roles } from "@/data/experience";
+import { formatPostDate, platformLabel, posts } from "@/data/posts";
 import { projects } from "@/data/projects";
 import { resumeEducation, resumeOpenSource, resumeProjects, resumeSummary } from "@/data/resume";
 import { results } from "@/data/results";
@@ -52,6 +53,7 @@ ${projects.map((p) => `- [${p.title}](${site.url}/projects/${p.slug}) (${p.langu
 - [Work](${site.url}/work) roles, studio and projects
 - [Open source](${site.url}/open-source) upstream contributions
 - [About](${site.url}/about) background in his own words
+- [Posts](${site.url}/posts) selected posts from X and LinkedIn, each linked to the original
 - [Everything in plain text](${site.url}/llms-full.txt)
 
 ## Notes for summarisers
@@ -104,6 +106,12 @@ ${projects.map((p) => `### ${p.title}\n${p.repoUrl}\n\n${p.body.join("\n\n")}`).
 ## Work in depth
 
 ${systems.map((s) => `### ${s.name}, ${s.context}\n${s.domain} · ${s.period}\n\n${s.body.join("\n\n")}${s.subItems ? `\n\n${s.subItems.map((i) => `- ${i.name}. ${i.description}`).join("\n")}` : ""}`).join("\n\n")}
+
+## Selected posts
+
+Quoted exactly as published. Each links to the original.
+
+${posts.map((p) => `### ${p.title}\n${platformLabel[p.platform]} · ${formatPostDate(p.date)} · ${p.url}\n\n${p.text}`).join("\n\n")}
 
 ## Education
 
