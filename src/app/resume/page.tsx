@@ -1,6 +1,5 @@
 import { Kicker, TagRow } from "@/components/blueprint";
 import { JsonLd } from "@/components/json-ld";
-import { PrintButton } from "@/components/print-button";
 import { Rich } from "@/components/rich";
 import { roles } from "@/data/experience";
 import {
@@ -10,7 +9,7 @@ import {
   resumeSummary,
   type ResumeEntry,
 } from "@/data/resume";
-import { contactEmail, site, socials } from "@/data/site";
+import { contactEmail, resumePdf, site, socials } from "@/data/site";
 import { stack } from "@/data/stack";
 import { breadcrumbSchema, jsonLd, pageMeta, personSchema } from "@/lib/seo";
 
@@ -24,7 +23,8 @@ export const metadata = pageMeta({
 /**
  * The resume as HTML, word for word with the PDF. Recruiters can read it
  * without downloading anything, crawlers and agents can index it, and the
- * print stylesheet turns it into a clean PDF.
+ * print stylesheet turns it into the PDF behind every download button
+ * (public/aditya-joshi-resume.pdf, regenerated with `npm run resume:pdf`).
  */
 
 function Bullets({ items }: { items: string[] }) {
@@ -67,7 +67,7 @@ function Head({
 
 function Entry({ e }: { e: ResumeEntry }) {
   return (
-    <div style={{ marginTop: 24 }}>
+    <div className="resume-item" style={{ marginTop: 24 }}>
       <Head name={e.name} href={e.href} sub={e.meta} period={e.period} />
       <Bullets items={e.bullets} />
     </div>
@@ -76,7 +76,7 @@ function Entry({ e }: { e: ResumeEntry }) {
 
 export default function ResumePage() {
   return (
-    <>
+    <div className="resume">
       <JsonLd
         data={jsonLd(
           personSchema(),
@@ -105,8 +105,15 @@ export default function ResumePage() {
               </a>
             ))}
           </p>
-          <div style={{ marginTop: 20 }}>
-            <PrintButton />
+          <div className="no-print" style={{ marginTop: 20 }}>
+            <a
+              className="btn btn-primary"
+              href={resumePdf.href}
+              download={resumePdf.filename}
+              style={{ padding: "10px 18px", fontSize: 15 }}
+            >
+              Download the PDF ↓
+            </a>
           </div>
         </div>
       </section>
@@ -140,7 +147,7 @@ export default function ResumePage() {
         <div className="wrap-prose">
           <h2 className="h3">Experience</h2>
           {roles.map((r) => (
-            <div style={{ marginTop: 24 }} key={r.company}>
+            <div className="resume-item" style={{ marginTop: 24 }} key={r.company}>
               <Head
                 name={r.company}
                 href={r.companyUrl}
@@ -183,6 +190,6 @@ export default function ResumePage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

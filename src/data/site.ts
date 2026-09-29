@@ -108,10 +108,15 @@ export const extraSameAs = ["https://www.npmjs.com/package/@jino-labs/earshot"] 
 export const githubUser = "CodeMongerrr";
 
 export const nav = [
-  { label: "Now", href: "/#building-now" },
   { label: "Work", href: "/work" },
+  { label: "Experience", href: "/experience" },
   { label: "Open source", href: "/open-source" },
   { label: "Resume", href: "/resume" },
   { label: "About", href: "/about" },
-  { label: "Contact", href: "/#contact" },
 ] as const;
+
+/** The one filled button in the navbar, so contact is a click away from anywhere. */
+export const navCta = { label: "Get in touch", href: "/#contact" } as const;
+
+/** The resume as a file, generated from /resume by `npm run resume:pdf`. */
+export const resumePdf = { href: "/aditya-joshi-resume.pdf", filename: "Aditya-Joshi-Resume.pdf" } as const;

@@ -25,8 +25,10 @@ export type Contribution = {
   code?: string[];
   /** Last known status, the live fetch overrides this when it succeeds. */
   status: Status;
-  /** Security fixes get called out in prose above the table. */
+  /** Security fixes open /open-source as cards, above the full table. */
   security?: boolean;
+  /** What the fix protects, for the security cards. Site copy, same words as the resume. */
+  detail?: string;
 };
 
 export const contributions: Contribution[] = [
@@ -38,6 +40,8 @@ export const contributions: Contribution[] = [
     code: ["zebrad-log-filter"],
     status: "merged",
     security: true,
+    detail:
+      "Reproduced a shell-injection path with a crafted log line, then rewrote the filter in pure Bash, so a malicious log line can no longer run commands on a node operator's machine.",
   },
   {
     repo: "ZcashFoundation/zebra",
@@ -46,6 +50,8 @@ export const contributions: Contribution[] = [
     what: "Kept the Elasticsearch password out of the config dump",
     status: "merged",
     security: true,
+    detail:
+      "Stopped the Elasticsearch password leaking into the startup config dump by wrapping it in a RedactedString type.",
   },
   {
     repo: "ZcashFoundation/zebra",
@@ -99,7 +105,3 @@ export const contributions: Contribution[] = [
     status: "open",
   },
 ];
-
-/** Framing line that must appear in prose, not buried in a table cell. */
-export const securityLede =
-  "The first two are security fixes in Zebra v6.2.2. One closed a shell-injection path so a crafted log line can no longer run commands on a node operator's machine, and the other stopped a database password leaking into config output.";

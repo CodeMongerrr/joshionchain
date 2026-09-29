@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useState, useSyncExternalStore } from "react";
 
-import { nav, site } from "@/data/site";
+import { nav, navCta, site } from "@/data/site";
 
 /* The theme lives on <html data-theme>, which ThemeScript resolves before
    paint. Reading it with useSyncExternalStore rather than mirroring it into
@@ -86,6 +86,9 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
+          <Link href={navCta.href} className="btn btn-primary navcta">
+            {navCta.label}
+          </Link>
           <button
             type="button"
             className="btn btn-secondary mono"

@@ -115,39 +115,6 @@ export const earlier: EarlierRole[] = [
 /** Strip the bold markers for plain-text surfaces. */
 export const plain = (s: string) => s.replace(/\*\*/g, "");
 
-/**
- * The "Before this" list the home and About pages render. Current work lives
- * in systems.ts and must not repeat here.
- */
-export type PastRole = {
-  company: string;
-  title: string;
-  team?: string;
-  period: string;
-  location: string;
-  description: string;
-};
-
-export const experience: PastRole[] = [
-  {
-    company: "Gusto Development",
-    title: "Blockchain Developer (part-time)",
-    period: "Sep 2025 to Jan 2026",
-    location: "Japan (Remote)",
-    description:
-      "Custom-built swap execution for Janction DEX, a Uniswap V3-style exchange on JASMY Chain, around the client's Japan-specific market requirements that standard DEX logic could not handle, plus its Subgraph analytics.",
-  },
-  {
-    company: "Nethermind",
-    title: "Research Intern",
-    period: "May to Aug 2024",
-    location: "London (Remote)",
-    description:
-      "Joined the core infrastructure team behind one of Ethereum's leading execution clients to work on Juno, Nethermind's Go full node for Starknet, across P2P networking, chain sync and the JSON-RPC API. Chased a P2P bug where nodes never rejoined peers after going offline and briefed the core maintainers.",
-  },
-  ...earlier,
-];
-
 /** Compressed into one row of small items rather than large cards. */
 export const highlights = [
   "Both security fixes · Zebra v6.2.2",

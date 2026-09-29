@@ -2,13 +2,14 @@
   "name": "joshionchain",
   "version": "1.0.0",
   "private": true,
-  "description": "Personal site for Aditya Joshi — joshionchain.com",
+  "description": "Personal site for Aditya Joshi \u2014 joshionchain.com",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "resume:pdf": "node scripts/resume-pdf.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^1.5.0",

@@ -48,7 +48,7 @@ export function TitleBlock() {
           <dt className="tlabel">Based in</dt>
           <dd>
             <span className="tvalue">{site.location}</span>
-            <span className="tsub">{home.zoneLabel} · open to US, UK, UAE or remote</span>
+            <span className="tsub">India Standard Time ({home.zoneLabel})</span>
           </dd>
         </div>
 

@@ -11,7 +11,7 @@ import { earlier, roles } from "@/data/experience";
 import { posts } from "@/data/posts";
 import { projects } from "@/data/projects";
 import { results } from "@/data/results";
-import { contactEmail, site, socials } from "@/data/site";
+import { resumePdf, site, socials } from "@/data/site";
 import { stack } from "@/data/stack";
 import { systems } from "@/data/systems";
 import { jsonLd, profilePageSchema } from "@/lib/seo";
@@ -86,21 +86,24 @@ export default function HomePage() {
             >
               {site.tagline}
             </p>
-            <p className="body dim" style={{ margin: "0 0 30px" }}>
-              {site.supporting}
-            </p>
+            {/* The proof in one scannable line. The title block below carries
+                the rest, so nothing here needs a paragraph. */}
+            <div style={{ margin: "0 0 30px" }}>
+              <Evidence items={site.proof} />
+            </div>
 
             <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
               <a className="btn btn-primary" href="#contact" style={{ padding: "10px 18px", fontSize: 15 }}>
                 Get in touch
               </a>
-              <Link
+              <a
                 className="btn btn-secondary"
-                href="/resume"
+                href={resumePdf.href}
+                download={resumePdf.filename}
                 style={{ padding: "10px 18px", fontSize: 15 }}
               >
-                Read the resume
-              </Link>
+                Download the resume ↓
+              </a>
             </div>
 
             <div
@@ -123,30 +126,6 @@ export default function HomePage() {
                   {s.label} ↗
                 </a>
               ))}
-              {contactEmail ? (
-                <a
-                  href={`mailto:${contactEmail}`}
-                  style={{
-                    fontSize: 13,
-                    textDecoration: "none",
-                    borderBottom: "1px solid var(--color-divider)",
-                    paddingBottom: 2,
-                  }}
-                >
-                  Email ↗
-                </a>
-              ) : (
-                <span
-                  className="dimmer"
-                  style={{
-                    fontSize: 13,
-                    borderBottom: "1px dashed var(--color-divider)",
-                    paddingBottom: 2,
-                  }}
-                >
-                  email: add address
-                </span>
-              )}
             </div>
           </div>
 
@@ -203,7 +182,7 @@ export default function HomePage() {
 
           <div style={{ display: "grid", gap: 28 }}>
             {systems.map((s) => (
-              <Frame as="article" className="frame-link" key={s.slug}>
+              <Frame as="article" className="frame-link card" key={s.slug}>
                 <div
                   style={{
                     display: "flex",
@@ -214,9 +193,7 @@ export default function HomePage() {
                   }}
                 >
                   <h3 className="h3" style={{ fontSize: 26 }}>
-                    <Link href={`/work/${s.slug}`} style={{ color: "inherit", textDecoration: "none" }}>
-                      {s.name}
-                    </Link>
+                    {s.name}
                   </h3>
                   <span
                     className="mono dimmer"
@@ -251,10 +228,12 @@ export default function HomePage() {
                   }}
                 >
                   <TagRow items={s.tags} />
+                  {/* One link per card, stretched over all of it by .card-cta, so
+                      the whole card clicks through and the button says where. */}
                   <Link
                     href={`/work/${s.slug}`}
-                    className="mono"
-                    style={{ fontSize: 13, marginLeft: "auto", whiteSpace: "nowrap" }}
+                    className="btn btn-primary card-cta"
+                    aria-label={`Read the full ${s.name} story`}
                   >
                     Read the full story →
                   </Link>
@@ -318,38 +297,23 @@ export default function HomePage() {
         <section className="sec" id="stack" data-reveal>
           <Kicker>04 · Skills</Kicker>
           <h2 className="h2">What I work in</h2>
-          <div className="stack-grid" style={{ marginTop: 36 }}>
+          {/* One line per group, like the spec table on a drawing, so the whole
+              stack reads in a glance instead of a wall of chips. */}
+          <dl className="spec">
             {stack.map((group) => (
-              <div key={group.label}>
-                <div
-                  className="mono"
-                  style={{
-                    fontSize: 12,
-                    letterSpacing: ".1em",
-                    textTransform: "uppercase",
-                    paddingBottom: 10,
-                    borderBottom: "1px solid var(--color-divider)",
-                    marginBottom: 14,
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: 10,
-                  }}
-                >
-                  {group.label}
+              <div className="spec-row" key={group.label}>
+                <dt className="spec-label">{group.label}</dt>
+                <dd className="spec-items">{group.items.join(" · ")}</dd>
+                <dd className="spec-proof">
                   {group.evidence ? (
-                    <Link
-                      href={group.evidence.href}
-                      className="dimmer"
-                      style={{ textDecoration: "none", marginLeft: "auto" }}
-                    >
-                      {group.evidence.label}
+                    <Link href={group.evidence.href} className="mono">
+                      {group.evidence.label.replace(/^→\s*/, "")} →
                     </Link>
                   ) : null}
-                </div>
-                <TagRow items={group.items} />
+                </dd>
               </div>
             ))}
-          </div>
+          </dl>
         </section>
 
       </div>

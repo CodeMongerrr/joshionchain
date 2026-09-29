@@ -539,6 +539,21 @@ html[data-theme="dark"] .btn-primary:hover {
   color: var(--accent-ink);
 }
 
+/* The one filled button in the bar. Contact is a click away from anywhere,
+   not a scroll to the bottom of the homepage. */
+.navlinks a.navcta {
+  font-family: var(--font-barlow-condensed), system-ui, sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--color-bg);
+  padding: 6px 12px;
+}
+
+.navlinks a.navcta:hover {
+  color: var(--color-bg);
+}
+
 .menubtn {
   display: none;
 }
@@ -1343,6 +1358,156 @@ html[data-js] .kt[data-inview] .kt-rise {
   }
 }
 
+/* ── clickable cards (recent work) ────────────────────────────────────── */
+
+/* The card's one link is its button, stretched over the whole card, so any
+   click on the card goes through and the button still says where. */
+.frame.card {
+  transition:
+    border-color 0.15s ease-out,
+    background-color 0.15s ease-out;
+}
+
+.frame.card:hover {
+  border-color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 5%, transparent);
+}
+
+.frame.card:has(.card-cta:focus-visible) {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 5px;
+}
+
+.card-cta {
+  margin-left: auto;
+  padding: 10px 18px;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.card-cta:focus-visible {
+  outline: none;
+}
+
+.card-cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.frame.card:hover .card-cta {
+  background: var(--color-accent-600);
+  border-color: var(--color-accent-600);
+}
+
+html[data-theme="dark"] .frame.card:hover .card-cta {
+  background: var(--color-accent-300);
+  border-color: var(--color-accent-300);
+}
+
+/* ── security fix cards (/open-source) ────────────────────────────────── */
+
+.fix-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: 36px;
+}
+
+.frame.fix {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+}
+
+.fix .kick {
+  margin: 0;
+}
+
+.fix-title {
+  margin: 0;
+  font-family: var(--font-barlow-condensed), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(22px, 2.4vw, 26px);
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+}
+
+.fix-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.fix-status {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+
+.fix-meta .btn {
+  padding: 8px 14px;
+  font-size: 14px;
+}
+
+@media (max-width: 880px) {
+  .fix-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── spec table (skills) ──────────────────────────────────────────────── */
+
+.spec {
+  margin: 36px 0 0;
+  border-top: 1px solid var(--color-divider);
+}
+
+.spec-row {
+  display: grid;
+  grid-template-columns: minmax(0, 220px) minmax(0, 1fr) auto;
+  gap: 8px 28px;
+  align-items: baseline;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.spec-label {
+  font-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+
+.spec-items {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.spec-proof {
+  margin: 0;
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+  .spec-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .spec-proof {
+    white-space: normal;
+  }
+}
+
 /* ── doors (the way into a page the homepage only summarises) ─────────── */
 
 /* Framed like everything else, but tinted with the accent and carrying a
@@ -1428,6 +1593,11 @@ html[data-js] .kt[data-inview] .kt-rise {
 html[data-theme="dark"] .frame.door:hover .door-action {
   background: var(--color-accent-300);
   border-color: var(--color-accent-300);
+}
+
+/* A door that opens its own section needs no gap above it. */
+.wrap > .frame.door:first-child {
+  margin-top: 0;
 }
 
 @media (max-width: 700px) {
@@ -1775,6 +1945,12 @@ a.tvalue:hover {
     width: 100%;
     font-size: 13px;
   }
+  .navlinks a.navcta {
+    width: auto;
+    margin: 8px 0 6px;
+    padding: 10px 18px;
+    font-size: 15px;
+  }
   [data-menu="closed"] .navlinks {
     display: none;
   }
@@ -1854,5 +2030,65 @@ a.tvalue:hover {
   .sec {
     padding: 14pt 0;
     break-inside: avoid-page;
+  }
+
+  /* The resume prints as the downloadable PDF, so it is set like one. Dense
+     type, sections that may break across pages, and a heading or a single
+     role that never does. */
+  @page {
+    size: letter;
+    margin: 12mm 13mm 13mm;
+  }
+  .resume .sec {
+    padding: 5pt 0;
+    border-top: 0;
+    break-inside: auto;
+  }
+  .resume .sec-first {
+    padding-top: 0;
+  }
+  .resume .wrap-prose {
+    max-width: none;
+    padding: 0;
+  }
+  .resume .kick {
+    display: none;
+  }
+  .resume .h2 {
+    font-size: 21pt;
+    margin: 0;
+  }
+  .resume .h3 {
+    font-size: 11.5pt;
+    break-after: avoid;
+  }
+  .resume .body {
+    font-size: 9.5pt;
+    line-height: 1.36;
+    max-width: none;
+    margin-top: 3pt !important;
+  }
+  .resume ul.body {
+    gap: 2.5pt !important;
+    margin-top: 4pt !important;
+    list-style: disc;
+  }
+  .resume li {
+    break-inside: avoid;
+  }
+  .resume .mono {
+    font-size: 8.3pt !important;
+    margin-top: 1pt !important;
+  }
+  .resume .resume-item {
+    margin-top: 8pt !important;
+    break-inside: avoid;
+  }
+  .resume .t {
+    font-size: 7.8pt;
+    padding: 0 4pt;
+  }
+  .resume .tagrow {
+    gap: 3pt;
   }
 }

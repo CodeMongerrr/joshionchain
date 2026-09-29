@@ -1,10 +1,11 @@
 import Link from "next/link";
 
-import { Frame, Kicker, TagRow } from "@/components/blueprint";
+import { Kicker, TagRow } from "@/components/blueprint";
+import { Door } from "@/components/door";
 import { JsonLd } from "@/components/json-ld";
 import { Portrait } from "@/components/portrait";
 import { bio } from "@/data/about";
-import { experience, highlights } from "@/data/experience";
+import { earlier, roles } from "@/data/experience";
 import { contactEmail, site, socials } from "@/data/site";
 import { stack } from "@/data/stack";
 import { breadcrumbSchema, jsonLd, pageMeta, personSchema } from "@/lib/seo";
@@ -17,6 +18,8 @@ export const metadata = pageMeta({
 });
 
 export default function AboutPage() {
+  const pastCompanies = [...roles.filter((r) => !r.slug), ...earlier].map((r) => r.company);
+
   return (
     <>
       <JsonLd
@@ -52,40 +55,16 @@ export default function AboutPage() {
 
       <section className="sec">
         <div className="wrap">
-          <h2 className="h3">Previously</h2>
-          <p className="body dim" style={{ marginTop: 8 }}>
-            Current work lives under{" "}
-            <Link href="/work" className="rowlink">
-              Work
-            </Link>
-            .
-          </p>
-
-          <div style={{ display: "grid", gap: 16, marginTop: 24 }}>
-            {experience.map((role) => (
-              <Frame as="article" key={`${role.company}-${role.period}`}>
-                <div>
-                  <p className="mono dimmer" style={{ fontSize: 12 }}>
-                    {role.period} · {role.location}
-                  </p>
-                  <h3 className="h3" style={{ marginTop: 8 }}>
-                    {role.company}
-                  </h3>
-                  <p className="mono dim" style={{ fontSize: 13, marginTop: 2 }}>
-                    {role.title}
-                    {role.team ? `, ${role.team}` : ""}
-                  </p>
-                  <p className="body" style={{ marginTop: 12 }}>
-                    {role.description}
-                  </p>
-                </div>
-              </Frame>
-            ))}
-          </div>
-
-          <div style={{ marginTop: 24 }}>
-            <TagRow items={highlights} />
-          </div>
+          {/* The full list lives on /experience now. One door here instead of
+              a second copy to read through. */}
+          <Door
+            href="/experience"
+            kicker="Previously"
+            title="Before this"
+            summary="Ethereum core infrastructure at Nethermind, a DEX for a client in Japan, and the early roles that came first. Current work lives under Work."
+            items={pastCompanies}
+            action="See the experience"
+          />
         </div>
       </section>
 
