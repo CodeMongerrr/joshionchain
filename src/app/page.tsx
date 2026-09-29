@@ -416,18 +416,23 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* ── 07 in public ────────────────────────────────────────────── */}
-        {/* Social proof sits last, after every section of actual work and
-            right before the ask, so it backs the case instead of making it. */}
-        <section className="sec" id="in-public" data-reveal>
-          <TestimonialsVerticalMarquee
-            kicker="07 · In public"
-            title="Where I think out loud"
-            subtitle="Posts from X and LinkedIn on AI agents, crypto infrastructure and the bugs that taught me something. Every card opens the full post, with a link to the original."
-            posts={posts}
-          />
-        </section>
+      </div>
 
+      {/* ── 07 in public ────────────────────────────────────────────────── */}
+      {/* Social proof sits last, after every section of actual work and right
+          before the ask, so it backs the case instead of making it. It is the
+          one section that runs the full width of the window, so it lives
+          outside .wrap and puts the grid back around its own heading. */}
+      <section className="sec-bleed" id="in-public" data-reveal>
+        <TestimonialsVerticalMarquee
+          kicker="07 · In public"
+          title="Where I think out loud"
+          subtitle="Posts from X and LinkedIn on AI agents, crypto infrastructure and the bugs that taught me something. Every card opens the full post, with a link to the original."
+          posts={posts}
+        />
+      </section>
+
+      <div className="wrap">
         {/* ── 08 contact ──────────────────────────────────────────────── */}
         <section className="sec" id="contact" data-reveal style={{ paddingBottom: 88 }}>
           <Kicker>08 · Contact</Kicker>

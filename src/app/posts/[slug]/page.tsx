@@ -60,28 +60,25 @@ export default async function PostPage({
         )}
       />
 
+      {/* Laid out like the homepage hero, the words on the left and the post
+          on the right as the page's registered figure, the way the portrait
+          sits there. On a long post the left column stays in view. */}
       <section className="sec sec-first">
-        <div className="wrap">
-          <p className="mono dimmer" style={{ fontSize: 12 }}>
-            <Link href="/posts" className="rowlink">
-              ← All posts
-            </Link>
-          </p>
+        <div className="wrap post-hero">
+          <div className="post-lead">
+            <p className="mono dimmer" style={{ fontSize: 12 }}>
+              <Link href="/posts" className="rowlink">
+                ← All posts
+              </Link>
+            </p>
 
-          <Kicker>
-            Posted on {platform} · {formatPostDate(post.date)}
-          </Kicker>
-          <h1 className="h2">{post.title}</h1>
-          <p className="body dim" style={{ marginTop: 16 }}>
-            {post.note}
-          </p>
-        </div>
-      </section>
-
-      <section className="sec">
-        <div className="wrap-prose">
-          <div style={{ maxWidth: 600 }}>
-            <PostCard post={post} variant="full" />
+            <Kicker>
+              Posted on {platform} · {formatPostDate(post.date)}
+            </Kicker>
+            <h1 className="post-title">{post.title}</h1>
+            <p className="body dim" style={{ margin: 0 }}>
+              {post.note}
+            </p>
 
             {post.response ? (
               <div className="post-reply">
@@ -103,7 +100,7 @@ export default async function PostPage({
               </div>
             ) : null}
 
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 28 }}>
+            <div className="post-actions">
               <a
                 className="btn btn-primary"
                 href={post.url}
@@ -124,6 +121,17 @@ export default async function PostPage({
               ) : null}
             </div>
           </div>
+
+          <figure className="post-figure">
+            <figcaption className="figcap">As posted on {platform}</figcaption>
+            <div className="post-figure-card">
+              <PostCard post={post} variant="full" />
+              <i className="corner tl" />
+              <i className="corner tr" />
+              <i className="corner bl" />
+              <i className="corner br" />
+            </div>
+          </figure>
         </div>
       </section>
 

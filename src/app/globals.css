@@ -358,7 +358,8 @@ figure {
   overflow: hidden;
 }
 
-.blueprint > .corner {
+.blueprint > .corner,
+.post-figure-card > .corner {
   position: absolute;
   width: 11px;
   height: 11px;
@@ -366,39 +367,47 @@ figure {
 }
 
 .blueprint > .corner::before,
-.blueprint > .corner::after {
+.blueprint > .corner::after,
+.post-figure-card > .corner::before,
+.post-figure-card > .corner::after {
   content: "";
   position: absolute;
   background: currentColor;
 }
 
-.blueprint > .corner::before {
+.blueprint > .corner::before,
+.post-figure-card > .corner::before {
   left: 5px;
   top: 0;
   width: 1px;
   height: 100%;
 }
 
-.blueprint > .corner::after {
+.blueprint > .corner::after,
+.post-figure-card > .corner::after {
   top: 5px;
   left: 0;
   width: 100%;
   height: 1px;
 }
 
-.blueprint > .corner.tl {
+.blueprint > .corner.tl,
+.post-figure-card > .corner.tl {
   top: -6px;
   left: -6px;
 }
-.blueprint > .corner.tr {
+.blueprint > .corner.tr,
+.post-figure-card > .corner.tr {
   top: -6px;
   right: -6px;
 }
-.blueprint > .corner.bl {
+.blueprint > .corner.bl,
+.post-figure-card > .corner.bl {
   bottom: -6px;
   left: -6px;
 }
-.blueprint > .corner.br {
+.blueprint > .corner.br,
+.post-figure-card > .corner.br {
   bottom: -6px;
   right: -6px;
 }
@@ -982,6 +991,72 @@ a.pc:hover .pc-open {
   margin-bottom: 12px;
 }
 
+/* The post page, laid out like the hero. Words left, the post right as the
+   registered figure, the left column holding still beside a long post. */
+.post-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 56px;
+  align-items: start;
+}
+
+.post-lead {
+  position: sticky;
+  top: 97px;
+}
+
+.post-title {
+  font-family: var(--font-barlow-condensed), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(32px, 4.4vw, 46px);
+  line-height: 1.06;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  margin: 0 0 18px;
+}
+
+.post-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.post-figure {
+  margin: 0;
+}
+
+.post-figure .figcap {
+  margin-bottom: 14px;
+}
+
+.post-figure-card {
+  position: relative;
+}
+
+/* Stacked, the post has to come before the reply to it and the way out, so
+   the lead column dissolves and the figure takes its place in the reading
+   order, right after the title and note. */
+@media (max-width: 880px) {
+  .post-hero {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .post-lead {
+    display: contents;
+  }
+  .post-figure {
+    order: 1;
+    margin-top: 32px;
+  }
+  .post-reply {
+    order: 2;
+  }
+  .post-actions {
+    order: 3;
+  }
+}
+
 /* A notable reply, quoted under the post on its detail page. */
 .post-reply {
   margin-top: 24px;
@@ -1029,32 +1104,70 @@ a.pc:hover .pc-open {
   }
 }
 
-.frame.kt-frame {
-  padding: 0 20px;
+/* The section runs the full window width, so it rebuilds the .sec rhythm
+   around its own heading instead of inheriting it from .wrap. */
+.sec-bleed {
+  padding: 0 0 120px;
+  scroll-margin-top: 57px;
+}
+
+.kt-head {
+  padding-top: 120px;
+  border-top: 1px solid var(--color-divider);
+}
+
+/* The wall, edge to edge between two hairlines. */
+.kt-band {
+  position: relative;
+  margin-top: 44px;
+  border-top: 1px solid var(--color-divider);
+  border-bottom: 1px solid var(--color-divider);
 }
 
 .kt-stage {
   display: grid;
-  grid-template-columns: repeat(var(--kt-cols, 3), minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(var(--kt-cols, 5), minmax(0, 1fr));
   align-items: start;
-  height: 640px;
+  height: clamp(560px, 78vh, 820px);
+  padding: 0 clamp(8px, 1.2vw, 20px);
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
-  mask-image: linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
+  overflow: clip;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent);
+}
+
+/* Ruled trails, like the columns of a drawing sheet. The rule belongs to the
+   still column, only the track inside it moves. */
+.kt-col {
+  min-width: 0;
+  padding: 0 8px;
+  border-left: 1px solid var(--color-divider);
+}
+
+.kt-col:first-child {
+  border-left: 0;
 }
 
 .kt-track {
-  animation: scroll-up-smooth var(--kt-duration, 45s) linear infinite;
   will-change: transform;
 }
 
-.kt-track[data-dir="down"] {
+/* Before hydration, or with JavaScript off, the keyframes turn the wall at
+   its resting speed. Once the scroll engine is live it owns the transform. */
+.kt-stage:not([data-live]) .kt-track {
+  animation: scroll-up-smooth var(--kt-duration, 45s) linear infinite;
+}
+
+.kt-stage:not([data-live]) .kt-track[data-dir="down"] {
   animation-name: scroll-down-smooth;
 }
 
+.kt-stage:not([data-live]):hover .kt-track {
+  animation-play-state: paused;
+}
+
 /* Padding rather than a gap between the two copies, so the track is exactly
-   two copies tall and -50% is exactly one of them. */
+   two copies tall and one copy is exactly the wrap distance. */
 .kt-set {
   display: flex;
   flex-direction: column;
@@ -1062,11 +1175,93 @@ a.pc:hover .pc-open {
   padding-bottom: 16px;
 }
 
-/* Hold still for the reader. */
-.kt-stage:hover .kt-track,
-.kt-stage:focus-within .kt-track,
-.kt-stage[data-offscreen] .kt-track {
-  animation-play-state: paused;
+/* The page grid's registration marks, sitting on the band's hairlines at the
+   content edges, so the full width band still lines up with everything else. */
+.kt-marks {
+  position: absolute;
+  inset: -1px 0;
+  pointer-events: none;
+}
+
+.kt-marks > .wrap,
+.kt-marks-box {
+  height: 100%;
+}
+
+.kt-marks-box {
+  position: relative;
+}
+
+.kt-marks-box > .corner {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  color: color-mix(in srgb, var(--color-text) 55%, transparent);
+}
+
+.kt-marks-box > .corner::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: currentColor;
+}
+
+.kt-marks-box > .corner::after {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+}
+
+.kt-marks-box > .corner.tl {
+  top: -7px;
+  left: -7px;
+}
+.kt-marks-box > .corner.tr {
+  top: -7px;
+  right: -7px;
+}
+.kt-marks-box > .corner.bl {
+  bottom: -7px;
+  left: -7px;
+}
+.kt-marks-box > .corner.br {
+  bottom: -7px;
+  right: -7px;
+}
+
+/* Caption row under the wall. The hint says how to steer it, and drops the
+   mouse half on touch screens. */
+.kt-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-top: 20px;
+}
+
+.kt-hint {
+  font-size: 12px;
+}
+
+.kt-hint-touch {
+  display: none;
+}
+
+@media (hover: none) {
+  .kt-hint-pointer {
+    display: none;
+  }
+  .kt-hint-touch {
+    display: inline;
+  }
 }
 
 /* The heading blurs in word by word, then the subtitle, then the marquee,
@@ -1126,7 +1321,7 @@ html[data-js] .kt[data-inview] .kt-rise {
   animation: kt-rise 0.6s ease-out 0.65s both;
 }
 
-/* Reduced motion gets a still wall, every card once, nothing hidden. */
+/* Reduced motion gets a still wall, every post once, nothing moving. */
 @media (prefers-reduced-motion: reduce) {
   html[data-js] .kt .kt-w,
   html[data-js] .kt .kt-sub,
@@ -1136,24 +1331,43 @@ html[data-js] .kt[data-inview] .kt-rise {
   }
   .kt-stage {
     height: auto;
-    padding: 20px 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    overflow: visible;
     -webkit-mask-image: none;
     mask-image: none;
   }
   .kt-track {
-    animation: none;
+    animation: none !important;
+    transform: none !important;
   }
-  .kt-set[aria-hidden="true"] {
+  .kt-set[aria-hidden="true"],
+  .kt-stage a.pc[aria-hidden="true"] {
     display: none;
   }
 }
 
+@media (max-width: 880px) {
+  .sec-bleed {
+    padding-bottom: 80px;
+  }
+  .kt-head {
+    padding-top: 80px;
+  }
+}
+
 @media (max-width: 700px) {
+  .sec-bleed {
+    padding-bottom: 64px;
+  }
+  .kt-head {
+    padding-top: 64px;
+  }
+  .kt-band {
+    margin-top: 32px;
+  }
   .kt-stage {
     height: 560px;
-  }
-  .frame.kt-frame {
-    padding: 0 12px;
   }
 }
 
