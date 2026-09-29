@@ -5,6 +5,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import { Analytics } from "@/components/analytics";
 import { JsonLd } from "@/components/json-ld";
+import { NavMemory } from "@/components/back-home";
 import { Reveal } from "@/components/reveal";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -118,6 +119,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <SiteFooter />
         <Reveal />
+        <NavMemory />
         <Analytics />
         <VercelAnalytics />
         <SpeedInsights />

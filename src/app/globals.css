@@ -358,8 +358,7 @@ figure {
   overflow: hidden;
 }
 
-.blueprint > .corner,
-.post-figure-card > .corner {
+.blueprint > .corner {
   position: absolute;
   width: 11px;
   height: 11px;
@@ -367,47 +366,39 @@ figure {
 }
 
 .blueprint > .corner::before,
-.blueprint > .corner::after,
-.post-figure-card > .corner::before,
-.post-figure-card > .corner::after {
+.blueprint > .corner::after {
   content: "";
   position: absolute;
   background: currentColor;
 }
 
-.blueprint > .corner::before,
-.post-figure-card > .corner::before {
+.blueprint > .corner::before {
   left: 5px;
   top: 0;
   width: 1px;
   height: 100%;
 }
 
-.blueprint > .corner::after,
-.post-figure-card > .corner::after {
+.blueprint > .corner::after {
   top: 5px;
   left: 0;
   width: 100%;
   height: 1px;
 }
 
-.blueprint > .corner.tl,
-.post-figure-card > .corner.tl {
+.blueprint > .corner.tl {
   top: -6px;
   left: -6px;
 }
-.blueprint > .corner.tr,
-.post-figure-card > .corner.tr {
+.blueprint > .corner.tr {
   top: -6px;
   right: -6px;
 }
-.blueprint > .corner.bl,
-.post-figure-card > .corner.bl {
+.blueprint > .corner.bl {
   bottom: -6px;
   left: -6px;
 }
-.blueprint > .corner.br,
-.post-figure-card > .corner.br {
+.blueprint > .corner.br {
   bottom: -6px;
   right: -6px;
 }
@@ -910,6 +901,7 @@ a.pc .pc-byline {
 }
 
 .pc-replying {
+  display: block;
   margin: 0 0 4px;
 }
 
@@ -972,6 +964,7 @@ a.pc-quote:hover {
 }
 
 .pc-response {
+  display: block;
   margin: 10px 0 0;
   font-size: 13px;
 }
@@ -987,375 +980,163 @@ a.pc:hover .pc-open {
   color: var(--pc-link);
 }
 
-/* The post itself on its detail page, X's larger reading size. */
-.pc-full {
-  padding: 16px 20px 20px;
-}
+/* ── hero posts (trails beside the hero) ──────────────────────────────── */
 
-.pc-full.pc-x {
-  font-size: 17px;
-  line-height: 1.4;
-}
-
-.pc-full.pc-linkedin {
-  font-size: 15px;
-  line-height: 1.5;
-}
-
-.pc-full .pc-head {
-  margin-bottom: 12px;
-}
-
-/* The post page, laid out like the hero. Words left, the post right as the
-   registered figure, the left column holding still beside a long post. */
-.post-hero {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: 56px;
-  align-items: start;
-}
-
-.post-lead {
-  position: sticky;
-  top: 97px;
-}
-
-.post-title {
-  font-family: var(--font-barlow-condensed), system-ui, sans-serif;
-  font-weight: 600;
-  font-size: clamp(32px, 4.4vw, 46px);
-  line-height: 1.06;
-  letter-spacing: -0.015em;
-  text-transform: uppercase;
-  margin: 0 0 18px;
-}
-
-.post-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 28px;
-}
-
-.post-figure {
-  margin: 0;
-}
-
-.post-figure .figcap {
-  margin-bottom: 14px;
-}
-
-.post-figure-card {
+/* The hero gets a full width stage, so posts can live in the empty side
+   margins without touching the page grid. */
+.hero-stage {
   position: relative;
 }
 
-/* Stacked, the post has to come before the reply to it and the way out, so
-   the lead column dissolves and the figure takes its place in the reading
-   order, right after the title and note. */
-@media (max-width: 880px) {
-  .post-hero {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-  .post-lead {
-    display: contents;
-  }
-  .post-figure {
-    order: 1;
-    margin-top: 32px;
-  }
-  .post-reply {
-    order: 2;
-  }
-  .post-actions {
-    order: 3;
-  }
-}
-
-/* A notable reply, quoted under the post on its detail page. */
-.post-reply {
-  margin-top: 24px;
-  padding: 4px 0 4px 16px;
-  border-left: 2px solid var(--color-accent);
-}
-
-/* /posts, a masonry of every card with a CSS only platform filter, same
-   pattern as the open-source status filter. */
-.pgrid-cols {
-  columns: 3 280px;
-  column-gap: 16px;
-  margin-top: 28px;
-}
-
-.pgrid-cols > .pc {
-  break-inside: avoid;
-  margin-bottom: 16px;
-}
-
-.pgrid:has(#pf-x:checked) .pc[data-platform="linkedin"],
-.pgrid:has(#pf-li:checked) .pc[data-platform="x"] {
+/* Narrow screens have no side margins. The left trail becomes one row under
+   the hero instead, and the right one waits for a wide screen. */
+.hero-trail-right {
   display: none;
 }
 
-/* ── in public: vertical marquee ──────────────────────────────────────── */
-
-/* Keyframes from the 21st.dev vertical marquee. Each track holds its cards
-   twice, so sliding by -50% lands exactly on the start of the copy. */
-@keyframes scroll-up-smooth {
-  0% {
-    transform: translateY(0%);
-  }
-  100% {
-    transform: translateY(-50%);
-  }
+.hero-trail-left {
+  margin-top: -56px;
+  padding-bottom: 48px;
 }
 
-@keyframes scroll-down-smooth {
-  0% {
-    transform: translateY(-50%);
-  }
-  100% {
-    transform: translateY(0%);
-  }
+.hero-trail-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
 }
 
-/* The section runs the full window width, so it rebuilds the .sec rhythm
-   around its own heading instead of inheriting it from .wrap. */
-.sec-bleed {
-  padding: 0 0 120px;
-  scroll-margin-top: 57px;
+.hero-trail-scroll::-webkit-scrollbar {
+  display: none;
 }
 
-.kt-head {
-  padding-top: 120px;
-  border-top: 1px solid var(--color-divider);
-}
-
-/* The wall, edge to edge between two hairlines. */
-.kt-band {
-  position: relative;
-  margin-top: 44px;
-  border-top: 1px solid var(--color-divider);
-  border-bottom: 1px solid var(--color-divider);
-}
-
-.kt-stage {
-  display: grid;
-  grid-template-columns: repeat(var(--kt-cols, 5), minmax(0, 1fr));
-  align-items: start;
-  height: clamp(560px, 78vh, 820px);
-  padding: 0 clamp(8px, 1.2vw, 20px);
-  overflow: hidden;
-  overflow: clip;
-  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent);
-  mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent);
-}
-
-/* Ruled trails, like the columns of a drawing sheet. The rule belongs to the
-   still column, only the track inside it moves. */
-.kt-col {
-  min-width: 0;
-  padding: 0 8px;
-  border-left: 1px solid var(--color-divider);
-}
-
-.kt-col:first-child {
-  border-left: 0;
-}
-
-.kt-track {
+.hero-trail-track {
+  display: flex;
+  width: max-content;
   will-change: transform;
 }
 
-/* Before hydration, or with JavaScript off, the keyframes turn the wall at
-   its resting speed. Once the scroll engine is live it owns the transform. */
-.kt-stage:not([data-live]) .kt-track {
-  animation: scroll-up-smooth var(--kt-duration, 45s) linear infinite;
-}
-
-.kt-stage:not([data-live]) .kt-track[data-dir="down"] {
-  animation-name: scroll-down-smooth;
-}
-
-.kt-stage:not([data-live]):hover .kt-track {
-  animation-play-state: paused;
-}
-
-/* Padding rather than a gap between the two copies, so the track is exactly
-   two copies tall and one copy is exactly the wrap distance. */
-.kt-set {
+.hero-trail-set {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding-bottom: 16px;
+  align-items: flex-start;
+  gap: 14px;
+  padding-right: 14px;
 }
 
-/* The page grid's registration marks, sitting on the band's hairlines at the
-   content edges, so the full width band still lines up with everything else. */
-.kt-marks {
-  position: absolute;
-  inset: -1px 0;
-  pointer-events: none;
+.hero-trail-set > .pc {
+  flex: none;
+  width: 300px;
 }
 
-.kt-marks > .wrap,
-.kt-marks-box {
-  height: 100%;
-}
-
-.kt-marks-box {
-  position: relative;
-}
-
-.kt-marks-box > .corner {
-  position: absolute;
-  width: 15px;
-  height: 15px;
-  color: color-mix(in srgb, var(--color-text) 55%, transparent);
-}
-
-.kt-marks-box > .corner::before {
-  content: "";
-  position: absolute;
-  left: 7px;
-  top: 0;
-  width: 1px;
-  height: 100%;
-  background: currentColor;
-}
-
-.kt-marks-box > .corner::after {
-  content: "";
-  position: absolute;
-  top: 7px;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: currentColor;
-}
-
-.kt-marks-box > .corner.tl {
-  top: -7px;
-  left: -7px;
-}
-.kt-marks-box > .corner.tr {
-  top: -7px;
-  right: -7px;
-}
-.kt-marks-box > .corner.bl {
-  bottom: -7px;
-  left: -7px;
-}
-.kt-marks-box > .corner.br {
-  bottom: -7px;
-  right: -7px;
-}
-
-/* The heading blurs in word by word, then the subtitle, then the marquee,
-   the same sequence and timings as the original's motion props. */
-.kt-w {
-  display: inline-block;
-}
-
-@keyframes kt-word {
-  from {
-    opacity: 0;
-    filter: blur(6px);
-    transform: translateY(12px);
+/* Wide screens, a trail down each side margin, centred in the space between
+   the window edge and the page content. Resting the mouse on one lets the
+   wheel scroll it without moving the page. */
+@media (min-width: 1600px) {
+  .hero-trail {
+    --gut: calc((100% - 1100px) / 2 + 56px);
+    --trail-w: min(320px, calc(var(--gut) - 72px));
+    display: block;
+    position: absolute;
+    top: 24px;
+    bottom: 24px;
+    width: var(--trail-w);
+    margin: 0;
+    padding: 0;
   }
-  to {
-    opacity: 1;
-    filter: blur(0);
-    transform: none;
+  .hero-trail-left {
+    left: calc((var(--gut) - var(--trail-w)) / 2);
   }
-}
-
-@keyframes kt-fade {
-  from {
-    opacity: 0;
+  .hero-trail-right {
+    right: calc((var(--gut) - var(--trail-w)) / 2);
   }
-  to {
-    opacity: 1;
+  .hero-trail-scroll {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
   }
-}
-
-@keyframes kt-rise {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+  .hero-trail-track {
+    display: block;
+    width: auto;
   }
-  to {
-    opacity: 1;
-    transform: none;
+  .hero-trail-set {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 0 14px;
   }
-}
-
-html[data-js] .kt:not([data-inview]) .kt-w,
-html[data-js] .kt:not([data-inview]) .kt-sub,
-html[data-js] .kt:not([data-inview]) .kt-rise {
-  opacity: 0;
-}
-
-html[data-js] .kt[data-inview] .kt-w {
-  animation: kt-word 0.4s ease-in-out calc(var(--i) * 80ms) both;
-}
-
-html[data-js] .kt[data-inview] .kt-sub {
-  animation: kt-fade 0.5s ease-out 0.5s both;
-}
-
-html[data-js] .kt[data-inview] .kt-rise {
-  animation: kt-rise 0.6s ease-out 0.65s both;
-}
-
-/* Reduced motion gets a still wall, every post once, nothing moving. */
-@media (prefers-reduced-motion: reduce) {
-  html[data-js] .kt .kt-w,
-  html[data-js] .kt .kt-sub,
-  html[data-js] .kt .kt-rise {
-    opacity: 1;
-    animation: none;
-  }
-  .kt-stage {
-    height: auto;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    overflow: visible;
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-  .kt-track {
-    animation: none !important;
-    transform: none !important;
-  }
-  .kt-set[aria-hidden="true"],
-  .kt-stage a.pc[aria-hidden="true"] {
-    display: none;
-  }
-}
-
-@media (max-width: 880px) {
-  .sec-bleed {
-    padding-bottom: 80px;
-  }
-  .kt-head {
-    padding-top: 80px;
+  .hero-trail-set > .pc {
+    width: auto;
   }
 }
 
 @media (max-width: 700px) {
-  .sec-bleed {
-    padding-bottom: 64px;
+  .hero-trail-left {
+    margin-top: -32px;
+    padding-bottom: 32px;
   }
-  .kt-head {
-    padding-top: 64px;
+  .hero-trail-set > .pc {
+    width: 280px;
   }
-  .kt-band {
-    margin-top: 32px;
+}
+
+/* ── sub-page bar (every page but the landing page) ───────────────────── */
+
+/* Pages open from the landing page and only lead back, so their bar holds
+   the way back, the way to reach me, and the theme. */
+.subnav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.backhome,
+.subnav-cta {
+  padding: 6px 12px;
+  font-size: 14px;
+}
+
+.backhome {
+  gap: 8px;
+}
+
+.backhome-short {
+  display: none;
+}
+
+.backhome-key {
+  font-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  font-size: 10px;
+  line-height: 1.4;
+  padding: 0 5px;
+  border: 1px solid color-mix(in srgb, var(--color-bg) 60%, transparent);
+  border-radius: 3px;
+}
+
+@media (hover: none) {
+  .backhome-key {
+    display: none;
   }
-  .kt-stage {
-    height: 560px;
+}
+
+@media (max-width: 560px) {
+  .backhome-long,
+  .backhome-key,
+  .subnav-cta {
+    display: none;
   }
+  .backhome-short {
+    display: inline;
+  }
+}
+
+/* The last thing on every page. */
+.frame.back-door {
+  margin-top: 56px;
 }
 
 /* ── clickable cards (recent work) ────────────────────────────────────── */

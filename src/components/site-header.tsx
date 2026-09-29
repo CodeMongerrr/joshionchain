@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useState, useSyncExternalStore } from "react";
 
+import { BackHomeButton } from "@/components/back-home";
 import { nav, navCta, site } from "@/data/site";
 
 /* The theme lives on <html data-theme>, which ThemeScript resolves before
@@ -54,11 +55,46 @@ export function SiteHeader() {
     }
   }, []);
 
+  // The landing page gets the full menu. Every other page opened from it, and
+  // its bar offers only the way back, so pages never lead to each other.
+  const isHome = pathname === "/";
+
   const isActive = (href: string) => {
     const base = href.split("#")[0];
     if (base === "/" || base === "") return false;
     return pathname === base || pathname.startsWith(`${base}/`);
   };
+
+  const themeButton = (
+    <button
+      type="button"
+      className="btn btn-secondary mono"
+      style={{ fontSize: 11, letterSpacing: ".08em", padding: "5px 9px" }}
+      onClick={toggleTheme}
+      title="Switch theme"
+    >
+      {theme === "dark" ? "LIGHT" : "DARK"}
+    </button>
+  );
+
+  if (!isHome) {
+    return (
+      <header className="navbar navbar-sub">
+        <nav className="navinner" aria-label="Primary">
+          <Link href="/" className="navbrand">
+            {site.name}
+          </Link>
+          <div className="subnav">
+            <BackHomeButton />
+            <Link href={navCta.href} className="btn btn-secondary subnav-cta">
+              {navCta.label}
+            </Link>
+            {themeButton}
+          </div>
+        </nav>
+      </header>
+    );
+  }
 
   return (
     <header className="navbar" data-menu={menu}>
@@ -89,15 +125,7 @@ export function SiteHeader() {
           <Link href={navCta.href} className="btn btn-primary navcta">
             {navCta.label}
           </Link>
-          <button
-            type="button"
-            className="btn btn-secondary mono"
-            style={{ fontSize: 11, letterSpacing: ".08em", padding: "5px 9px" }}
-            onClick={toggleTheme}
-            title="Switch theme"
-          >
-            {theme === "dark" ? "LIGHT" : "DARK"}
-          </button>
+          {themeButton}
         </div>
       </nav>
     </header>

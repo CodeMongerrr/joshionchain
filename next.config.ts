@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
@@ -45,16 +46,25 @@ const nextConfig: NextConfig = {
     // written as real paths. The hash equivalents are handled client-side in
     // src/components/legacy-hash-redirect.tsx.
     return [
-      { source: "/projects", destination: "/work", permanent: true },
-      { source: "/skills", destination: "/about", permanent: true },
+      // The landing page is the only index. /work used to be a second one, so
+      // it now opens the landing page at the matching section instead.
+      { source: "/work", destination: "/#building-now", permanent: false },
+      { source: "/projects", destination: "/#work", permanent: true },
+      { source: "/skills", destination: "/#stack", permanent: true },
       // /experience used to redirect to /about. It is a real page now.
 
       // Projects dropped in the resume sync. Old links and search results can
-      // still point at them, so send them to the projects list on /work
+      // still point at them, so send them to the projects on the landing page
       // instead of a 404.
-      { source: "/projects/ethereum-event-log-indexer", destination: "/work", permanent: true },
-      { source: "/projects/rsa-ring-signature-library", destination: "/work", permanent: true },
-      { source: "/projects/ethereum-light-client", destination: "/work", permanent: true },
+      { source: "/projects/ethereum-event-log-indexer", destination: "/#work", permanent: true },
+      { source: "/projects/rsa-ring-signature-library", destination: "/#work", permanent: true },
+      { source: "/projects/ethereum-light-client", destination: "/#work", permanent: true },
+
+      // Posts used to have pages of their own. /posts goes home, where the
+      // posts live now. Each old post address is forwarded to its original
+      // by src/app/posts/[slug]/route.ts, because LinkedIn's addresses are
+      // full of colons that a redirect destination would read as parameters.
+      { source: "/posts", destination: "/", permanent: false },
     ];
   },
 };

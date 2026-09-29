@@ -18,9 +18,7 @@ export const site = {
   role: "Forward Deployed Founding Engineer",
   /** Hero, under the name. */
   tagline: "I find what is actually broken in a business and ship the system that fixes it.",
-  supporting:
-    "Forward deployed founding engineer across distributed systems, AI agents and crypto infrastructure. Two platforms built from scratch, ex-Nethermind, and both security fixes in Zcash Zebra v6.2.2.",
-  statusPill: "Open to forward deployed roles · US, UK, UAE or remote",
+  statusPill: "Open to new roles",
   title: "Aditya Joshi | Forward Deployed Founding Engineer",
   /** The positioning line, split so the second half can render quieter. */
   headline: ["I find what is actually broken", "and ship the fix."],
@@ -33,7 +31,7 @@ export const site = {
     "Both security fixes in Zcash Zebra v6.2.2",
   ],
   domains: ["Distributed systems", "AI agents", "Crypto infrastructure"],
-  availability: "Open to forward deployed and founding roles in the US, UK and UAE, or remote",
+  availability: "Open to new roles",
   description:
     "Aditya Joshi (JoshiOnChain) is a forward deployed founding engineer. He finds what is actually broken in a business and ships the system that fixes it, across distributed systems, AI agents and crypto infrastructure. Ex-Nethermind, and the author of both security fixes in Zcash Zebra v6.2.2.",
   location: "Mumbai, India",
@@ -107,8 +105,13 @@ export const extraSameAs = ["https://www.npmjs.com/package/@jino-labs/earshot"] 
 
 export const githubUser = "CodeMongerrr";
 
+/**
+ * The landing page's menu. Every entry is either a section of the landing
+ * page or a page that opens from it. Pages never link to each other, only
+ * back here (see homeSectionFor).
+ */
 export const nav = [
-  { label: "Work", href: "/work" },
+  { label: "Work", href: "/#building-now" },
   { label: "Experience", href: "/experience" },
   { label: "Open source", href: "/open-source" },
   { label: "Resume", href: "/resume" },
@@ -120,3 +123,14 @@ export const navCta = { label: "Get in touch", href: "/#contact" } as const;
 
 /** The resume as a file, generated from /resume by `npm run resume:pdf`. */
 export const resumePdf = { href: "/aditya-joshi-resume.pdf", filename: "Aditya-Joshi-Resume.pdf" } as const;
+
+/**
+ * Which landing section each page opens from, so "back" returns the visitor
+ * to the spot they left rather than the top of the page. Pages opened from the
+ * menu (About, Resume) return to the top.
+ */
+export function homeSectionFor(pathname: string): string | null {
+  if (pathname.startsWith("/work/") || pathname === "/experience") return "building-now";
+  if (pathname.startsWith("/projects/") || pathname === "/open-source") return "work";
+  return null;
+}

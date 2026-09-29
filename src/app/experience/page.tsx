@@ -1,6 +1,5 @@
-import Link from "next/link";
-
 import { Kicker, TagRow } from "@/components/blueprint";
+import { BackHomeDoor } from "@/components/back-home";
 import { JsonLd } from "@/components/json-ld";
 import { ReachOut } from "@/components/reach-out";
 import { Rich } from "@/components/rich";
@@ -36,12 +35,6 @@ export default function ExperiencePage() {
 
       <section className="sec sec-first">
         <div className="wrap">
-          <p className="mono dimmer" style={{ fontSize: 12 }}>
-            <Link href="/#building-now" className="rowlink">
-              ← Recent work
-            </Link>
-          </p>
-
           <Kicker>Experience</Kicker>
           <h1 className="h2">Before this</h1>
           <p className="body dim" style={{ marginTop: 16 }}>
@@ -119,19 +112,12 @@ export default function ExperiencePage() {
 
       <section className="sec" style={{ paddingBottom: 88 }}>
         <div className="wrap">
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
-            <Link className="btn btn-primary" href="/resume" style={{ padding: "10px 18px", fontSize: 15 }}>
-              Read the full resume →
-            </Link>
-            <Link className="btn btn-secondary" href="/work" style={{ padding: "10px 18px", fontSize: 15 }}>
-              See the recent work →
-            </Link>
-          </div>
-
           <ReachOut
             prompt="Hiring for a role like one of these? I would love to hear about it."
             subject="A role for Aditya"
           />
+
+          <BackHomeDoor />
         </div>
       </section>
     </>

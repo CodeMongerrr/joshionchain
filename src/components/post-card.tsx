@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { formatPostDate, platformLabel, type Post } from "@/data/posts";
@@ -11,32 +10,38 @@ import { site, socials } from "@/data/site";
  * LinkedIn posts borrow LinkedIn's (8px radius, the "in" mark, the headline
  * under the name). Both follow the site's light and dark toggle.
  *
- * `compact` is the clickable card used in the marquee and on /posts, the
- * whole card is one link to the post's page and the text is clamped. `full`
- * is the post itself on its detail page, unclamped, with real links.
+ * The whole card is one link straight to the original post, in a new tab.
+ * There is no page of our own in between.
  *
- * No hooks and no server-only imports, so the client marquee can render it.
+ * No hooks and no server-only imports, so client components can render it.
  */
 
 const xProfile = socials.find((s) => s.label === "X")!;
 
 export function PostCard({
   post,
-  variant = "compact",
   duplicate = false,
 }: {
   post: Post;
-  variant?: "compact" | "full";
-  /** A repeat in the marquee. Kept clickable, but hidden from assistive tech and the tab order. */
+  /** A loop copy in a scrolling trail. Clickable, but hidden from assistive tech and the tab order. */
   duplicate?: boolean;
 }) {
-  const full = variant === "full";
   const isX = post.platform === "x";
+  const platform = platformLabel[post.platform];
   const date = formatPostDate(post.date);
 
-  const body = (
-    <>
-      <header className="pc-head">
+  return (
+    <a
+      href={post.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`pc pc-${post.platform}`}
+      data-platform={post.platform}
+      aria-label={`${post.title}, ${platform} post from ${date}, opens in a new tab`}
+      aria-hidden={duplicate ? true : undefined}
+      tabIndex={duplicate ? -1 : undefined}
+    >
+      <span className="pc-head">
         <Image
           className="pc-avatar"
           src="/profile.jpeg"
@@ -68,98 +73,49 @@ export function PostCard({
           </span>
         )}
         {isX ? <XLogo /> : <LinkedInLogo />}
-      </header>
+      </span>
 
       {post.replyTo ? (
-        <p className="pc-dim pc-replying">
-          Replying to{" "}
-          {full ? (
-            <a className="pc-link" href={post.replyTo.url} target="_blank" rel="noopener noreferrer">
-              @{post.replyTo.handle}
-            </a>
-          ) : (
-            <span className="pc-link">@{post.replyTo.handle}</span>
-          )}
-        </p>
-      ) : null}
-
-      <p className={full ? "pc-text" : "pc-text pc-clamp"}>{richText(post.text, full)}</p>
-
-      {post.quote ? <QuoteBox quote={post.quote} linked={full} /> : null}
-
-      {post.response && !full ? (
-        <p className="pc-dim pc-response">↳ {post.response.name} replied</p>
-      ) : null}
-
-      {!full ? (
-        <span className="pc-open" aria-hidden="true">
-          Open post →
+        <span className="pc-dim pc-replying">
+          Replying to <span className="pc-link">@{post.replyTo.handle}</span>
         </span>
       ) : null}
-    </>
-  );
 
-  const className = `pc pc-${post.platform}${full ? " pc-full" : ""}`;
+      <span className="pc-text pc-clamp">{richText(post.text)}</span>
 
-  if (full) {
-    return <article className={className}>{body}</article>;
-  }
+      {post.quote ? (
+        <span className="pc-quote">
+          <span className="pc-quote-by">
+            <span className="pc-name">{post.quote.name}</span>{" "}
+            <span className="pc-dim">@{post.quote.handle}</span>
+          </span>
+          <span className="pc-quote-title">{post.quote.title}</span>
+        </span>
+      ) : null}
 
-  return (
-    <Link
-      href={`/posts/${post.slug}`}
-      className={className}
-      data-platform={post.platform}
-      aria-label={`${post.title}, ${platformLabel[post.platform]} post from ${date}`}
-      aria-hidden={duplicate ? true : undefined}
-      tabIndex={duplicate ? -1 : undefined}
-      prefetch={false}
-    >
-      {body}
-    </Link>
-  );
-}
+      {post.response ? <span className="pc-dim pc-response">↳ {post.response.name} replied</span> : null}
 
-function QuoteBox({ quote, linked }: { quote: NonNullable<Post["quote"]>; linked: boolean }) {
-  const inner = (
-    <>
-      <span className="pc-quote-by">
-        <span className="pc-name">{quote.name}</span> <span className="pc-dim">@{quote.handle}</span>
+      <span className="pc-open" aria-hidden="true">
+        Open on {platform} ↗
       </span>
-      <span className="pc-quote-title">{quote.title}</span>
-    </>
-  );
-  return linked ? (
-    <a className="pc-quote" href={quote.url} target="_blank" rel="noopener noreferrer">
-      {inner}
     </a>
-  ) : (
-    <span className="pc-quote">{inner}</span>
   );
 }
 
 /**
- * Colours mentions, hashtags and links the way each platform does. On the
- * detail page mentions and links are real anchors; inside a compact card they
- * stay spans, because the whole card is already a link and links can't nest.
+ * Colours mentions, hashtags and links the way each platform does. They stay
+ * spans, because the whole card is already a link and links can't nest.
  */
-function richText(text: string, linked: boolean): ReactNode[] {
-  return text.split(/(https?:\/\/\S+|@\w{1,15}|#\w+)/g).map((part, i) => {
-    if (i % 2 === 0) return part;
-    if (!linked || part.startsWith("#")) {
-      return (
-        <span className="pc-link" key={i}>
-          {part}
-        </span>
-      );
-    }
-    const href = part.startsWith("@") ? `https://x.com/${part.slice(1)}` : part;
-    return (
-      <a className="pc-link" href={href} key={i} target="_blank" rel="noopener noreferrer">
+function richText(text: string): ReactNode[] {
+  return text.split(/(https?:\/\/\S+|@\w{1,15}|#\w+)/g).map((part, i) =>
+    i % 2 === 0 ? (
+      part
+    ) : (
+      <span className="pc-link" key={i}>
         {part}
-      </a>
-    );
-  });
+      </span>
+    ),
+  );
 }
 
 function VerifiedBadge() {

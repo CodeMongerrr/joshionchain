@@ -1,11 +1,8 @@
-import Link from "next/link";
-
 import { Kicker, TagRow } from "@/components/blueprint";
-import { Door } from "@/components/door";
+import { BackHomeDoor } from "@/components/back-home";
 import { JsonLd } from "@/components/json-ld";
 import { Portrait } from "@/components/portrait";
 import { bio } from "@/data/about";
-import { earlier, roles } from "@/data/experience";
 import { contactEmail, site, socials } from "@/data/site";
 import { stack } from "@/data/stack";
 import { breadcrumbSchema, jsonLd, pageMeta, personSchema } from "@/lib/seo";
@@ -18,8 +15,6 @@ export const metadata = pageMeta({
 });
 
 export default function AboutPage() {
-  const pastCompanies = [...roles.filter((r) => !r.slug), ...earlier].map((r) => r.company);
-
   return (
     <>
       <JsonLd
@@ -55,21 +50,6 @@ export default function AboutPage() {
 
       <section className="sec">
         <div className="wrap">
-          {/* The full list lives on /experience now. One door here instead of
-              a second copy to read through. */}
-          <Door
-            href="/experience"
-            kicker="Previously"
-            title="Before this"
-            summary="Ethereum core infrastructure at Nethermind, a DEX for a client in Japan, and the early roles that came first. Current work lives under Work."
-            items={pastCompanies}
-            action="See the experience"
-          />
-        </div>
-      </section>
-
-      <section className="sec">
-        <div className="wrap">
           <h2 className="h3">Stack</h2>
 
           <div className="stack-grid" style={{ marginTop: 24 }}>
@@ -79,13 +59,6 @@ export default function AboutPage() {
                   {group.label}
                 </h3>
                 <TagRow items={group.items} className="mt-4" />
-                {group.evidence ? (
-                  <p style={{ marginTop: 8 }}>
-                    <Link href={group.evidence.href} className="mono rowlink dimmer">
-                      {group.evidence.label}
-                    </Link>
-                  </p>
-                ) : null}
               </div>
             ))}
           </div>
@@ -96,8 +69,7 @@ export default function AboutPage() {
         <div className="wrap">
           <h2 className="h3">Contact</h2>
           <p className="body dim" style={{ marginTop: 8 }}>
-            Open to forward deployed and founding roles in the US, UK and
-            UAE, or remote, and to hard problems where the first job is
+            Open to new roles, and to hard problems where the first job is
             figuring out what is actually broken.
           </p>
 
@@ -119,6 +91,8 @@ export default function AboutPage() {
               </a>
             ))}
           </div>
+
+          <BackHomeDoor />
         </div>
       </section>
     </>

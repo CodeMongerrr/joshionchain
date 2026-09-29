@@ -1,6 +1,4 @@
-import Link from "next/link";
-
-import { contactEmail, site, socials } from "@/data/site";
+import { contactEmail, resumePdf, site, socials } from "@/data/site";
 
 export function SiteFooter() {
   return (
@@ -29,11 +27,12 @@ export function SiteFooter() {
           </a>
         ))}
         {contactEmail ? <a href={`mailto:${contactEmail}`}>Email</a> : null}
-        <Link href="/experience">Experience</Link>
-        <Link href="/open-source">Open source</Link>
-        <Link href="/posts">Posts</Link>
-        <Link href="/resume">Resume</Link>
-        <Link href="/about">About</Link>
+        {/* No links to other pages here. Every page opens from the landing
+            page and leads back to it, so the footer only carries ways to
+            reach me and the resume as a file. */}
+        <a href={resumePdf.href} download={resumePdf.filename}>
+          Resume PDF
+        </a>
       </nav>
       <span className="mono dimmer" style={{ fontSize: 12, marginLeft: "auto" }}>
         {site.domain}
