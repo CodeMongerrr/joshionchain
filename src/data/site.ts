@@ -64,8 +64,16 @@ export const socials = [
   },
 ] as const;
 
-/** Where the local time on the contact section is read from. */
-export const home = { city: "Mumbai", timeZone: "Asia/Kolkata", zoneLabel: "IST" } as const;
+/** Home base, used for the local time on the contact section and the hero's time zone line. */
+export const home = {
+  city: "Mumbai",
+  timeZone: "Asia/Kolkata",
+  zoneLabel: "IST",
+  /** Written without a colon, per the copy rule. */
+  utcOffset: "UTC+5½",
+  /** The working hours a recruiter can count on, shown in the hero and llms.txt. */
+  workHours: "Available for US, UK, EU and UAE hours",
+} as const;
 
 /**
  * One-click starts for an email. Each opens the visitor's mail app with the
