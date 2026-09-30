@@ -1650,6 +1650,12 @@ a.fact-value:hover {
   color: color-mix(in srgb, var(--color-text) 64%, transparent);
 }
 
+/* The working hours line is the answer a recruiter abroad looks for, so it
+   carries the accent. */
+.fact-sub.fact-hours {
+  color: var(--accent-ink);
+}
+
 @media (max-width: 700px) {
   .hero-grid .hero-portrait {
     margin-top: 0;

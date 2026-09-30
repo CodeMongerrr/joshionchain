@@ -4,7 +4,7 @@ import { formatPostDate, platformLabel, posts } from "@/data/posts";
 import { projects } from "@/data/projects";
 import { resumeEducation, resumeOpenSource, resumeProjects, resumeSummary } from "@/data/resume";
 import { results } from "@/data/results";
-import { contactEmail, site, socials } from "@/data/site";
+import { contactEmail, home, site, socials } from "@/data/site";
 import { stack } from "@/data/stack";
 import { systems } from "@/data/systems";
 
@@ -22,7 +22,8 @@ ${site.description}
 
 - Contact ${contactEmail ?? "via LinkedIn"}
 - Availability ${site.availability}
-- Location ${site.location}
+- Location ${site.location} (${home.zoneLabel}, ${home.utcOffset})
+- Hours ${home.workHours}
 - Site ${site.url}
 ${socials.map((s) => `- ${s.label} ${s.href}`).join("\n")}
 `;
