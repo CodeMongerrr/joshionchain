@@ -25,8 +25,13 @@ import type { Post } from "@/data/posts";
  */
 
 const WIDE = "(min-width: 1680px)";
-/** Pixels a second at rest, the same on both sides so the two trails mirror each other. */
-const DRIFT = 24;
+/**
+ * Pixels a second at rest, the same on both sides so the two trails mirror
+ * each other. Quick enough that a post feels like it is leaving before you
+ * finish it, which is the pull to stop and read. Resting the mouse on a trail
+ * still stops it dead, so anyone who takes the bait can read at their pace.
+ */
+const DRIFT = 40;
 
 export function HeroPosts({ left, right }: { left: readonly Post[]; right: readonly Post[] }) {
   const wide = useSyncExternalStore(subscribeWide, () => matchMedia(WIDE).matches, () => true);
