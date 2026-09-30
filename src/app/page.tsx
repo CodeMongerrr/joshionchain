@@ -41,77 +41,49 @@ export default function HomePage() {
       <LegacyHashRedirect />
 
       {/* ── hero ──────────────────────────────────────────────────────── */}
-      {/* A full width stage so posts from X and LinkedIn can fill the empty
-          side margins beside the hero on wide screens. */}
+      {/* The whole first screen. On laptop and wider screens the hero sits
+          between two trails of posts from X and LinkedIn and fills the
+          screen under the bar, so everything in it is seen without a scroll. */}
       <div className="hero-stage">
-        <div className="wrap">
-        <header className="hero-grid">
-          <div>
-            <span className="hero-status">
-              <i aria-hidden="true" />
-              {site.statusPill}
-            </span>
+        <div className="wrap hero-center">
+          <header className="hero-grid">
+            <div className="hero-copy">
+              <span className="hero-status">
+                <i aria-hidden="true" />
+                {site.statusPill}
+              </span>
 
-            <h1
-              style={{
-                fontSize: "clamp(38px, 6vw, 48px)",
-                lineHeight: 1.08,
-                letterSpacing: "-.02em",
-                textTransform: "uppercase",
-                margin: "26px 0 20px",
-              }}
-            >
-              {site.name}
-            </h1>
+              <h1 className="hero-name">{site.name}</h1>
 
-            <p
-              className="body"
-              style={{ fontSize: 19, lineHeight: 1.45, margin: "0 0 30px", maxWidth: "34ch" }}
-            >
-              {site.tagline}
-            </p>
+              <p className="body hero-tagline">{site.tagline}</p>
 
-            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "12px 28px" }}>
-              <a className="btn btn-primary" href="#contact" style={{ padding: "10px 18px", fontSize: 15 }}>
-                Get in touch
-              </a>
-              <a className="hero-textlink" href={resumePdf.href} download={resumePdf.filename}>
-                Download the resume ↓
-              </a>
-            </div>
-
-            <div
-              className="mono"
-              style={{ display: "flex", flexWrap: "wrap", gap: 18, marginTop: 30 }}
-            >
-              {socials.map((s) => (
-                <a
-                  key={s.href}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    fontSize: 13,
-                    textDecoration: "none",
-                    borderBottom: "1px solid var(--color-divider)",
-                    paddingBottom: 2,
-                  }}
-                >
-                  {s.label} ↗
+              <div className="hero-actions">
+                <a className="btn btn-primary" href="#contact">
+                  Get in touch
                 </a>
-              ))}
-              {contactEmail ? (
-                <span className="hero-email">
-                  <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
-                  <CopyEmail email={contactEmail} className="inline-copy mono" />
-                </span>
-              ) : null}
-            </div>
-          </div>
+                <a className="hero-textlink" href={resumePdf.href} download={resumePdf.filename}>
+                  Download the resume ↓
+                </a>
+              </div>
 
-          <Portrait />
-          <HeroFacts />
-        </header>
+              <div className="mono hero-socials">
+                {socials.map((s) => (
+                  <a key={s.href} href={s.href} target="_blank" rel="noopener noreferrer">
+                    {s.label} ↗
+                  </a>
+                ))}
+                {contactEmail ? (
+                  <span className="hero-email">
+                    <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+                    <CopyEmail email={contactEmail} className="inline-copy mono" />
+                  </span>
+                ) : null}
+              </div>
+            </div>
+
+            <Portrait />
+            <HeroFacts />
+          </header>
         </div>
         <HeroPosts left={left} right={right} />
       </div>
