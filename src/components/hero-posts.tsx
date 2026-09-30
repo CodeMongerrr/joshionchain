@@ -25,8 +25,8 @@ import type { Post } from "@/data/posts";
  */
 
 const WIDE = "(min-width: 1680px)";
-/** Pixels a second at rest. The two sides run at different speeds so they never move in lockstep. */
-const DRIFT = { left: 26, right: 22 } as const;
+/** Pixels a second at rest, the same on both sides so the two trails mirror each other. */
+const DRIFT = 24;
 
 export function HeroPosts({ left, right }: { left: readonly Post[]; right: readonly Post[] }) {
   const wide = useSyncExternalStore(subscribeWide, () => matchMedia(WIDE).matches, () => true);
@@ -99,7 +99,7 @@ function Trail({
       last = now;
       if (!held && visible) {
         const c = copy();
-        offset = (((offset + direction * DRIFT[side] * dt) % c) + c) % c;
+        offset = (((offset + direction * DRIFT * dt) % c) + c) % c;
         paint();
       }
       raf = requestAnimationFrame(frame);
@@ -155,7 +155,7 @@ function Trail({
       scroller.removeEventListener("focusout", onFocusOut);
       track.style.transform = "";
     };
-  }, [axis, direction, side]);
+  }, [axis, direction]);
 
   return (
     <aside

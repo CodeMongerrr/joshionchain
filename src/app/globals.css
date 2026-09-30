@@ -1020,61 +1020,100 @@ a.pc:hover .pc-open {
 
 .hero-trail-set {
   display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  padding-right: 14px;
+  align-items: stretch;
 }
 
+/* Posts in the trails are quiet, like rows of X's own timeline. No boxes,
+   just a hairline between posts, with each platform's look carried by the
+   avatar, names, logo and blue links. Hovering lifts only that one post, so
+   the two sides always look the same. */
+.hero-trail .pc {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 16px 18px 18px;
+  transition: background-color 0.15s ease-out;
+}
+
+.hero-trail .pc:hover,
+.hero-trail .pc:focus-visible {
+  background: color-mix(in srgb, var(--color-text) 5%, transparent);
+  border-color: var(--color-divider);
+}
+
+.hero-trail .pc-head {
+  gap: 9px;
+}
+
+.hero-trail .pc-avatar {
+  width: 32px;
+  height: 32px;
+}
+
+.hero-trail .pc-text {
+  color: color-mix(in srgb, var(--pc-text) 84%, transparent);
+}
+
+.hero-trail .pc-clamp {
+  -webkit-line-clamp: 6;
+  line-clamp: 6;
+}
+
+.hero-trail .pc-linkedin .pc-clamp {
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
+}
+
+.hero-trail .pc-quote {
+  border-color: var(--color-divider);
+}
+
+.hero-trail .pc-open {
+  opacity: 0;
+  transition: opacity 0.15s ease-out;
+}
+
+.hero-trail .pc:hover .pc-open,
+.hero-trail .pc:focus-visible .pc-open {
+  opacity: 1;
+}
+
+/* In the row, the hairlines run between posts side by side. */
 .hero-trail-set > .pc {
   flex: none;
   width: 300px;
+  border-left: 1px solid var(--color-divider);
 }
 
-/* Wide screens, a trail down each side margin. Resting the mouse on one lets
-   the wheel scroll it without moving the page.
-
-   The two sides are deliberately unequal, different widths, heights and
-   speeds, set back from the content and dimmed until hovered, so they read as
-   texture around the hero rather than two more columns competing with it. */
+/* Wide screens, one trail down each side margin, and the two are exact
+   mirrors. Same width, centred in their margins, spanning the same band as
+   the hero content, drifting at the same speed in opposite directions.
+   Resting the mouse on one lets the wheel scroll it without moving the page. */
 @media (min-width: 1680px) {
   .hero-trail {
     --gut: calc((100% - 1100px) / 2 + 56px);
+    --trail-w: min(290px, calc(var(--gut) - 96px));
     display: block;
     position: absolute;
+    top: 112px;
+    bottom: 96px;
     width: var(--trail-w);
     margin: 0;
     padding: 0;
   }
   .hero-trail-left {
-    --trail-w: min(300px, calc(var(--gut) - 80px));
-    left: max(20px, calc((var(--gut) - var(--trail-w)) / 2 - 30px));
-    top: 12px;
-    bottom: 110px;
+    left: calc((var(--gut) - var(--trail-w)) / 2);
   }
   .hero-trail-right {
-    --trail-w: min(260px, calc(var(--gut) - 100px));
-    right: max(20px, calc((var(--gut) - var(--trail-w)) / 2 - 30px));
-    top: 140px;
-    bottom: -24px;
-  }
-  .hero-trail .pc {
-    opacity: 0.6;
-    transition:
-      opacity 0.25s ease-out,
-      background-color 0.15s ease-out,
-      border-color 0.15s ease-out;
-  }
-  .hero-trail:hover .pc,
-  .hero-trail:focus-within .pc {
-    opacity: 1;
+    right: calc((var(--gut) - var(--trail-w)) / 2);
   }
   .hero-trail-scroll {
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior: contain;
-    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
-    mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
   }
   .hero-trail-track {
     display: block;
@@ -1082,11 +1121,11 @@ a.pc:hover .pc-open {
   }
   .hero-trail-set {
     flex-direction: column;
-    align-items: stretch;
-    padding: 0 0 14px;
   }
   .hero-trail-set > .pc {
     width: auto;
+    border-left: 0;
+    border-top: 1px solid var(--color-divider);
   }
 }
 
