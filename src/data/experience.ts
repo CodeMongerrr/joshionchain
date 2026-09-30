@@ -70,6 +70,7 @@ export const roles: Role[] = [
     title: "Research Intern",
     period: "May to Aug 2024",
     location: "London (Remote)",
+    slug: "nethermind",
     bullets: [
       "Joined the core infrastructure team behind **one of Ethereum's leading execution clients** to work on **Juno**, Nethermind's Go full node for **Starknet**, across P2P networking, chain sync and the JSON-RPC API.",
       "Chased a P2P bug where Juno nodes **never rejoined peers after going offline** and briefed the core maintainers.",

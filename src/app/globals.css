@@ -1345,6 +1345,15 @@ html[data-theme="dark"] .frame.card:hover .card-cta {
   }
 }
 
+/* A role that has ended, marked in type rather than a box. */
+.past-role {
+  font-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-text) 55%, transparent);
+}
+
 /* ── doors (the way into a page the homepage only summarises) ─────────── */
 
 /* Framed like everything else, but tinted with the accent and carrying a
