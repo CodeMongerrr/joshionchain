@@ -411,12 +411,18 @@ figure {
   gap: 44px;
 }
 
+/* The hero, text on the left and the portrait on the right. The portrait
+   column has a set width and takes its height from the text beside it (see
+   .hero-portrait), and the facts run underneath both. */
 .hero-grid {
+  --hero-gap: clamp(32px, 4vw, 56px);
+  --portrait-w: clamp(210px, 24vw, 300px);
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.85fr);
-  gap: 56px;
-  align-items: start;
-  padding: 132px 0 120px;
+  grid-template-columns: minmax(0, 1fr) var(--portrait-w);
+  column-gap: var(--hero-gap);
+  row-gap: clamp(28px, 5vh, 44px);
+  align-items: stretch;
+  padding: 104px 0 80px;
 }
 
 .lead-grid {
@@ -982,20 +988,20 @@ a.pc:hover .pc-open {
 
 /* ── hero posts (trails beside the hero) ──────────────────────────────── */
 
-/* The hero gets a full width stage, so posts can live in the empty side
-   margins without touching the page grid. */
+/* The hero gets a full width stage, so posts can live beside it without
+   touching the page grid. */
 .hero-stage {
   position: relative;
 }
 
-/* Narrow screens have no side margins. The left trail becomes one row under
-   the hero instead, and the right one waits for a wide screen. */
+/* Under laptop width there is no room beside the hero. The left trail becomes
+   one row under it instead, and the right one waits for a wider screen. */
 .hero-trail-right {
   display: none;
 }
 
 .hero-trail-left {
-  margin-top: -56px;
+  margin-top: -32px;
   padding-bottom: 48px;
 }
 
@@ -1085,27 +1091,53 @@ a.pc:hover .pc-open {
   border-left: 1px solid var(--color-divider);
 }
 
-/* Wide screens, one trail down each side margin, and the two are exact
-   mirrors. Same width, centred in their margins, spanning the same band as
-   the hero content, drifting at the same speed in opposite directions.
-   Resting the mouse on one lets the wheel scroll it without moving the page. */
-@media (min-width: 1680px) {
+/* Laptop and wider. The hero fills the first screen under the bar, set
+   between two trails of posts that run the full height of that screen. The
+   trails are exact mirrors, the same width and the same distance from the
+   hero, drifting at the same speed in opposite directions. On wide screens
+   the hero meets the same edges as the menu and every section below, and on
+   laptops it narrows to make room. Resting the mouse on a trail lets the
+   wheel scroll it without moving the page. */
+@media (min-width: 1280px) {
+  .hero-stage {
+    --stage-pad: clamp(16px, 1.6vw, 40px);
+    --trail-w: clamp(210px, 16vw, 300px);
+    --stage-gap: clamp(28px, 3vw, 64px);
+    display: grid;
+    grid-template-columns: var(--trail-w) minmax(0, 988px) var(--trail-w);
+    justify-content: center;
+    column-gap: var(--stage-gap);
+    min-height: calc(100vh - 57px);
+    min-height: calc(100svh - 57px);
+    padding: 0 var(--stage-pad);
+  }
+  .hero-stage > .hero-center {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: clamp(28px, 6vh, 72px) 0;
+  }
+  .hero-stage .hero-grid {
+    --portrait-w: clamp(230px, 18vw, 300px);
+    padding: 0;
+  }
+  /* Size containment lets each trail take the height of the stage without
+     its long list of posts ever setting that height. */
   .hero-trail {
-    --gut: calc((100% - 1100px) / 2 + 56px);
-    --trail-w: min(290px, calc(var(--gut) - 96px));
+    grid-row: 1;
     display: block;
-    position: absolute;
-    top: 112px;
-    bottom: 96px;
-    width: var(--trail-w);
+    contain: size;
     margin: 0;
     padding: 0;
   }
   .hero-trail-left {
-    left: calc((var(--gut) - var(--trail-w)) / 2);
+    grid-column: 1;
   }
   .hero-trail-right {
-    right: calc((var(--gut) - var(--trail-w)) / 2);
+    grid-column: 3;
   }
   .hero-trail-scroll {
     height: 100%;
@@ -1126,6 +1158,23 @@ a.pc:hover .pc-open {
     width: auto;
     border-left: 0;
     border-top: 1px solid var(--color-divider);
+  }
+  /* The name above already reads JoshiOnChain, so the trails drop the
+     repeated handle rather than cut it short, and keep the date. */
+  .hero-trail .pc-handle,
+  .hero-trail .pc-handle + [aria-hidden] {
+    display: none;
+  }
+}
+
+/* The smallest laptops leave the trails the least room, so their posts are
+   set a size smaller and a little tighter, and the name is never cut short. */
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .hero-trail .pc {
+    padding: 14px 14px 16px;
+  }
+  .hero-trail .pc-x {
+    font-size: 14px;
   }
 }
 
@@ -1594,18 +1643,84 @@ html[data-theme="dark"] .frame.door:hover .door-action {
   color: var(--accent-ink);
 }
 
-/* The portrait sits a little lower than the text, so the two columns don't
-   line up edge to edge. */
-.hero-grid .hero-portrait {
-  margin-top: 48px;
+/* The text column runs from the status line down to the links, the links
+   sitting on its bottom edge. When the portrait is taller than the text, the
+   spare height is shared above the name and above the links, so the middle
+   of the column stays in the middle. */
+.hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
 }
 
-.facts {
-  grid-column: 1 / -1;
+.hero-name {
+  font-size: clamp(40px, 6vw, 56px);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  margin: auto 0 18px;
+  padding-top: 24px;
+}
+
+.hero-tagline {
+  font-size: 19px;
+  line-height: 1.45;
+  margin: 0 0 28px;
+  max-width: 34ch;
+}
+
+.hero-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 18px 56px;
-  margin: 8px 0 0;
+  align-items: center;
+  gap: 12px 28px;
+}
+
+.hero-actions .btn {
+  padding: 10px 18px;
+  font-size: 15px;
+}
+
+.hero-socials {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px 18px;
+  margin-top: auto;
+  padding-top: 28px;
+}
+
+.hero-socials > a {
+  font-size: 13px;
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-divider);
+  padding-bottom: 2px;
+}
+
+/* The portrait takes the height of the text beside it, so its top edge is
+   level with the status line and its bottom edge with the links. The photo
+   fills the frame and is cropped to it, so it never makes the row taller,
+   and it stays centred on the face. */
+.hero-portrait {
+  position: relative;
+  margin: 0;
+  align-self: stretch;
+  min-height: clamp(280px, 42vh, 360px);
+}
+
+.hero-portrait img {
+  object-position: 54% 44%;
+}
+
+/* The facts run under the text and the portrait, the third one exactly
+   under the portrait. */
+.facts {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) var(--portrait-w);
+  gap: 18px var(--hero-gap);
+  margin: 0;
   padding-top: 22px;
   border-top: 1px solid var(--color-divider);
 }
@@ -1640,6 +1755,12 @@ html[data-theme="dark"] .frame.door:hover .door-action {
   text-decoration: none;
 }
 
+/* Balanced, so a fact that wraps breaks into even lines at a natural spot. */
+.fact-value,
+.fact-sub {
+  text-wrap: balance;
+}
+
 a.fact-value:hover {
   color: var(--accent-ink);
 }
@@ -1657,11 +1778,11 @@ a.fact-value:hover {
 }
 
 @media (max-width: 700px) {
-  .hero-grid .hero-portrait {
+  .hero-socials {
     margin-top: 0;
   }
   .facts {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     gap: 16px;
   }
 }
@@ -1767,22 +1888,17 @@ a.fact-value:hover {
   /* Deliberately still two columns. Stacking the hero this early left the
      portrait as a small box with an empty half-page beside it, which is what
      made tablet widths look unfinished. At 700-1000px there is genuinely
-     room for both, so the ratio tightens instead of collapsing.
+     room for both, so the gap tightens instead of collapsing.
 
      The fixed navbar is 56px tall and body already carries 57px of padding;
      the extra top space here is what stops the h1 colliding with the bar. */
   .hero-grid {
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-    gap: 32px;
-    padding: 92px 0 84px;
-  }
-  .hero-portrait {
-    max-width: 320px;
+    padding: 88px 0 72px;
   }
   /* The hero tagline is capped at 34ch on desktop for a deliberate ragged
      edge. At tablet widths that cap fights the narrower column and produces
      a stranded two-word line, so it lifts. */
-  .hero-grid .body {
+  .hero-tagline {
     max-width: none;
   }
 }
@@ -1873,8 +1989,12 @@ a.fact-value:hover {
     gap: 32px;
     padding: 72px 0 64px;
   }
+  /* Stacked, there is no text beside it to take a height from. */
   .hero-portrait {
+    width: 100%;
     max-width: 360px;
+    min-height: 0;
+    aspect-ratio: 4 / 5;
   }
   .sec {
     padding: 64px 0;

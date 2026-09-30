@@ -8,15 +8,15 @@ import type { Post } from "@/data/posts";
 /**
  * Posts from X and LinkedIn in the empty space beside the hero.
  *
- * On wide screens they are two vertical trails in the side margins, one on
- * each side, drifting in opposite directions. Rest the mouse on either and it
- * stops, and the wheel then scrolls that trail through every post, round and
- * round, without moving the page. Click a card and the original post opens in
- * a new tab.
+ * On laptops and wider they are two vertical trails, one on each side of the
+ * hero and as tall as the first screen, drifting in opposite directions. Rest
+ * the mouse on either and it stops, and the wheel then scrolls that trail
+ * through every post, round and round, without moving the page. Click a card
+ * and the original post opens in a new tab.
  *
- * Narrower screens (under 1680px) have no room in the margins, so the left
- * trail becomes one row
- * under the hero instead, which drifts sideways and can be swiped or scrolled.
+ * Narrower screens (under 1280px) have no room beside the hero, so the left
+ * trail becomes one row under it instead, which drifts sideways and can be
+ * swiped or scrolled.
  *
  * The drift is a transform, so it is smooth at any speed, and the scrolling is
  * the browser's own, so the wheel, trackpads, touch and keyboard focus all
@@ -24,7 +24,8 @@ import type { Post } from "@/data/posts";
  * copy, so neither ever reaches an end. With reduced motion nothing drifts.
  */
 
-const WIDE = "(min-width: 1680px)";
+/** Matches the stage breakpoint in globals.css. */
+const WIDE = "(min-width: 1280px)";
 /**
  * Pixels a second at rest, the same on both sides so the two trails mirror
  * each other. Quick enough that a post feels like it is leaving before you

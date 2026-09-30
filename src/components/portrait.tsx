@@ -8,22 +8,21 @@ import Image from "next/image";
  * washes the image with the accent colour, and the photograph reads better
  * unmodified.
  *
- * The source is the 3000×3000 square carried over from the previous site;
- * next/image crops it to the design's 4:5 and serves AVIF/WebP at the right
- * size. Swapping in a purpose-shot 4:5 portrait means replacing the file at
+ * The source is the 3000×3000 square carried over from the previous site.
+ * Beside the hero text the frame takes the height of that text, so its top
+ * and bottom edges line up with the first and last lines, and the photo is
+ * cropped to fit (see .hero-portrait). next/image serves AVIF/WebP at the
+ * right size. Swapping in another portrait means replacing the file at
  * public/profile.jpeg, nothing here changes.
  */
 export function Portrait() {
   return (
-    <figure
-      className="hero-portrait blueprint"
-      style={{ aspectRatio: "4 / 5", width: "100%", position: "relative" }}
-    >
+    <figure className="hero-portrait blueprint">
       <Image
         src="/profile.jpeg"
         alt="Aditya Joshi"
         fill
-        sizes="(max-width: 1000px) 300px, 380px"
+        sizes="(max-width: 700px) 360px, 300px"
         style={{ objectFit: "cover" }}
         priority
       />
