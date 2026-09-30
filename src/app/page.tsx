@@ -158,8 +158,8 @@ export default function HomePage() {
 
         {/* ── 02 building now ─────────────────────────────────────────── */}
         <section className="sec" id="building-now" data-reveal>
-          <Kicker>02 · Recent work</Kicker>
-          <h2 className="h2">Two founding roles and a studio</h2>
+          <Kicker>02 · Work</Kicker>
+          <h2 className="h2">Founding roles, Nethermind and a studio</h2>
           <p className="body dim" style={{ margin: "16px 0 44px" }}>
             Different markets, same job. I get brought in where something is broken, find what
             it actually is, and ship the system that fixes it.
@@ -180,6 +180,9 @@ export default function HomePage() {
                   <h3 className="h3" style={{ fontSize: 26 }}>
                     {s.name}
                   </h3>
+                  {/* Ended roles say so, quietly, so a past role carries the
+                      same weight without reading as current. */}
+                  {/present/i.test(s.period) ? null : <span className="past-role">Past role</span>}
                   <span
                     className="mono dimmer"
                     style={{
@@ -231,7 +234,7 @@ export default function HomePage() {
             href="/experience"
             kicker="Experience"
             title="Before this"
-            summary="Ethereum core infrastructure at Nethermind, a DEX for a client in Japan, and the early roles that came first."
+            summary="A DEX built for a client in Japan, a healthcare platform in Dubai, and the early roles that came first."
             items={pastCompanies}
             action="See the experience"
           />

@@ -9,7 +9,7 @@ import { breadcrumbSchema, jsonLd, pageMeta } from "@/lib/seo";
 export const metadata = pageMeta({
   title: "Experience",
   description:
-    "Aditya Joshi's roles before BatteryFlow and BharatTruck. Ethereum and Starknet core infrastructure at Nethermind, a Uniswap V3-style DEX for a client in Japan at Gusto Development, and the early roles that came first.",
+    "Aditya Joshi's roles alongside BatteryFlow, BharatTruck and Nethermind. A Uniswap V3-style DEX for a client in Japan at Gusto Development, a healthcare platform in Dubai at Tabibi, and the early roles that came first.",
   path: "/experience",
 });
 
@@ -19,7 +19,7 @@ export const metadata = pageMeta({
  * this page starts where they end.
  */
 export default function ExperiencePage() {
-  // Roles with a /work page are the current story; the rest are what came before.
+  // Roles with a /work page have their own card on the landing page; the rest live here.
   const before = roles.filter((r) => !r.slug);
 
   return (
@@ -38,8 +38,8 @@ export default function ExperiencePage() {
           <Kicker>Experience</Kicker>
           <h1 className="h2">Before this</h1>
           <p className="body dim" style={{ marginTop: 16 }}>
-            The roles before BatteryFlow and BharatTruck, from Ethereum core infrastructure at
-            Nethermind to a DEX built around a client&apos;s Japan-specific market rules.
+            The rest of the story beside BatteryFlow, BharatTruck and Nethermind, from a DEX built
+            around a client&apos;s Japan-specific market rules to the early roles that came first.
           </p>
           <div style={{ marginTop: 24 }}>
             <TagRow items={highlights} />

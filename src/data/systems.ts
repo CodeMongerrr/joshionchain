@@ -77,6 +77,23 @@ export const systems: System[] = [
       "Aditya Joshi was the sole founding engineer of BharatTruck, an Indian freight marketplace. Seven microservices, a pricing engine within 0.5% of the fleet's cost model, 115 production deploys in 31 days, and a first paid trip in 4 months.",
   },
   {
+    slug: "nethermind",
+    name: "Nethermind",
+    domain: "Ethereum and Starknet core infrastructure",
+    period: "May to Aug 2024",
+    context: "Research Intern",
+    summary:
+      "Core infrastructure research on the team behind one of Ethereum's leading execution clients. I worked on Juno, Nethermind's Go full node for Starknet, across P2P networking, chain sync and the JSON-RPC API.",
+    body: [
+      "Nethermind builds core infrastructure for Ethereum, including one of its leading execution clients. I spent May to August 2024 on its core infrastructure team, working on Juno, the Go full node for Starknet.",
+    ],
+    evidence: ["Juno, the Starknet full node", "P2P networking", "Chain sync", "JSON-RPC API"],
+    tags: ["Go", "Starknet", "Ethereum", "P2P networking", "JSON-RPC"],
+    seoTitle: "Nethermind · Juno, the Go full node for Starknet",
+    seoDescription:
+      "Aditya Joshi worked on Nethermind's core infrastructure team as a research intern, on Juno, the Go full node for Starknet, across P2P networking, chain sync and the JSON-RPC API.",
+  },
+  {
     slug: "jino-labs",
     name: "Jino Labs",
     domain: "Zcash and agent infrastructure",
