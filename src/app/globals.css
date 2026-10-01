@@ -1030,19 +1030,21 @@ a.pc:hover .pc-open {
 }
 
 /* Posts in the trails keep the colours of the app they came from in both
-   site themes, so a glance tells X from LinkedIn. X posts are X's black and
-   LinkedIn posts are LinkedIn's blue, each its own card with that platform's
-   corners. Hovering lifts only the one post under the mouse. */
+   site themes, so a glance tells X from LinkedIn. X posts sit on Twitter's
+   Dim navy, the background X shows posts on in its app (#15202b, with Dim's
+   own borders, text and hover), and LinkedIn posts on LinkedIn's blue. Each
+   is its own card with that platform's corners. Hovering lifts only the one
+   post under the mouse. */
 .hero-trail .pc {
   padding: 14px 16px 16px;
 }
 
 .hero-trail .pc.pc-x {
-  --pc-bg: #000000;
-  --pc-hover: #0e0f10;
-  --pc-border: #2f3336;
-  --pc-text: #e7e9ea;
-  --pc-dim: #71767b;
+  --pc-bg: #15202b;
+  --pc-hover: #1e2732;
+  --pc-border: #38444d;
+  --pc-text: #f7f9f9;
+  --pc-dim: #8b98a5;
   --pc-link: #1d9bf0;
 }
 
