@@ -1032,9 +1032,10 @@ a.pc:hover .pc-open {
 /* Posts in the trails keep the colours of the app they came from in both
    site themes, so a glance tells X from LinkedIn. X posts sit on Twitter's
    Dim navy, the background X shows posts on in its app (#15202b, with Dim's
-   own borders, text and hover), and LinkedIn posts on LinkedIn's blue. Each
-   is its own card with that platform's corners. Hovering lifts only the one
-   post under the mouse. */
+   own borders, text and hover). LinkedIn posts are LinkedIn's feed card, the
+   white post with LinkedIn's text, faint border and blue links, as set in
+   LinkedIn's own stylesheet. Each is its own card with that platform's
+   corners. Hovering lifts only the one post under the mouse. */
 .hero-trail .pc {
   padding: 14px 16px 16px;
 }
@@ -1049,22 +1050,21 @@ a.pc:hover .pc-open {
 }
 
 .hero-trail .pc.pc-linkedin {
-  --pc-bg: #0a66c2;
-  --pc-hover: #004182;
-  --pc-border: #0a66c2;
-  --pc-text: #ffffff;
-  --pc-dim: rgb(255 255 255 / 0.78);
-  --pc-link: #ffffff;
+  --pc-bg: #ffffff;
+  --pc-hover: #f5f7f9;
+  --pc-border: rgb(0 0 0 / 0.08);
+  --pc-text: rgb(0 0 0 / 0.9);
+  --pc-dim: rgb(0 0 0 / 0.6);
+  --pc-link: #0a66c2;
 }
 
-/* On LinkedIn's blue, mentions and tags are white like the text, so weight
-   sets them apart. */
+/* LinkedIn sets mentions and tags in its blue at semibold. */
 .hero-trail .pc-linkedin .pc-link {
   font-weight: 600;
 }
 
-/* The site's own accent marks keyboard focus, because a white ring around a
-   LinkedIn post would vanish on the light theme. */
+/* The site's own accent marks keyboard focus in the trails, so the ring
+   reads the same on every card in both themes. */
 .hero-trail .pc:focus-visible {
   outline-color: var(--accent-ink);
 }
