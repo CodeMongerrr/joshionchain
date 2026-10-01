@@ -1029,22 +1029,42 @@ a.pc:hover .pc-open {
   align-items: stretch;
 }
 
-/* Posts in the trails are quiet, like rows of X's own timeline. No boxes,
-   just a hairline between posts, with each platform's look carried by the
-   avatar, names, logo and blue links. Hovering lifts only that one post, so
-   the two sides always look the same. */
+/* Posts in the trails keep the colours of the app they came from in both
+   site themes, so a glance tells X from LinkedIn. X posts are X's black and
+   LinkedIn posts are LinkedIn's blue, each its own card with that platform's
+   corners. Hovering lifts only the one post under the mouse. */
 .hero-trail .pc {
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  padding: 16px 18px 18px;
-  transition: background-color 0.15s ease-out;
+  padding: 14px 16px 16px;
 }
 
-.hero-trail .pc:hover,
+.hero-trail .pc.pc-x {
+  --pc-bg: #000000;
+  --pc-hover: #0e0f10;
+  --pc-border: #2f3336;
+  --pc-text: #e7e9ea;
+  --pc-dim: #71767b;
+  --pc-link: #1d9bf0;
+}
+
+.hero-trail .pc.pc-linkedin {
+  --pc-bg: #0a66c2;
+  --pc-hover: #004182;
+  --pc-border: #0a66c2;
+  --pc-text: #ffffff;
+  --pc-dim: rgb(255 255 255 / 0.78);
+  --pc-link: #ffffff;
+}
+
+/* On LinkedIn's blue, mentions and tags are white like the text, so weight
+   sets them apart. */
+.hero-trail .pc-linkedin .pc-link {
+  font-weight: 600;
+}
+
+/* The site's own accent marks keyboard focus, because a white ring around a
+   LinkedIn post would vanish on the light theme. */
 .hero-trail .pc:focus-visible {
-  background: color-mix(in srgb, var(--color-text) 5%, transparent);
-  border-color: var(--color-divider);
+  outline-color: var(--accent-ink);
 }
 
 .hero-trail .pc-head {
@@ -1054,10 +1074,6 @@ a.pc:hover .pc-open {
 .hero-trail .pc-avatar {
   width: 32px;
   height: 32px;
-}
-
-.hero-trail .pc-text {
-  color: color-mix(in srgb, var(--pc-text) 84%, transparent);
 }
 
 .hero-trail .pc-clamp {
@@ -1070,25 +1086,17 @@ a.pc:hover .pc-open {
   line-clamp: 5;
 }
 
-.hero-trail .pc-quote {
-  border-color: var(--color-divider);
-}
-
+/* Each card ends with where it opens, which also keeps the space under the
+   post as even as the space above it. */
 .hero-trail .pc-open {
-  opacity: 0;
-  transition: opacity 0.15s ease-out;
+  margin-top: 12px;
 }
 
-.hero-trail .pc:hover .pc-open,
-.hero-trail .pc:focus-visible .pc-open {
-  opacity: 1;
-}
-
-/* In the row, the hairlines run between posts side by side. */
+/* In the row, posts sit side by side with a little space between. */
 .hero-trail-set > .pc {
   flex: none;
   width: 300px;
-  border-left: 1px solid var(--color-divider);
+  margin-right: 12px;
 }
 
 /* Laptop and wider. The hero fills the first screen under the bar, set
@@ -1144,8 +1152,10 @@ a.pc:hover .pc-open {
     overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior: contain;
-    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
-    mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+    /* A short fade, so solid cards slide in and out cleanly instead of
+       smudging into the page. */
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 40px, #000 calc(100% - 40px), transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 40px, #000 calc(100% - 40px), transparent);
   }
   .hero-trail-track {
     display: block;
@@ -1156,8 +1166,7 @@ a.pc:hover .pc-open {
   }
   .hero-trail-set > .pc {
     width: auto;
-    border-left: 0;
-    border-top: 1px solid var(--color-divider);
+    margin: 0 0 12px;
   }
   /* The name above already reads JoshiOnChain, so the trails drop the
      repeated handle rather than cut it short, and keep the date. */
