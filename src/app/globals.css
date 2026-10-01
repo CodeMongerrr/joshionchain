@@ -12,12 +12,15 @@
    ══════════════════════════════════════════════════════════════════════ */
 
 :root {
-  --color-bg: #f2f2f3;
-  --color-surface: #e9e9ea;
-  --color-text: #1d1f20;
-  --color-accent: #5980a6;
+  /* Light is the dark theme's calm daytime twin, one blue family throughout.
+     A faintly blue paper, white surfaces that sit up off it, navy ink rather
+     than grey black, and a deeper blue for every action. */
+  --color-bg: #f2f5fa;
+  --color-surface: #ffffff;
+  --color-text: #172133;
+  --color-accent: #2b64a8;
   --color-accent-2: #728fab;
-  --color-divider: color-mix(in srgb, #1d1f20 16%, transparent);
+  --color-divider: color-mix(in srgb, #172133 15%, transparent);
 
   /* Tonal ramps, generated in OKLCH on one shared lightness scale, so the
      same step of any role matches the others in visual value. */
@@ -52,9 +55,13 @@
   --radius-md: 4px;
   --radius-lg: 7px;
 
-  /* Ink for links and accent text. Split from --color-accent because the
-     raw accent fails AA as text on the light background; the 700 step passes. */
-  --accent-ink: var(--color-accent-700);
+  /* Ink for links, labels and accent text, a step deeper than the accent so
+     small mono type clears AA comfortably on the light paper (about 7:1). */
+  --accent-ink: #22548f;
+  /* The accent under the mouse, and the text that sits on the accent. White
+     on the accent is about 6:1, and on the hover shade about 8:1. */
+  --accent-hover: #1e4f8c;
+  --on-accent: #ffffff;
 }
 
 html[data-theme="dark"] {
@@ -64,6 +71,8 @@ html[data-theme="dark"] {
   --color-accent: #94bce3;
   --color-divider: color-mix(in srgb, #f3f3f4 20%, transparent);
   --accent-ink: var(--color-accent-300);
+  --accent-hover: var(--color-accent-300);
+  --on-accent: var(--color-bg);
 }
 
 /* Expose the tokens to Tailwind utilities so `text-text`, `bg-bg`,
@@ -460,13 +469,13 @@ figure {
 
 .btn-primary {
   background: var(--color-accent);
-  color: var(--color-bg);
+  color: var(--on-accent);
   border-color: var(--color-accent);
 }
 
 .btn-primary:hover {
-  background: var(--color-accent-600);
-  border-color: var(--color-accent-600);
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
 }
 
 html[data-theme="dark"] .btn-primary:hover {
@@ -543,12 +552,12 @@ html[data-theme="dark"] .btn-primary:hover {
   font-size: 14px;
   letter-spacing: 0.02em;
   text-transform: none;
-  color: var(--color-bg);
+  color: var(--on-accent);
   padding: 6px 12px;
 }
 
 .navlinks a.navcta:hover {
-  color: var(--color-bg);
+  color: var(--on-accent);
 }
 
 .menubtn {
@@ -631,7 +640,7 @@ html[data-theme="dark"] .btn-primary:hover {
 
 .seg-opt:has(input:checked) {
   background: var(--color-accent);
-  color: var(--color-bg);
+  color: var(--on-accent);
 }
 
 .seg-opt:not(:has(input:checked)):hover {
@@ -1293,8 +1302,8 @@ a.pc:hover .pc-open {
 }
 
 .frame.card:hover .card-cta {
-  background: var(--color-accent-600);
-  border-color: var(--color-accent-600);
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
 }
 
 html[data-theme="dark"] .frame.card:hover .card-cta {
@@ -1492,8 +1501,8 @@ html[data-theme="dark"] .frame.card:hover .card-cta {
 
 .frame.door:hover .door-action {
   transform: translateX(4px);
-  background: var(--color-accent-600);
-  border-color: var(--color-accent-600);
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
 }
 
 html[data-theme="dark"] .frame.door:hover .door-action {
@@ -2013,6 +2022,88 @@ a.fact-value:hover {
   .frame {
     padding: 20px;
   }
+}
+
+/* ── light theme finish ───────────────────────────────────────────────── */
+
+/* Dark ink on a light page reads thin with greyscale smoothing, so the light
+   theme uses the system's own text rendering, which is a touch fuller. */
+html:not([data-theme="dark"]) body {
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+}
+
+/* Cards, panels and outlined buttons are white surfaces on the blue paper,
+   so the page has structure instead of hollow outlines. */
+html:not([data-theme="dark"]) .frame:not(.door),
+html:not([data-theme="dark"]) .btn-secondary {
+  background: var(--color-surface);
+}
+
+html:not([data-theme="dark"]) .btn {
+  transition:
+    background-color 0.15s ease-out,
+    border-color 0.15s ease-out,
+    color 0.15s ease-out,
+    box-shadow 0.15s ease-out,
+    transform 0.15s ease-out;
+}
+
+/* Hover answers in the accent. A filled button deepens and lifts a pixel on
+   a soft blue shadow, an outlined one takes a blue tint and a blue edge. */
+html:not([data-theme="dark"]) .btn-primary:hover {
+  transform: translateY(-1px);
+}
+
+html:not([data-theme="dark"]) .btn-primary:hover,
+html:not([data-theme="dark"]) .frame.card:hover .card-cta,
+html:not([data-theme="dark"]) .frame.door:hover .door-action {
+  box-shadow: 0 10px 20px -12px rgb(30 79 140 / 0.75);
+}
+
+html:not([data-theme="dark"]) .btn-primary:active {
+  transform: none;
+  box-shadow: none;
+}
+
+html:not([data-theme="dark"]) .btn-secondary:hover {
+  background: color-mix(in srgb, var(--color-accent) 9%, var(--color-surface));
+  border-color: var(--color-accent);
+  color: var(--accent-ink);
+}
+
+/* A card under the mouse picks up a blue edge and a soft shadow. */
+html:not([data-theme="dark"]) .frame.card,
+html:not([data-theme="dark"]) .frame-link {
+  transition:
+    border-color 0.15s ease-out,
+    box-shadow 0.15s ease-out;
+}
+
+html:not([data-theme="dark"]) .frame.card:hover,
+html:not([data-theme="dark"]) .frame-link:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+  box-shadow: 0 18px 40px -28px rgb(23 33 51 / 0.45);
+}
+
+/* Tags as light blue chips in the accent ink. */
+html:not([data-theme="dark"]) .t {
+  background: color-mix(in srgb, var(--color-accent) 6%, var(--color-surface));
+  border-color: color-mix(in srgb, var(--color-accent) 22%, transparent);
+  color: var(--accent-ink);
+}
+
+/* Small grey type gets a little more ink, so it reads at a glance. */
+html:not([data-theme="dark"]) .navlinks a:not(.navcta):not(:hover):not([aria-current="page"]) {
+  color: color-mix(in srgb, var(--color-text) 76%, transparent);
+}
+
+html:not([data-theme="dark"]) .fact-sub:not(.fact-hours) {
+  color: color-mix(in srgb, var(--color-text) 74%, transparent);
+}
+
+html:not([data-theme="dark"]) .inline-copy:not(:hover) {
+  color: color-mix(in srgb, var(--color-text) 68%, transparent);
 }
 
 /* ── print (the /resume page saves cleanly as a PDF) ─────────────────── */
