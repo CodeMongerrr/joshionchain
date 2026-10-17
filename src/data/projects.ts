@@ -89,11 +89,16 @@ export const projects: Project[] = [
     body: [
       "An ERC-20 whose balances and transfers stay encrypted on chain, built on Zama's fhEVM, with a Hardhat and TypeScript test suite running against dockerized fhEVM nodes.",
       "Fully homomorphic encryption lets the contract compute on ciphertext directly, so a balance can be debited and credited without the plaintext ever existing on chain. The interesting constraint is that ordinary Solidity control flow leaks information. A branch on an encrypted comparison is itself a disclosure, so the arithmetic has to be written branch free over encrypted types.",
+      "It works with a token you already have. The contract takes the address of an ordinary ERC-20 in its constructor. A holder locks plain tokens in it and gets an encrypted balance back, and claiming turns that balance back into the original token. Nothing about the existing contract has to change.",
+      "The development workflow follows from that. Balances and allowances become euint64 instead of uint256. A transfer takes an encrypted amount plus an input proof, which the client builds with fhevmjs, and the contract converts it with TFHE.asEuint64. Every check that used to be a require becomes an encrypted comparison, TFHE.le for the balance and the allowance, joined with TFHE.and.",
+      "Then the transfer has to happen whether or not it is allowed. TFHE.select picks the real amount when the checks pass and an encrypted zero when they fail, and both balances are updated either way. A failed transfer looks exactly like a successful one from outside, which is the whole point.",
+      "Two things trip people up coming from plain Solidity. Every new ciphertext needs explicit access, so after each update the contract calls TFHE.allow for itself and for the owner of that balance, or nobody can read or reuse it. And decryption is asynchronous. The contract asks the Gateway and receives the plaintext later in a callback, so any flow that needs a real number, like unwrapping, has to be designed around that wait.",
+      "Everything runs locally against a dockerized fhEVM node with a faucet for test accounts, and the same Hardhat suite runs in a mocked mode for fast iteration before touching the real encrypted node.",
     ],
     tags: ["Solidity", "fhEVM", "Hardhat", "TypeScript", "Docker"],
-    seoTitle: "Homomorphic ERC-20 on Zama's fhEVM · encrypted token balances",
+    seoTitle: "Encrypted ERC-20 with FHE on Zama's fhEVM · how to add it to an existing token",
     seoDescription:
-      "An ERC-20 token by Aditya Joshi whose balances and transfers stay encrypted on chain using fully homomorphic encryption on Zama's fhEVM.",
+      "How to integrate fully homomorphic encryption into an existing Solidity ERC-20 with Zama's fhEVM. Encrypted balances, transfers and approvals with euint64, TFHE.select and fhevmjs input proofs, by Aditya Joshi with source on GitHub.",
   },
 ];
 

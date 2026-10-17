@@ -49,6 +49,11 @@ function PostHogPageview() {
           // Heatmaps are the point of this integration, they're what tells
           // you which project card people actually click.
           enable_heatmaps: true,
+          // Real visitors' LCP, INP and CLS. Without this the Web vitals tab
+          // in PostHog stays empty and load speed is guesswork.
+          capture_performance: { web_vitals: true },
+          // No surveys run on this site, so skip the 33KB survey script.
+          disable_surveys: true,
           persistence: "localStorage+cookie",
           defaults: "2025-05-24",
         });
