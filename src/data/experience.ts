@@ -31,11 +31,10 @@ export const roles: Role[] = [
     location: "Remote",
     slug: "batteryflow",
     bullets: [
-      "Brought in to **find and fix the platform's hardest problems**, owning the fleet operator experience end to end, from onboarding and partner feeds to live monitoring and monthly reports, across **3,000+ EVs** and **3.7M events a day**.",
-      "Built **route planning in 2 weeks**, a feature the team had never cracked, powered by an in-house **routing engine for all of India** that handles **2,000+ routes a second** on just 2 CPUs, with 1,000x room to grow at a fixed cost.",
-      "Restored operators' trust in their data by reviving a partner feed that had dropped **613k packets**, zeroing **705k** impossible-speed readings and ending **6.8M junk errors a week** sent to the partner.",
-      "Led fleet onboarding for a **national battery-swap network** and a **new OEM partner**, then architected **self-serve onboarding** so business teams can launch new fleet customers without engineering in the loop.",
-      "Single-handedly built **BatteryFlow Rental** for riders and warehouses in **18 days** (181 commits, 38 PRs), with verified payment webhooks, OTP login and tenant isolation tests that fail the build.",
+      "Forward deployed founding engineer on an **EV fleet telematics platform**, owning the **fleet operator experience end to end**, from onboarding and partner integrations to live monitoring and reporting.",
+      "Works across **backend services, streaming data pipelines and partner integrations**, and on the data quality that fleet-facing alerting depends on.",
+      "Owns the delivery path for that work, from **schema and API design** through CI, deployment and production support.",
+      "Project-level detail from this role is not published.",
     ],
   },
   {

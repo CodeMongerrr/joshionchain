@@ -8,7 +8,7 @@
  */
 
 export const resumeSummary =
-  "Founding engineer across **logistics, EV fleet telematics and crypto infrastructure**, building the backends, integrations and data pipelines they run on. Owns work end to end, from **system design and APIs to partner integrations, cloud deployment, security and production support**. Works directly with **founders, customers and partners** to turn operational problems into shipped software. Built **2 startup platforms from scratch**, ex-**Nethermind**, and shipped **Zcash core-node security fixes**. Ships **well-tested, documented, production-guarded PRs**, from CI gates and health checks to runbooks and a 100k-case test suite, and writes the design docs, cost briefs and verification reports behind key product and infrastructure decisions.";
+  "Founding engineer across **logistics, EV fleet telematics and crypto infrastructure**, building the backends, integrations and data pipelines they run on. Owns work end to end, from **system design and APIs to partner integrations, cloud deployment, security and production support**. Works directly with **founders, customers and partners** to turn operational problems into shipped software. Built **2 startup platforms from scratch**, ex-**Nethermind**, and shipped **Zcash core-node security fixes**. Ships **well-tested, documented, production-guarded PRs**, from CI gates and health checks to runbooks and differential test suites, and writes the design docs, cost briefs and verification reports behind key product and infrastructure decisions.";
 
 export type ResumeEntry = {
   name: string;

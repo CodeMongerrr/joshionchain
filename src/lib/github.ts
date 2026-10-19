@@ -33,6 +33,21 @@ export const GITHUB_REVALIDATE_SECONDS = 3600;
 
 const API = "https://api.github.com";
 
+/**
+ * Owners whose pull requests must never be listed here, even when the search
+ * can see them. Work for these is covered by an agreement that makes
+ * project-level detail, and a PR title is project-level detail, shareable only
+ * with prior written approval. The search runs with a token that can read
+ * private repositories, so this list is the only thing standing between a
+ * private PR title and a public page. Lowercase.
+ */
+const EXCLUDED_OWNERS = new Set(["battery-flow"]);
+
+/** True when the repo belongs to an owner we must not publish. */
+function isExcluded(repo: string) {
+  return EXCLUDED_OWNERS.has(repo.split("/")[0]?.toLowerCase() ?? "");
+}
+
 type SearchItem = {
   html_url?: string;
   number?: number;
@@ -128,7 +143,7 @@ export async function getContributions(): Promise<ContributionsResult> {
   }
 
   // 1. Curated rows, with live status applied where we found a match.
-  const refreshed: LiveContribution[] = curated.map((c) => {
+  const refreshed: LiveContribution[] = curated.filter((c) => !isExcluded(c.repo)).map((c) => {
     const hit = byKey.get(`${c.repo}#${c.number}`);
     return hit ? { ...c, status: statusOf(hit) } : c;
   });
@@ -142,6 +157,7 @@ export async function getContributions(): Promise<ContributionsResult> {
     const repo = repoFromUrl(item.repository_url);
     if (!repo || typeof item.number !== "number") continue;
     if (known.has(`${repo}#${item.number}`)) continue;
+    if (isExcluded(repo)) continue;
     if (item.draft) continue;
 
     const status = statusOf(item);

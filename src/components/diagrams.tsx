@@ -53,46 +53,7 @@ export function BharatTruckTopology() {
   );
 }
 
-export function BatteryFlowIntegration() {
-  return (
-    <figure style={{ margin: 0 }}>
-      <figcaption className="figcap">Fig. 02 · vehicle-integration layer</figcaption>
-      <svg
-        viewBox="0 0 330 186"
-        width="100%"
-        role="img"
-        aria-label="Diagram: manufacturer hardware feeds a telematics integration, which normalizes data and command handling, feeding fleet operations tooling."
-      >
-        <g className="dg">
-          <rect x="40" y="4" width="250" height="30" />
-          <rect x="40" y="56" width="250" height="30" />
-          <rect x="40" y="108" width="250" height="30" />
-          <rect x="40" y="156" width="250" height="26" />
-          <path d="M165 34v22M165 86v22M165 138v18" />
-          <path
-            d="M165 56l-4-6h8zM165 108l-4-6h8zM165 156l-4-6h8z"
-            fill="currentColor"
-            stroke="none"
-          />
-          <path d="M300 56v82M300 56h-6M300 138h-6" strokeDasharray="3 3" />
-        </g>
-        <g className="dgt" textAnchor="middle">
-          <text x="165" y="23">manufacturer hardware</text>
-          <text x="165" y="75">telematics integration</text>
-          <text x="165" y="127">normalized data + commands</text>
-          <text x="165" y="173">fleet operations tooling</text>
-        </g>
-      </svg>
-      <p className="mono dimmer" style={{ fontSize: 12, lineHeight: 1.4, margin: "10px 0 0" }}>
-        The bracketed steps are where most of my work sits. The same logical command maps to
-        different control behavior on each vehicle platform.
-      </p>
-    </figure>
-  );
-}
-
 export function Diagram({ kind }: { kind?: string }) {
   if (kind === "bharattruck-topology") return <BharatTruckTopology />;
-  if (kind === "batteryflow-integration") return <BatteryFlowIntegration />;
   return null;
 }
