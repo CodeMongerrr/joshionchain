@@ -12,11 +12,6 @@ export type Result = {
 
 export const results: Result[] = [
   {
-    claim: "Built route planning in 2 weeks, a feature the team had never cracked, on an in-house routing engine for all of India.",
-    where: "BatteryFlow",
-    proof: { label: "How it works", href: "/work/batteryflow" },
-  },
-  {
     claim: "Took a freight marketplace from zero to its first paid trip in 4 months, as its only engineer.",
     where: "BharatTruck",
     proof: { label: "The build", href: "/work/bharattruck" },

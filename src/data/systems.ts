@@ -26,7 +26,7 @@ export type System = {
   /** Short facts shown as a strip under the title. */
   evidence?: string[];
   tags: string[];
-  diagram?: "bharattruck-topology" | "batteryflow-integration";
+  diagram?: "bharattruck-topology";
   subItems?: SubItem[];
   seoTitle: string;
   seoDescription: string;
@@ -40,19 +40,16 @@ export const systems: System[] = [
     period: "Jun 2026 to present",
     context: "Founding Engineer (Forward Deployed)",
     summary:
-      "An EV fleet platform tracking 3,000+ electric vehicles and 3.7M events a day. I was brought in to find and fix its hardest problems, from route planning the team had never cracked to data operators could finally trust.",
+      "An EV fleet platform. I work there as a forward deployed founding engineer and own the fleet operator experience end to end, from onboarding and partner integrations to live monitoring and reporting.",
     body: [
-      "BatteryFlow runs an EV fleet platform that tracks 3,000+ electric vehicles and 3.7M events a day and turns them into tooling for fleet operators. I was brought in as a forward deployed founding engineer to find and fix its hardest problems, and I own the fleet operator experience end to end, from onboarding and partner feeds to live monitoring and monthly reports.",
-      "Route planning was a feature the team had never cracked. I built it in 2 weeks on an in-house routing engine for all of India that handles 2,000+ routes a second on just 2 CPUs, with 1,000x room to grow at a fixed cost. The trip monitoring built on top of it is guarded by a 106,751 case differential test.",
-      "Operators had stopped trusting their data. I revived a partner feed that had dropped 613k packets, zeroed 705k impossible-speed readings, and ended 6.8M junk errors a week that were being sent back to the partner, so alerts now run on clean data.",
-      "The work reaches past engineering. I led fleet onboarding for a national battery-swap network and a new OEM partner, then architected self-serve onboarding so business teams can launch new fleet customers without engineering in the loop. I also single-handedly built BatteryFlow Rental, a second product for riders and warehouses, in 18 days.",
+      "BatteryFlow runs an EV fleet telematics platform for fleet operators. I joined as a forward deployed founding engineer, and I own the fleet operator experience end to end, from onboarding and partner integrations through live monitoring to the reports operators work from.",
+      "Day to day that is backend services, streaming data pipelines, the data quality that fleet alerting depends on, and the delivery path around all of it, from schema and API design through CI, deployment and production support.",
+      "Project-level detail from this role is not published. What is here is the role and the technologies, in general terms.",
     ],
-    evidence: ["3,000+ EVs", "3.7M events a day", "2,000+ routes a second", "Rental built in 18 days"],
     tags: ["TypeScript", "Kafka", "Redis", "PostgreSQL", "BigQuery", "Apollo GraphQL", "Kubernetes", "GCP"],
-    diagram: "batteryflow-integration",
-    seoTitle: "BatteryFlow · EV fleet platform, route planning and data you can trust",
+    seoTitle: "BatteryFlow \u00b7 forward deployed founding engineer",
     seoDescription:
-      "Aditya Joshi, forward deployed founding engineer at BatteryFlow. Route planning built in 2 weeks on an all-India routing engine handling 2,000+ routes a second, clean data across 3,000+ EVs and 3.7M events a day, and a second product built in 18 days.",
+      "Aditya Joshi, forward deployed founding engineer at BatteryFlow, an EV fleet platform. Backend services, streaming data pipelines, partner integrations and live monitoring, in TypeScript, Kafka, Redis, PostgreSQL and GCP.",
   },
   {
     slug: "bharattruck",
